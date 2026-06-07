@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservations | Vatan Indian Vegetarian Cuisine & Bakery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --saffron:#C8660A; --saffron-light:#E8820F; --maroon:#7A1C2E; --maroon-deep:#5A1020;
+  --gold:#D4A853; --gold-light:#F0C878; --ivory:#FDF6E9; --ivory-dark:#F5EDD8;
+  --dark:#1C1008; --dark-mid:#2E1A0E; --text-body:#3D2010; --text-muted:#7A5C40;
+  --white:#FFFFFF; --radius:10px; --radius-lg:18px;
+  --shadow-warm:0 8px 40px rgba(200,102,10,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--text-body);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(28,16,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,168,83,0.25);padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between;}
+nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
+.nav-logo img{height:46px;}
+.nav-links{display:flex;align-items:center;gap:0.2rem;list-style:none;}
+.nav-links a{color:rgba(253,246,233,0.82);text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.5rem 0.65rem;border-radius:6px;transition:all 0.2s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold-light);background:rgba(212,168,83,0.1);}
+.nav-cta{background:linear-gradient(135deg,var(--saffron),var(--maroon))!important;color:var(--white)!important;padding:0.5rem 1.1rem!important;border-radius:50px!important;font-weight:600!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--gold);border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:rgba(22,10,4,0.98);backdrop-filter:blur(16px);z-index:999;padding:1.5rem 2rem 2rem;border-bottom:1px solid rgba(212,168,83,0.2);}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;color:var(--ivory);text-decoration:none;font-size:1rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:0.9rem 0;border-bottom:1px solid rgba(212,168,83,0.1);}
+.mobile-menu a:hover{color:var(--gold);}
+
+/* PAGE HERO */
+.page-hero{
+  margin-top:70px;
+  min-height:340px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:var(--dark);
+}
+.page-hero-bg{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&q=80');
+  background-size:cover;background-position:center;
+  filter:brightness(0.22) saturate(0.8);
+  transform:scale(1.04);
+}
+.page-hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(28,16,8,0.7) 0%,rgba(122,28,46,0.4) 50%,rgba(28,16,8,0.8) 100%);
+}
+.page-hero-content{
+  position:relative;z-index:2;
+  text-align:center;padding:3rem 2rem;
+}
+.page-hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,6vw,4rem);font-weight:600;
+  color:var(--ivory);line-height:1.1;margin-bottom:0.5rem;
+}
+.page-hero h1 em{font-style:italic;color:var(--gold-light);font-weight:300;}
+.page-hero p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;color:rgba(253,246,233,0.65);
+  font-style:italic;margin-bottom:0;
+}
+.hero-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 1.2rem;}
+
+/* MAIN LAYOUT */
+.res-body{max-width:1100px;margin:0 auto;padding:4rem 1.5rem 6rem;display:grid;grid-template-columns:1fr 420px;gap:3.5rem;align-items:start;}
+
+/* LEFT SIDE - info */
+.res-info{}
+
+.info-block{margin-bottom:2.5rem;}
+.info-block h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:600;color:var(--dark);
+  margin-bottom:1rem;
+}
+.info-block h3 em{font-style:italic;color:var(--maroon);font-weight:300;}
+
+.location-res-card{
+  background:var(--white);
+  border:1px solid rgba(212,168,83,0.18);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  margin-bottom:1rem;
+  transition:all 0.3s;
+  box-shadow:0 2px 12px rgba(28,16,8,0.06);
+}
+.location-res-card:hover{
+  border-color:rgba(212,168,83,0.4);
+  box-shadow:var(--shadow-warm);
+  transform:translateY(-2px);
+}
+.loc-res-header{
+  background:linear-gradient(135deg,var(--dark) 0%,var(--dark-mid) 100%);
+  padding:1rem 1.4rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.loc-res-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem;font-weight:600;color:var(--ivory);
+}
+.loc-res-badge{
+  background:rgba(200,102,10,0.25);color:var(--gold-light);
+  font-size:0.65rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.2rem 0.65rem;
+  border-radius:50px;border:1px solid rgba(200,102,10,0.3);
+}
+.loc-res-body{padding:1.1rem 1.4rem;}
+.loc-res-row{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  padding:0.5rem 0;border-bottom:1px solid rgba(212,168,83,0.08);
+  font-size:0.86rem;color:var(--text-muted);line-height:1.5;
+}
+.loc-res-row:last-child{border-bottom:none;}
+.loc-res-row a{color:var(--saffron);text-decoration:none;font-weight:500;}
+.loc-res-row a:hover{color:var(--maroon);}
+.loc-icon{color:var(--gold);font-size:0.85rem;flex-shrink:0;margin-top:0.1rem;}
+
+.hours-note{
+  background:var(--ivory-dark);
+  border:1px solid rgba(212,168,83,0.2);
+  border-radius:var(--radius);
+  padding:1rem 1.2rem;
+  font-size:0.84rem;color:var(--text-muted);
+  line-height:1.6;
+  margin-top:1rem;
+}
+.hours-note strong{color:var(--saffron);}
+
+.policy-list{list-style:none;margin-top:0.75rem;}
+.policy-list li{
+  display:flex;align-items:flex-start;gap:0.7rem;
+  font-size:0.86rem;color:var(--text-muted);
+  padding:0.4rem 0;line-height:1.5;
+}
+.policy-list li::before{content:'•';color:var(--gold);font-size:1rem;flex-shrink:0;margin-top:-0.05rem;}
+
+/* FORM SIDE */
+.res-form-wrap{
+  position:sticky;top:90px;
+}
+
+.form-card{
+  background:var(--white);
+  border:1px solid rgba(212,168,83,0.2);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  box-shadow:0 8px 40px rgba(28,16,8,0.10);
+}
+
+.form-card-header{
+  background:linear-gradient(135deg,var(--dark) 0%,var(--dark-mid) 60%,var(--maroon-deep) 100%);
+  padding:1.8rem 2rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.form-card-header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 130%,rgba(212,168,83,0.15) 0%,transparent 65%);
+}
+.form-card-header h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;font-weight:600;color:var(--ivory);
+  position:relative;z-index:1;margin-bottom:0.25rem;
+}
+.form-card-header p{
+  font-size:0.82rem;color:rgba(253,246,233,0.55);
+  position:relative;z-index:1;
+}
+
+.form-body{padding:2rem;}
+
+/* LOCATION SELECTOR */
+.loc-selector{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;
+  margin-bottom:1.5rem;
+}
+.loc-btn{
+  background:var(--ivory-dark);
+  border:2px solid rgba(212,168,83,0.2);
+  border-radius:var(--radius);
+  padding:0.8rem 0.75rem;
+  text-align:center;cursor:pointer;
+  transition:all 0.2s;font-family:'DM Sans',sans-serif;
+}
+.loc-btn:hover{border-color:var(--saffron);background:rgba(200,102,10,0.05);}
+.loc-btn.selected{
+  border-color:var(--saffron);
+  background:rgba(200,102,10,0.08);
+}
+.loc-btn-name{font-size:0.88rem;font-weight:600;color:var(--dark);display:block;}
+.loc-btn-addr{font-size:0.72rem;color:var(--text-muted);margin-top:0.15rem;display:block;}
+
+/* FORM FIELDS */
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.field{margin-bottom:1.1rem;}
+.field label{
+  display:block;font-size:0.75rem;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:0.4rem;
+}
+.field input,
+.field select,
+.field textarea{
+  width:100%;padding:0.75rem 1rem;
+  border:1.5px solid rgba(212,168,83,0.25);
+  border-radius:var(--radius);
+  font-family:'DM Sans',sans-serif;font-size:0.9rem;
+  color:var(--text-body);background:var(--ivory);
+  transition:all 0.2s;outline:none;
+  -webkit-appearance:none;appearance:none;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--saffron);
+  background:var(--white);
+  box-shadow:0 0 0 3px rgba(200,102,10,0.1);
+}
+.field input::placeholder,
+.field textarea::placeholder{color:rgba(122,92,64,0.5);}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8660A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
+.field textarea{resize:vertical;min-height:90px;}
+
+/* DIETARY ROW */
+.dietary-check{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.diet-opt{
+  display:flex;align-items:center;gap:0.4rem;cursor:pointer;
+}
+.diet-opt input{display:none;}
+.diet-pill{
+  background:var(--ivory-dark);
+  border:1.5px solid rgba(212,168,83,0.25);
+  border-radius:50px;padding:0.3rem 0.85rem;
+  font-size:0.78rem;font-weight:500;color:var(--text-muted);
+  transition:all 0.2s;user-select:none;
+}
+.diet-opt input:checked + .diet-pill{
+  background:rgba(200,102,10,0.1);
+  border-color:var(--saffron);color:var(--saffron);font-weight:600;
+}
+
+/* SUBMIT BTN */
+.btn-reserve{
+  width:100%;
+  background:linear-gradient(135deg,var(--saffron) 0%,var(--maroon) 100%);
+  color:var(--white);border:none;
+  padding:1rem 2rem;border-radius:50px;
+  font-family:'DM Sans',sans-serif;font-size:0.95rem;
+  font-weight:700;letter-spacing:0.06em;
+  cursor:pointer;transition:all 0.3s;
+  box-shadow:0 4px 20px rgba(200,102,10,0.35);
+  margin-top:0.5rem;
+}
+.btn-reserve:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(200,102,10,0.5);
+}
+.btn-reserve:active{transform:translateY(0);}
+
+/* SUCCESS STATE */
+.form-success{
+  display:none;
+  text-align:center;padding:2.5rem 2rem;
+}
+.form-success.show{display:block;}
+.success-icon{font-size:3.5rem;margin-bottom:1rem;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;}
+@keyframes popIn{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--dark);margin-bottom:0.5rem;}
+.success-text{font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem;}
+.btn-another{
+  background:var(--ivory-dark);border:1.5px solid rgba(212,168,83,0.3);
+  color:var(--saffron);padding:0.7rem 1.8rem;border-radius:50px;
+  font-weight:600;font-size:0.85rem;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all 0.2s;
+}
+.btn-another:hover{background:rgba(200,102,10,0.08);border-color:var(--saffron);}
+
+/* DISCLAIMER */
+.form-note{
+  font-size:0.75rem;color:var(--text-muted);
+  text-align:center;margin-top:1rem;line-height:1.5;
+}
+.form-note a{color:var(--saffron);text-decoration:none;}
+
+/* OPENTABLE EMBED SECTION */
+.ot-section{
+  background:var(--ivory-dark);
+  border:1px solid rgba(212,168,83,0.2);
+  border-radius:var(--radius-lg);
+  padding:1.5rem;
+  margin-top:1.5rem;
+  text-align:center;
+}
+.ot-label{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--text-muted);
+  margin-bottom:0.75rem;display:block;
+}
+.ot-btn{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  background:#DA3743;color:white;text-decoration:none;
+  padding:0.75rem 1.8rem;border-radius:8px;
+  font-weight:700;font-size:0.88rem;letter-spacing:0.04em;
+  transition:all 0.2s;box-shadow:0 3px 12px rgba(218,55,67,0.3);
+}
+.ot-btn:hover{background:#C02535;transform:translateY(-1px);box-shadow:0 6px 20px rgba(218,55,67,0.4);}
+.ot-logo{font-size:1.2rem;}
+
+/* GALLERY STRIP */
+.res-gallery{
+  grid-column:1/-1;
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:1rem;margin-top:1rem;border-radius:var(--radius-lg);overflow:hidden;
+}
+.res-gallery-img{
+  width:100%;height:200px;object-fit:cover;
+  transition:transform 0.5s ease,filter 0.3s;
+  filter:brightness(0.85) saturate(0.9);
+}
+.res-gallery-img:hover{transform:scale(1.04);filter:brightness(1) saturate(1.1);}
+
+/* FLOATING */
+.float-order{position:fixed;bottom:1.5rem;right:1.5rem;z-index:500;background:linear-gradient(135deg,var(--saffron),var(--maroon));color:var(--white);text-decoration:none;padding:0.8rem 1.4rem;border-radius:50px;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;display:flex;align-items:center;gap:0.5rem;box-shadow:0 4px 20px rgba(200,102,10,0.5);transition:all 0.3s;cursor:pointer;border:none;}
+.float-order:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 8px 30px rgba(200,102,10,0.6);}
+.float-top{position:fixed;bottom:1.5rem;left:1.5rem;z-index:500;background:rgba(28,16,8,0.85);border:1px solid rgba(212,168,83,0.3);color:var(--gold);width:42px;height:42px;border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:all 0.3s;text-decoration:none;backdrop-filter:blur(8px);}
+.float-top.visible{display:flex;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:2000;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--dark-mid);border:1px solid rgba(212,168,83,0.25);border-radius:var(--radius-lg);padding:2.5rem 2rem;max-width:480px;width:100%;position:relative;animation:slideUp 0.3s ease;}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(253,246,233,0.5);font-size:1.4rem;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;}
+.modal-close:hover{background:rgba(255,255,255,0.1);color:var(--ivory);}
+.modal h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--ivory);margin-bottom:0.4rem;}
+.modal-sub{font-size:0.85rem;color:rgba(253,246,233,0.5);margin-bottom:2rem;}
+.modal-location{margin-bottom:1.5rem;}
+.modal-location-title{font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;}
+.modal-order-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
+.modal-order-btn{display:flex;align-items:center;justify-content:center;gap:0.4rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(253,246,233,0.8);text-decoration:none;font-size:0.82rem;font-weight:600;padding:0.7rem 0.5rem;border-radius:10px;transition:all 0.2s;}
+.modal-order-btn:hover{background:rgba(200,102,10,0.2);border-color:var(--saffron);color:var(--gold-light);}
+
+/* FOOTER */
+footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(212,168,83,0.15);}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
+.footer-bottom p{font-size:0.78rem;color:rgba(253,246,233,0.3);}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{color:rgba(253,246,233,0.45);text-decoration:none;font-size:0.82rem;transition:color 0.2s;}
+.footer-links a:hover{color:var(--ivory);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .res-body{grid-template-columns:1fr;gap:2.5rem;}
+  .res-form-wrap{position:static;}
+  .res-gallery{grid-template-columns:1fr 1fr;}
+  .res-gallery-img:last-child{display:none;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .field-row{grid-template-columns:1fr;}
+  .res-gallery{grid-template-columns:1fr;height:200px;}
+  .res-gallery-img:not(:first-child){display:none;}
+  .modal-order-grid{grid-template-columns:1fr;}
+  .loc-selector{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Vatan"></a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="index.html#promotions">Specials</a></li>
+    <li><a href="index.html#locations">Locations</a></li>
+    <li><a href="index.html#menu-preview">Gallery</a></li>
+    <li><a href="catering.html">Catering</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="reservations.html" class="nav-cta active">Reserve a Table</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="menu.html">Our Menu</a>
+  <a href="index.html#promotions">Weekly Specials</a>
+  <a href="index.html#locations">Locations</a>
+  <a href="index.html#menu-preview">Food Gallery</a>
+  <a href="catering.html">Catering</a>
+  <a href="contact.html">Contact Us</a>
+  <a href="reservations.html" style="color:var(--gold);font-weight:700;">Reserve a Table</a>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <div class="hero-divider"></div>
+    <h1>Reserve Your <em>Table</em></h1>
+    <p>Join us for an authentic Indian vegetarian dining experience</p>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="res-body">
+
+  <!-- LEFT: INFO -->
+  <div class="res-info">
+
+    <div class="info-block reveal">
+      <h3>Choose Your <em>Location</em></h3>
+
+      <!-- Jersey City -->
+      <div class="location-res-card">
+        <div class="loc-res-header">
+          <span class="loc-res-name">Jersey City</span>
+          <span class="loc-res-badge">Open Daily</span>
+        </div>
+        <div class="loc-res-body">
+          <div class="loc-res-row">
+            <span class="loc-icon">📍</span>
+            <a href="https://g.page/VatanIndianRestaurant?share" target="_blank" rel="noopener">808 Newark Ave, Jersey City, NJ 07306</a>
+          </div>
+          <div class="loc-res-row">
+            <span class="loc-icon">📞</span>
+            <a href="tel:+12018395426">(201) 839-5426</a>
+          </div>
+          <div class="loc-res-row">
+            <span class="loc-icon">🕐</span>
+            <span>Mon–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- East Windsor -->
+      <div class="location-res-card">
+        <div class="loc-res-header">
+          <span class="loc-res-name">East Windsor</span>
+          <span class="loc-res-badge">Tue–Sun</span>
+        </div>
+        <div class="loc-res-body">
+          <div class="loc-res-row">
+            <span class="loc-icon">📍</span>
+            <a href="https://maps.app.goo.gl/7EeXnaDAekc8pQC2A" target="_blank" rel="noopener">761 Route 33 West, East Windsor, NJ 08520</a>
+          </div>
+          <div class="loc-res-row">
+            <span class="loc-icon">📞</span>
+            <a href="tel:+16093367333">(609) 336-7333</a>
+          </div>
+          <div class="loc-res-row">
+            <span class="loc-icon">🕐</span>
+            <span>Mon: Closed &nbsp;|&nbsp; Tue–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hours-note">
+        <strong>Large parties & special occasions?</strong> We love hosting groups! For parties of 10 or more, please call your preferred location directly so we can prepare the best experience for you.
+      </div>
+    </div>
+
+    <div class="info-block reveal">
+      <h3>Good to <em>Know</em></h3>
+      <ul class="policy-list">
+        <li>Reservations are recommended, especially on weekends and during special events.</li>
+        <li>We hold reserved tables for up to <strong>15 minutes</strong> past the booking time.</li>
+        <li>Our entire menu is <strong>100% vegetarian</strong> — with extensive Jain, Swaminarayan, and vegan options.</li>
+        <li>Please note any dietary restrictions or allergies in the special requests field.</li>
+        <li>For catering inquiries or private events, please visit our <a href="contact.html" style="color:var(--saffron);font-weight:500;">Contact page</a>.</li>
+        <li>Walk-ins are always welcome, subject to availability.</li>
+      </ul>
+    </div>
+
+    <!-- Gallery strip -->
+    <div class="res-gallery reveal">
+      <img src="images/food/Paneerbuttermasala.jpg" alt="Paneer Butter Masala" class="res-gallery-img">
+      <img src="images/food/Palakpaneer.jpg" alt="Palak Paneer" class="res-gallery-img">
+      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&q=80" alt="Thali" class="res-gallery-img" loading="lazy">
+    </div>
+
+  </div>
+
+  <!-- RIGHT: FORM -->
+  <div class="res-form-wrap reveal reveal-delay-1">
+    <div class="form-card">
+      <div class="form-card-header">
+        <h2>Book a Table</h2>
+        <p>Fill in the details below and we'll confirm shortly</p>
+      </div>
+      <div class="form-body">
+
+        <!-- Success state -->
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">🎉</div>
+          <div class="success-title">You're all set!</div>
+          <p class="success-text">Thank you for your reservation request. We'll confirm your booking via email or phone within a few hours. We look forward to welcoming you!</p>
+          <button class="btn-another" onclick="resetForm()">Make Another Reservation</button>
+        </div>
+
+        <!-- Actual form -->
+        <form id="resForm" novalidate>
+
+          <!-- Location selector -->
+          <div style="margin-bottom:1.2rem;">
+            <label style="display:block;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem;">Select Location</label>
+            <div class="loc-selector">
+              <div class="loc-btn selected" id="locJC" onclick="selectLoc('JC')">
+                <span class="loc-btn-name">Jersey City</span>
+                <span class="loc-btn-addr">808 Newark Ave</span>
+              </div>
+              <div class="loc-btn" id="locEW" onclick="selectLoc('EW')">
+                <span class="loc-btn-name">East Windsor</span>
+                <span class="loc-btn-addr">761 Route 33 W</span>
+              </div>
+            </div>
+            <input type="hidden" id="selectedLocation" value="Jersey City">
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" placeholder="Priya" required>
+            </div>
+            <div class="field">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" placeholder="Patel" required>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="email">Email *</label>
+              <input type="email" id="email" placeholder="priya@email.com" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone *</label>
+              <input type="tel" id="phone" placeholder="(555) 000-0000" required>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="resDate">Date *</label>
+              <input type="date" id="resDate" required>
+            </div>
+            <div class="field">
+              <label for="resTime">Time *</label>
+              <select id="resTime" required>
+                <option value="">Select time</option>
+                <optgroup label="Lunch (11:00 AM – 3:00 PM)">
+                  <option>11:00 AM</option>
+                  <option>11:30 AM</option>
+                  <option>12:00 PM</option>
+                  <option>12:30 PM</option>
+                  <option>1:00 PM</option>
+                  <option>1:30 PM</option>
+                  <option>2:00 PM</option>
+                  <option>2:30 PM</option>
+                </optgroup>
+                <optgroup label="Dinner (4:30 PM – 9:30 PM)">
+                  <option>4:30 PM</option>
+                  <option>5:00 PM</option>
+                  <option>5:30 PM</option>
+                  <option>6:00 PM</option>
+                  <option>6:30 PM</option>
+                  <option>7:00 PM</option>
+                  <option>7:30 PM</option>
+                  <option>8:00 PM</option>
+                  <option>8:30 PM</option>
+                  <option>9:00 PM</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="partySize">Party Size *</label>
+            <select id="partySize" required>
+              <option value="">Number of guests</option>
+              <option>1 guest</option>
+              <option>2 guests</option>
+              <option>3 guests</option>
+              <option>4 guests</option>
+              <option>5 guests</option>
+              <option>6 guests</option>
+              <option>7 guests</option>
+              <option>8 guests</option>
+              <option>9 guests</option>
+              <option>10+ guests (call us)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Dietary Preferences</label>
+            <div class="dietary-check">
+              <label class="diet-opt"><input type="checkbox" value="Jain"><span class="diet-pill">🫙 Jain</span></label>
+              <label class="diet-opt"><input type="checkbox" value="Swaminarayan"><span class="diet-pill">🙏 Swaminarayan</span></label>
+              <label class="diet-opt"><input type="checkbox" value="Vegan"><span class="diet-pill">🌱 Vegan</span></label>
+              <label class="diet-opt"><input type="checkbox" value="Gluten Free"><span class="diet-pill">🌾 Gluten Free</span></label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="occasion">Special Occasion</label>
+            <select id="occasion">
+              <option value="">None / Regular dining</option>
+              <option>Birthday</option>
+              <option>Anniversary</option>
+              <option>Family Gathering</option>
+              <option>Business Lunch</option>
+              <option>Religious / Cultural Event</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="requests">Special Requests</label>
+            <textarea id="requests" placeholder="Allergies, seating preferences, accessibility needs..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-reserve">
+            ✨ &nbsp; Confirm Reservation
+          </button>
+
+          <p class="form-note">
+            By submitting you agree to our <a href="#">reservation policy</a>. 
+            We'll reach out to confirm within a few hours.
+          </p>
+        </form>
+
+        <!-- OpenTable alternate -->
+        <div class="ot-section">
+          <span class="ot-label">Prefer to book via OpenTable?</span>
+          <a href="https://www.opentable.com/s?covers=2&dateTime=&metroId=&term=Vatan+Indian+New+Jersey&latitude=&longitude=&corrid=" target="_blank" rel="noopener" class="ot-btn">
+            <span class="ot-logo">🍽️</span>
+            Book on OpenTable
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- end res-body -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <p>© 2025 Vatan Indian Vegetarian Cuisine & Bakery. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING -->
+<button class="float-order" onclick="document.getElementById('orderModal').classList.add('open')">🛵 &nbsp; Order Online</button>
+<a href="#" class="float-top" id="backToTop">↑</a>
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('orderModal').classList.remove('open')">✕</button>
+    <h3>Order Online</h3>
+    <p class="modal-sub">Choose your location & platform</p>
+    <div class="modal-location">
+      <div class="modal-location-title">📍 Jersey City — 808 Newark Ave</div>
+      <div class="modal-order-grid">
+        <a href="https://www.ubereats.com/store/vatan/cSX9t0mqRIS_f-cQPfxMVA" target="_blank" rel="noopener" class="modal-order-btn">🚗 Uber Eats</a>
+        <a href="https://www.doordash.com/store/vatan-indian-vegetarian-cuisine-bakery-east-windsor-1354547" target="_blank" rel="noopener" class="modal-order-btn">🛵 DoorDash</a>
+        <a href="https://www.seamless.com/menu/vatan-pure-vegetarian-indian-cuisine-808-newark-ave-jersey-city/82033" target="_blank" rel="noopener" class="modal-order-btn">🍴 Seamless</a>
+        <a href="https://www.grubhub.com/restaurant/vatan-pure-vegetarian-indian-cuisine-808-newark-ave-jersey-city/82033" target="_blank" rel="noopener" class="modal-order-btn">🥡 GrubHub</a>
+      </div>
+    </div>
+    <div class="modal-location">
+      <div class="modal-location-title">📍 East Windsor — 761 Route 33 W</div>
+      <div class="modal-order-grid">
+        <a href="https://www.ubereats.com/store/vatan/0O0LC8xpSaWCNvVV9hE-kQ" target="_blank" rel="noopener" class="modal-order-btn">🚗 Uber Eats</a>
+        <a href="https://www.doordash.com/store/vatan-indian-vegetarian-cuisine-bakery-east-windsor-1354547" target="_blank" rel="noopener" class="modal-order-btn">🛵 DoorDash</a>
+        <a href="https://www.seamless.com/menu/vatan-pure-vegetarian-indian-cuisine-and-bakery-761-nj-33-east-windsor/2466210" target="_blank" rel="noopener" class="modal-order-btn">🍴 Seamless</a>
+        <a href="https://www.grubhub.com/restaurant/vatan-pure-vegetarian-indian-cuisine-and-bakery-761-nj-33-east-windsor/2466210" target="_blank" rel="noopener" class="modal-order-btn">🥡 GrubHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Nav
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', scrollY > 60);
+  document.getElementById('backToTop').classList.toggle('visible', scrollY > 400);
+});
+
+// Hamburger
+const hb = document.getElementById('hamburger'), mm = document.getElementById('mobileMenu');
+hb.addEventListener('click', () => { hb.classList.toggle('open'); mm.classList.toggle('open'); });
+document.addEventListener('click', e => {
+  if (!hb.contains(e.target) && !mm.contains(e.target)) { hb.classList.remove('open'); mm.classList.remove('open'); }
+});
+
+// Modal
+document.getElementById('orderModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+
+// Set min date to today
+const dateInput = document.getElementById('resDate');
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm2 = String(today.getMonth()+1).padStart(2,'0');
+const dd = String(today.getDate()).padStart(2,'0');
+dateInput.min = `${yyyy}-${mm2}-${dd}`;
+
+// Location selector
+function selectLoc(loc) {
+  document.getElementById('locJC').classList.toggle('selected', loc === 'JC');
+  document.getElementById('locEW').classList.toggle('selected', loc === 'EW');
+  document.getElementById('selectedLocation').value = loc === 'JC' ? 'Jersey City' : 'East Windsor';
+}
+
+// Form submit
+document.getElementById('resForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const required = ['firstName','lastName','email','phone','resDate','resTime','partySize'];
+  let valid = true;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.style.borderColor = '#C8220A';
+      valid = false;
+    } else {
+      el.style.borderColor = '';
+    }
+  });
+  if (!valid) return;
+
+  // Show success
+  this.style.display = 'none';
+  document.querySelector('.ot-section').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+});
+
+function resetForm() {
+  document.getElementById('resForm').reset();
+  document.getElementById('resForm').style.display = '';
+  document.querySelector('.ot-section').style.display = '';
+  document.getElementById('formSuccess').classList.remove('show');
+  // Reset location
+  selectLoc('JC');
+}
+
+// Reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
