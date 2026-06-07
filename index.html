@@ -66,6 +66,10 @@ nav.scrolled{background:rgba(28,16,8,0.99);box-shadow:0 4px 24px rgba(0,0,0,0.3)
 .hero-content{position:relative;z-index:2;width:100%;max-width:1180px;padding:8rem 4rem 4rem;display:grid;grid-template-columns:1fr 420px;gap:3rem;align-items:center;}
 .hero-left{text-align:left;}
 .hero-right{display:flex;align-items:stretch;}
+.hero-content.hero-centered{grid-template-columns:1fr;max-width:800px;}
+.hero-content.hero-centered .hero-left{text-align:center;}
+.hero-content.hero-centered .hero-divider{margin:0 auto 2rem;}
+.hero-content.hero-centered .hero-btns{justify-content:center;}
 .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.75rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:50px;margin-bottom:1.5rem;animation:fadeUp 0.8s ease 0.2s both;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5.5vw,4.2rem);font-weight:600;line-height:1.1;color:var(--ivory);margin-bottom:0.4rem;animation:fadeUp 0.8s ease 0.4s both;}
 .hero-title em{font-style:italic;color:var(--gold-light);font-weight:300;}
@@ -152,15 +156,16 @@ section{position:relative;}
   text-decoration:none;transition:color 0.2s;
 }
 .hsc-see-all:hover{color:var(--gold-light);}
-.hsc-track{position:relative;height:400px;overflow:hidden;}
-.hsc-item{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;}
+.hsc-track{position:relative;height:480px;overflow:hidden;}
+.hsc-item{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;display:flex;flex-direction:column;}
 .hsc-item.active{opacity:1;}
-.hsc-item img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.hsc-item img{width:100%;flex:1;min-height:0;object-fit:cover;object-position:top center;display:block;}
 .hsc-info{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:3.5rem 1.1rem 0.9rem;
-  background:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.85) 100%);
-  display:flex;align-items:flex-end;justify-content:space-between;gap:0.5rem;
+  flex-shrink:0;
+  padding:0.75rem 1.1rem;
+  background:rgba(0,0,0,0.82);
+  border-top:1px solid rgba(212,168,83,0.25);
+  display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 }
 .hsc-day{
   font-size:0.64rem;font-weight:700;letter-spacing:0.2em;
@@ -719,56 +724,11 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
           <a href="#promotions" class="hsc-see-all">View all ›</a>
         </div>
         <div class="hsc-track">
-          <div class="hsc-item active">
-            <img src="images/promos/Sunday_Buffet.jpg" alt="Sunday Unlimited Buffet" loading="lazy">
-            <div class="hsc-info">
-              <div class="hsc-info-text">
-                <div class="hsc-day">Every Sunday</div>
-                <div class="hsc-name">Unlimited Buffet</div>
-              </div>
-              <div class="hsc-price">$24.99</div>
-            </div>
-          </div>
-          <div class="hsc-item">
-            <img src="images/promos/Tuesday_Night.jpg" alt="Kathiyawadi Night" loading="lazy">
-            <div class="hsc-info">
-              <div class="hsc-info-text">
-                <div class="hsc-day">Every Tuesday</div>
-                <div class="hsc-name">Kathiyawadi Night</div>
-              </div>
-              <div class="hsc-price">$19.99</div>
-            </div>
-          </div>
-          <div class="hsc-item">
-            <img src="images/promos/Wednesday_Night.jpg" alt="Chaat Night" loading="lazy">
-            <div class="hsc-info">
-              <div class="hsc-info-text">
-                <div class="hsc-day">Every Wednesday</div>
-                <div class="hsc-name">Chaat Night</div>
-              </div>
-              <div class="hsc-price">$19.99</div>
-            </div>
-          </div>
-          <div class="hsc-item">
-            <img src="images/promos/Thursday_Night.jpg" alt="Dosa Night" loading="lazy">
-            <div class="hsc-info">
-              <div class="hsc-info-text">
-                <div class="hsc-day">Every Thursday</div>
-                <div class="hsc-name">Dosa Night</div>
-              </div>
-              <div class="hsc-price">$19.99</div>
-            </div>
-          </div>
           <button class="hsc-arrow hsc-prev" id="hscPrev">‹</button>
           <button class="hsc-arrow hsc-next" id="hscNext">›</button>
         </div>
         <div class="hsc-controls">
-          <div class="hsc-dots">
-            <button class="hsc-dot active"></button>
-            <button class="hsc-dot"></button>
-            <button class="hsc-dot"></button>
-            <button class="hsc-dot"></button>
-          </div>
+          <div class="hsc-dots"></div>
         </div>
       </div>
     </div>
@@ -835,73 +795,12 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
   <!-- 4-promo grid: 2x2 desktop, scroll on mobile -->
   <div class="promo-grid-outer">
     <div class="promo-grid" id="promoGrid">
-
-      <div class="promo-flyer-card" onclick="openLightbox(0)">
-        <div class="flyer-crop">
-          <img src="images/promos/Sunday_Buffet.jpg" alt="Sunday Unlimited Buffet" loading="lazy">
-          <div class="flyer-cta"><span class="flyer-cta-btn">View Full Menu</span></div>
-        </div>
-        <div class="flyer-strip">
-          <div class="flyer-strip-text">
-            <div class="flyer-strip-day">Every Sunday</div>
-            <div class="flyer-strip-name">Unlimited Buffet</div>
-          </div>
-          <span class="flyer-strip-price">$24.99</span>
-        </div>
-      </div>
-
-      <div class="promo-flyer-card" onclick="openLightbox(1)">
-        <div class="flyer-crop">
-          <img src="images/promos/Tuesday_Night.jpg" alt="Kathiyawadi Night" loading="lazy">
-          <div class="flyer-cta"><span class="flyer-cta-btn">View Full Menu</span></div>
-        </div>
-        <div class="flyer-strip">
-          <div class="flyer-strip-text">
-            <div class="flyer-strip-day">Every Tuesday</div>
-            <div class="flyer-strip-name">Kathiyawadi Night</div>
-          </div>
-          <span class="flyer-strip-price">$19.99</span>
-        </div>
-      </div>
-
-      <div class="promo-flyer-card" onclick="openLightbox(2)">
-        <div class="flyer-crop">
-          <img src="images/promos/Wednesday_Night.jpg" alt="Wednesday Chaat Night" loading="lazy">
-          <div class="flyer-cta"><span class="flyer-cta-btn">View Full Menu</span></div>
-        </div>
-        <div class="flyer-strip">
-          <div class="flyer-strip-text">
-            <div class="flyer-strip-day">Every Wednesday</div>
-            <div class="flyer-strip-name">Chaat Night</div>
-          </div>
-          <span class="flyer-strip-price">$19.99</span>
-        </div>
-      </div>
-
-      <div class="promo-flyer-card" onclick="openLightbox(3)">
-        <div class="flyer-crop">
-          <img src="images/promos/Thursday_Night.jpg" alt="Thursday Dosa Night" loading="lazy">
-          <div class="flyer-cta"><span class="flyer-cta-btn">View Full Menu</span></div>
-        </div>
-        <div class="flyer-strip">
-          <div class="flyer-strip-text">
-            <div class="flyer-strip-day">Every Thursday</div>
-            <div class="flyer-strip-name">Dosa Night</div>
-          </div>
-          <span class="flyer-strip-price">$19.99</span>
-        </div>
-      </div>
-
     </div><!-- end promo-grid -->
 
     <!-- Carousel controls: only shown when cards overflow (>4 or mobile scroll) -->
     <div class="carousel-controls" id="promoCarouselControls" style="display:none;">
       <button class="carousel-arrow" id="prevBtn" onclick="carouselMove(-1)">‹</button>
       <div class="carousel-dots-row" id="carouselDotsRow">
-        <button class="carousel-dot active" onclick="carouselGoTo(0)"></button>
-        <button class="carousel-dot" onclick="carouselGoTo(1)"></button>
-        <button class="carousel-dot" onclick="carouselGoTo(2)"></button>
-        <button class="carousel-dot" onclick="carouselGoTo(3)"></button>
       </div>
       <button class="carousel-arrow" id="nextBtn" onclick="carouselMove(1)">›</button>
     </div>
@@ -1313,6 +1212,7 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
   </div>
 </div>
 
+<script src="promos.js"></script>
 <script>
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -1353,6 +1253,75 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── BUILD FROM PROMOS.JS ─────────────────────────────
+(function() {
+  const active = (typeof VATAN_PROMOS !== 'undefined') ? VATAN_PROMOS.filter(p => p.active) : [];
+
+  // Hero carousel
+  const hsc = document.getElementById('heroSpecialsCarousel');
+  const heroContent = document.querySelector('.hero-content');
+  if (hsc && heroContent) {
+    if (!active.length) {
+      heroContent.classList.add('hero-centered');
+      const hr = hsc.closest('.hero-right');
+      if (hr) hr.style.display = 'none';
+    } else {
+      const track = hsc.querySelector('.hsc-track');
+      const dotsContainer = hsc.querySelector('.hsc-dots');
+      const prevBtn = track.querySelector('.hsc-prev');
+      active.forEach(function(promo, i) {
+        const item = document.createElement('div');
+        item.className = 'hsc-item' + (i === 0 ? ' active' : '');
+        item.innerHTML =
+          '<img src="images/promos/' + promo.file + '" alt="' + promo.name + '" loading="lazy">' +
+          '<div class="hsc-info">' +
+            '<div class="hsc-info-text">' +
+              '<div class="hsc-day">' + promo.day + '</div>' +
+              '<div class="hsc-name">' + promo.name + '</div>' +
+            '</div>' +
+            '<div class="hsc-price">' + promo.price + '</div>' +
+          '</div>';
+        track.insertBefore(item, prevBtn);
+        const dot = document.createElement('button');
+        dot.className = 'hsc-dot' + (i === 0 ? ' active' : '');
+        dotsContainer.appendChild(dot);
+      });
+    }
+  }
+
+  // Promo grid
+  const grid = document.getElementById('promoGrid');
+  const dotsRow = document.getElementById('carouselDotsRow');
+  if (grid) {
+    active.forEach(function(promo, i) {
+      const card = document.createElement('div');
+      card.className = 'promo-flyer-card';
+      card.innerHTML =
+        '<div class="flyer-crop">' +
+          '<img src="images/promos/' + promo.file + '" alt="' + promo.name + '" loading="lazy">' +
+          '<div class="flyer-cta"><span class="flyer-cta-btn">View Full Menu</span></div>' +
+        '</div>' +
+        '<div class="flyer-strip">' +
+          '<div class="flyer-strip-text">' +
+            '<div class="flyer-strip-day">' + promo.day + '</div>' +
+            '<div class="flyer-strip-name">' + promo.name + '</div>' +
+          '</div>' +
+          '<span class="flyer-strip-price">' + promo.price + '</span>' +
+        '</div>';
+      if (promo.lightbox) {
+        (function(idx) { card.onclick = function() { openLightbox(idx); }; })(i);
+      }
+      grid.appendChild(card);
+      if (dotsRow) {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        (function(idx) { dot.onclick = function() { carouselGoTo(idx); }; })(i);
+        dotsRow.appendChild(dot);
+      }
+    });
+  }
+})();
 
 // ── PROMO GRID + MOBILE CAROUSEL ──────────────────────
 (function() {
@@ -1437,13 +1406,15 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // ── LIGHTBOX ─────────────────────────────────────────
 let promoImages = [];
 let lbCurrent = 0;
-// Build after DOM is fully loaded so lbImgStore imgs exist
-document.addEventListener('DOMContentLoaded', () => {
-  promoImages = [0,1,2,3].map(i => ({
-    src: document.getElementById('lb'+i)?.src || '',
-    alt: document.getElementById('lb'+i)?.alt || ''
-  }));
-});
+(function() {
+  const active = (typeof VATAN_PROMOS !== 'undefined') ? VATAN_PROMOS.filter(p => p.active) : [];
+  promoImages = active.map(function(p) {
+    return {
+      src: 'images/promos/' + p.file.replace(/(\.[^.]+)$/, '_lb$1'),
+      alt: p.name
+    };
+  });
+})();
 
 function openLightbox(idx) {
   lbCurrent = idx;
@@ -1572,12 +1543,5 @@ if(msEl) msObserver.observe(msEl);
 
 </script>
 
-<!-- Hidden hi-res lightbox images (avoids base64 in JS strings) -->
-<div id="lbImgStore" style="display:none;">
-  <img id="lb0" src="images/promos/Sunday_Buffet_lb.jpg" alt="Sunday Unlimited Buffet">
-  <img id="lb1" src="images/promos/Tuesday_Night_lb.jpg" alt="Kathiyawadi Night">
-  <img id="lb2" src="images/promos/Wednesday_Night_lb.jpg" alt="Chaat Night">
-  <img id="lb3" src="images/promos/Thursday_Night_lb.jpg" alt="Dosa Night">
-</div>
 </body>
 </html>

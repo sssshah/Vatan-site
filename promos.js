@@ -32,7 +32,7 @@
 const VATAN_PROMOS = [
   {
     id:       "sunday-buffet",
-    file:     "Sunday_Buffet.jpeg",
+    file:     "Sunday_Buffet.jpg",
     day:      "Every Sunday",
     name:     "Unlimited Buffet",
     desc:     "Kadai Paneer, Dal Fry, Garlic Rice, Veg Hakka Noodles, Desserts & more",
@@ -42,7 +42,7 @@ const VATAN_PROMOS = [
   },
   {
     id:       "tuesday-kathiyawadi",
-    file:     "Tuesday_Night.jpeg",
+    file:     "Tuesday_Night.jpg",
     day:      "Every Tuesday",
     name:     "Kathiyawadi Night",
     desc:     "Rotlo, Undhiyu, Baigan Bhartha, Khichdi, Kadhi, Fresh Mango Ras & more",
@@ -52,7 +52,7 @@ const VATAN_PROMOS = [
   },
   {
     id:       "wednesday-chaat",
-    file:     "Wednasday_Night.jpeg",
+    file:     "Wednesday_Night.jpg",
     day:      "Every Wednesday",
     name:     "Chaat Night",
     desc:     "Pani Puri, Samosa Chat, Papdi Chat, Pav Bhaji, Gulab Jamun & more",
@@ -62,7 +62,7 @@ const VATAN_PROMOS = [
   },
   {
     id:       "thursday-dosa",
-    file:     "Thursday_Night.jpeg",
+    file:     "Thursday_Night.jpg",
     day:      "Every Thursday",
     name:     "Dosa Night",
     desc:     "Plain, Masala, Mysore & Spring Dosas with Sambhar, Chutney & more",
