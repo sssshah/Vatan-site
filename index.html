@@ -37,7 +37,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(28,16,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,168,83,0.25);padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between;transition:all 0.3s ease;}
 nav.scrolled{background:rgba(28,16,8,0.99);box-shadow:0 4px 24px rgba(0,0,0,0.3);}
-.nav-logo img{height:48px;width:auto;filter:brightness(1.1);}
+.nav-logo img{height:60px;width:auto;filter:brightness(1.15) drop-shadow(0 0 8px rgba(212,168,83,0.25));}
 .nav-links{display:flex;align-items:center;gap:0.2rem;list-style:none;}
 .nav-links a{color:rgba(253,246,233,0.82);text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.5rem 0.65rem;border-radius:6px;transition:all 0.2s;white-space:nowrap;}
 .nav-links a:hover{color:var(--gold-light);background:rgba(212,168,83,0.1);}
@@ -63,18 +63,20 @@ nav.scrolled{background:rgba(28,16,8,0.99);box-shadow:0 4px 24px rgba(0,0,0,0.3)
 @keyframes slowRotate{to{transform:translateY(-50%) rotate(360deg);}}
 .spice-dot{position:absolute;border-radius:50%;animation:floatDot 6s ease-in-out infinite;}
 @keyframes floatDot{0%,100%{transform:translateY(0) rotate(0deg);opacity:0.6;}50%{transform:translateY(-20px) rotate(180deg);opacity:1;}}
-.hero-content{position:relative;z-index:2;text-align:center;max-width:780px;padding:8rem 2rem 4rem;}
+.hero-content{position:relative;z-index:2;width:100%;max-width:1180px;padding:8rem 4rem 4rem;display:grid;grid-template-columns:1fr 420px;gap:3rem;align-items:center;}
+.hero-left{text-align:left;}
+.hero-right{display:flex;align-items:stretch;}
 .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.75rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:50px;margin-bottom:1.5rem;animation:fadeUp 0.8s ease 0.2s both;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:600;line-height:1.1;color:var(--ivory);margin-bottom:0.4rem;animation:fadeUp 0.8s ease 0.4s both;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5.5vw,4.2rem);font-weight:600;line-height:1.1;color:var(--ivory);margin-bottom:0.4rem;animation:fadeUp 0.8s ease 0.4s both;}
 .hero-title em{font-style:italic;color:var(--gold-light);font-weight:300;}
 .hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.35rem);font-weight:400;color:rgba(253,246,233,0.65);margin-bottom:2.5rem;letter-spacing:0.04em;animation:fadeUp 0.8s ease 0.6s both;font-style:italic;}
-.hero-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 2rem;animation:fadeUp 0.8s ease 0.7s both;}
-.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;animation:fadeUp 0.8s ease 0.8s both;}
+.hero-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 0 2rem;animation:fadeUp 0.8s ease 0.7s both;}
+.hero-btns{display:flex;gap:1rem;justify-content:flex-start;flex-wrap:wrap;margin-bottom:2rem;animation:fadeUp 0.8s ease 0.8s both;}
 .btn-primary{background:linear-gradient(135deg,var(--saffron) 0%,var(--saffron-light) 100%);color:var(--white);text-decoration:none;padding:0.9rem 2.2rem;border-radius:50px;font-weight:600;font-size:0.9rem;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(200,102,10,0.45);transition:all 0.3s;display:inline-flex;align-items:center;gap:0.5rem;}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,102,10,0.55);}
 .btn-outline{background:transparent;color:var(--ivory);text-decoration:none;padding:0.9rem 2.2rem;border-radius:50px;font-weight:500;font-size:0.9rem;letter-spacing:0.05em;border:1.5px solid rgba(253,246,233,0.35);transition:all 0.3s;display:inline-flex;align-items:center;gap:0.5rem;}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold-light);background:rgba(212,168,83,0.08);}
-.dietary-badges{display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;animation:fadeUp 0.8s ease 1s both;}
+.dietary-badges{display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:flex-start;animation:fadeUp 0.8s ease 1s both;}
 .badge{display:inline-flex;align-items:center;gap:0.35rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(253,246,233,0.8);font-size:0.75rem;font-weight:500;padding:0.3rem 0.85rem;border-radius:50px;letter-spacing:0.04em;}
 .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
 .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.4rem;color:rgba(253,246,233,0.4);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;animation:fadeUp 1s ease 1.2s both;}
@@ -125,57 +127,79 @@ section{position:relative;}
 .float-label{font-size:0.72rem;color:var(--text-muted);font-weight:500;}
 
 
-/* ── HERO SPECIALS TICKER ── */
-.hero-specials{
-  display:flex;align-items:center;gap:1rem;
-  margin-top:2rem;
-  background:rgba(255,255,255,0.08);
+/* ── HERO SPECIALS CAROUSEL ── */
+.hero-specials-carousel{
+  width:100%;margin:0;
+  border-radius:16px;overflow:hidden;
   border:1px solid rgba(212,168,83,0.3);
-  border-radius:50px;
-  padding:0.8rem 1.4rem 0.8rem 1.4rem;
-  max-width:560px;
-  margin-left:auto;margin-right:auto;
+  background:rgba(0,0,0,0.25);
+  backdrop-filter:blur(8px);
   animation:fadeUp 0.8s ease 1.1s both;
-  overflow:hidden;
+  display:flex;flex-direction:column;
 }
-.hs-label{
-  font-size:0.75rem;font-weight:700;
-  letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--gold);white-space:nowrap;flex-shrink:0;
+.hsc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.6rem 1rem;
+  background:rgba(0,0,0,0.3);
+  border-bottom:1px solid rgba(212,168,83,0.2);
 }
-.hs-track-wrap{flex:1;overflow:hidden;height:1.6rem;position:relative;}
-.hs-track{position:relative;height:100%;}
-.hs-item{
-  position:absolute;top:0;left:0;right:0;
-  display:flex;align-items:center;gap:0.5rem;
-  opacity:0;transform:translateY(8px);
-  transition:opacity 0.4s ease,transform 0.4s ease;
-  pointer-events:none;
-  white-space:nowrap;
+.hsc-label{
+  font-size:0.7rem;font-weight:700;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--gold);
 }
-.hs-item.active{
-  opacity:1;transform:translateY(0);
-  pointer-events:auto;
+.hsc-see-all{
+  font-size:0.73rem;font-weight:600;color:rgba(253,246,233,0.6);
+  text-decoration:none;transition:color 0.2s;
 }
-.hs-item.exit{
-  opacity:0;transform:translateY(-8px);
+.hsc-see-all:hover{color:var(--gold-light);}
+.hsc-track{position:relative;height:400px;overflow:hidden;}
+.hsc-item{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;}
+.hsc-item.active{opacity:1;}
+.hsc-item img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.hsc-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:3.5rem 1.1rem 0.9rem;
+  background:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.85) 100%);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:0.5rem;
 }
-.hs-day{font-size:0.88rem;font-weight:600;color:rgba(253,246,233,0.75);}
-.hs-name{font-size:0.88rem;color:var(--ivory);font-weight:500;}
-.hs-price{
-  font-size:0.8rem;font-weight:700;
+.hsc-day{
+  font-size:0.64rem;font-weight:700;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--gold-light);margin-bottom:0.2rem;
+}
+.hsc-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;font-weight:600;color:var(--ivory);line-height:1.1;
+}
+.hsc-price{
   background:linear-gradient(135deg,var(--saffron),var(--maroon));
-  color:white;padding:0.2rem 0.75rem;border-radius:50px;
-  flex-shrink:0;
+  color:white;font-size:0.76rem;font-weight:700;
+  padding:0.25rem 0.85rem;border-radius:50px;flex-shrink:0;
 }
-.hs-see-all{
-  font-size:0.8rem;font-weight:600;color:var(--gold);
-  text-decoration:none;white-space:nowrap;flex-shrink:0;
-  transition:color 0.2s;
+.hsc-controls{
+  display:flex;align-items:center;justify-content:center;
+  padding:0.55rem 1rem;background:rgba(0,0,0,0.5);
 }
-.hs-see-all:hover{color:var(--gold-light);}
+.hsc-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(0,0,0,0.5);
+  border:1px solid rgba(212,168,83,0.35);
+  color:var(--gold);font-size:1.1rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.2s;z-index:3;
+}
+.hsc-arrow:hover{background:rgba(212,168,83,0.25);border-color:var(--gold);}
+.hsc-prev{left:0.65rem;}
+.hsc-next{right:0.65rem;}
+.hsc-dots{display:flex;gap:0.4rem;align-items:center;}
+.hsc-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(212,168,83,0.25);
+  border:none;cursor:pointer;padding:0;transition:all 0.3s;
+}
+.hsc-dot.active{background:var(--gold);transform:scale(1.4);}
 @media(max-width:480px){
-  .hero-specials{max-width:100%;border-radius:12px;}
+  .hero-specials-carousel{border-radius:12px;}
 }
 
 /* PROMOTIONS */
@@ -542,7 +566,7 @@ section{position:relative;}
 footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(212,168,83,0.15);}
 .footer-inner{max-width:1100px;margin:0 auto;}
 .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
-.footer-brand img{height:52px;margin-bottom:1.2rem;filter:brightness(1.1);}
+.footer-brand img{height:62px;margin-bottom:1.2rem;filter:brightness(1.15);}
 .footer-brand p{font-size:0.85rem;line-height:1.7;color:rgba(253,246,233,0.5);max-width:280px;}
 .footer-social-row{display:flex;gap:0.6rem;margin-top:1.2rem;flex-wrap:wrap;}
 .fsocial{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:rgba(253,246,233,0.6);text-decoration:none;font-size:0.85rem;transition:all 0.2s;}
@@ -605,6 +629,13 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
 @media(max-width:768px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
+  .hero-content{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;gap:2rem;text-align:center;}
+  .hero-left{text-align:center;}
+  .hero-right{display:block;}
+  .hero-divider{margin:0 auto 2rem;}
+  .hero-btns{justify-content:center;}
+  .dietary-badges{justify-content:center;}
+  .hsc-track{height:240px;}
   .about-inner{grid-template-columns:1fr;gap:3rem;}
   .about-visual{order:-1;max-width:300px;margin:0 auto;}
   .milestones{grid-template-columns:1fr 1fr;}
@@ -663,33 +694,83 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
   <div class="spice-dot" style="width:6px;height:6px;background:var(--gold);top:35%;left:30%;animation-delay:3s;"></div>
   <div class="spice-dot" style="width:4px;height:4px;background:rgba(200,102,10,0.6);top:70%;left:22%;animation-delay:0.8s;"></div>
   <div class="hero-content">
-    <div class="hero-badge">🌿 &nbsp; Authentic Indian Vegetarian Since 2009</div>
-    <h1 class="hero-title">Flavors Born<br>from <em>Tradition</em></h1>
-    <p class="hero-subtitle">Over 15 years of crafting authentic Indian vegetarian cuisine<br>across New Jersey — with love, care, and real spice.</p>
-    <div class="hero-divider"></div>
-    <div class="hero-btns">
-      <a href="menu.html" class="btn-primary">🍽️ &nbsp; View Our Menu</a>
-      <a href="reservations.html" class="btn-outline">📅 &nbsp; Book a Table</a>
-    </div>
-    <div class="dietary-badges">
-      <span class="badge"><span class="badge-dot"></span> Vegetarian</span>
-      <span class="badge"><span class="badge-dot" style="background:#4CAF50"></span> Vegan</span>
-      <span class="badge"><span class="badge-dot" style="background:var(--saffron)"></span> Jain</span>
-      <span class="badge"><span class="badge-dot" style="background:var(--maroon)"></span> Swaminarayan</span>
+    <div class="hero-left">
+      <div class="hero-badge">🌿 &nbsp; Authentic Indian Vegetarian Since 2009</div>
+      <h1 class="hero-title">Flavors Born<br>from <em>Tradition</em></h1>
+      <p class="hero-subtitle">Over 15 years of crafting authentic Indian vegetarian cuisine<br>across New Jersey — with love, care, and real spice.</p>
+      <div class="hero-divider"></div>
+      <div class="hero-btns">
+        <a href="menu.html" class="btn-primary">🍽️ &nbsp; View Our Menu</a>
+        <a href="reservations.html" class="btn-outline">📅 &nbsp; Book a Table</a>
+      </div>
+      <div class="dietary-badges">
+        <span class="badge"><span class="badge-dot"></span> Vegetarian</span>
+        <span class="badge"><span class="badge-dot" style="background:#4CAF50"></span> Vegan</span>
+        <span class="badge"><span class="badge-dot" style="background:var(--saffron)"></span> Jain</span>
+        <span class="badge"><span class="badge-dot" style="background:var(--maroon)"></span> Swaminarayan</span>
+      </div>
     </div>
 
-    <!-- Hero specials ticker -->
-    <div class="hero-specials">
-      <div class="hs-label">🎉 This Week</div>
-      <div class="hs-track-wrap">
-        <div class="hs-track">
-          <div class="hs-item active"><span class="hs-day">Sunday</span><span class="hs-name">Unlimited Buffet</span><span class="hs-price">$24.99</span></div>
-          <div class="hs-item"><span class="hs-day">Tuesday</span><span class="hs-name">Kathiyawadi Night</span><span class="hs-price">$19.99</span></div>
-          <div class="hs-item"><span class="hs-day">Wednesday</span><span class="hs-name">Chaat Night</span><span class="hs-price">$19.99</span></div>
-          <div class="hs-item"><span class="hs-day">Thursday</span><span class="hs-name">Dosa Night</span><span class="hs-price">$19.99</span></div>
+    <div class="hero-right">
+      <!-- Hero specials carousel -->
+      <div class="hero-specials-carousel" id="heroSpecialsCarousel">
+        <div class="hsc-header">
+          <span class="hsc-label">🎉 This Week's Specials</span>
+          <a href="#promotions" class="hsc-see-all">View all ›</a>
+        </div>
+        <div class="hsc-track">
+          <div class="hsc-item active">
+            <img src="images/promos/Sunday_Buffet.jpg" alt="Sunday Unlimited Buffet" loading="lazy">
+            <div class="hsc-info">
+              <div class="hsc-info-text">
+                <div class="hsc-day">Every Sunday</div>
+                <div class="hsc-name">Unlimited Buffet</div>
+              </div>
+              <div class="hsc-price">$24.99</div>
+            </div>
+          </div>
+          <div class="hsc-item">
+            <img src="images/promos/Tuesday_Night.jpg" alt="Kathiyawadi Night" loading="lazy">
+            <div class="hsc-info">
+              <div class="hsc-info-text">
+                <div class="hsc-day">Every Tuesday</div>
+                <div class="hsc-name">Kathiyawadi Night</div>
+              </div>
+              <div class="hsc-price">$19.99</div>
+            </div>
+          </div>
+          <div class="hsc-item">
+            <img src="images/promos/Wednesday_Night.jpg" alt="Chaat Night" loading="lazy">
+            <div class="hsc-info">
+              <div class="hsc-info-text">
+                <div class="hsc-day">Every Wednesday</div>
+                <div class="hsc-name">Chaat Night</div>
+              </div>
+              <div class="hsc-price">$19.99</div>
+            </div>
+          </div>
+          <div class="hsc-item">
+            <img src="images/promos/Thursday_Night.jpg" alt="Dosa Night" loading="lazy">
+            <div class="hsc-info">
+              <div class="hsc-info-text">
+                <div class="hsc-day">Every Thursday</div>
+                <div class="hsc-name">Dosa Night</div>
+              </div>
+              <div class="hsc-price">$19.99</div>
+            </div>
+          </div>
+          <button class="hsc-arrow hsc-prev" id="hscPrev">‹</button>
+          <button class="hsc-arrow hsc-next" id="hscNext">›</button>
+        </div>
+        <div class="hsc-controls">
+          <div class="hsc-dots">
+            <button class="hsc-dot active"></button>
+            <button class="hsc-dot"></button>
+            <button class="hsc-dot"></button>
+            <button class="hsc-dot"></button>
+          </div>
         </div>
       </div>
-      <a href="#promotions" class="hs-see-all">See all ›</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -1455,18 +1536,38 @@ const msEl = document.getElementById('milestones');
 if(msEl) msObserver.observe(msEl);
 
 
-// ── HERO SPECIALS TICKER ──────────────────────────────────
+// ── HERO SPECIALS CAROUSEL ──────────────────────────────────
 (function() {
-  const items = document.querySelectorAll('.hs-item');
-  if(!items.length) return;
+  const hsc = document.getElementById('heroSpecialsCarousel');
+  if(!hsc) return;
+  const items = hsc.querySelectorAll('.hsc-item');
+  const dots  = hsc.querySelectorAll('.hsc-dot');
   let current = 0;
-  setInterval(() => {
+  let timer;
+
+  function goTo(idx) {
     items[current].classList.remove('active');
-    items[current].classList.add('exit');
-    setTimeout(() => items[current].classList.remove('exit'), 400);
-    current = (current + 1) % items.length;
+    dots[current].classList.remove('active');
+    current = (idx + items.length) % items.length;
     items[current].classList.add('active');
-  }, 3000);
+    dots[current].classList.add('active');
+  }
+
+  function start() {
+    timer = setInterval(() => goTo(current + 1), 3500);
+  }
+
+  document.getElementById('hscPrev').addEventListener('click', () => {
+    clearInterval(timer); goTo(current - 1); start();
+  });
+  document.getElementById('hscNext').addEventListener('click', () => {
+    clearInterval(timer); goTo(current + 1); start();
+  });
+  dots.forEach((d, i) => d.addEventListener('click', () => {
+    clearInterval(timer); goTo(i); start();
+  }));
+
+  start();
 })();
 
 </script>
