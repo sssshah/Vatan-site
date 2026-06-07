@@ -253,13 +253,10 @@ section{position:relative;}
 .promo-grid-outer{max-width:1100px;margin:0 auto;padding:0 2rem;}
 .promo-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(220px,260px));
+  justify-content:center;
   gap:1.25rem;
   padding:0.5rem 0 1rem;
-}
-/* Falls back to 2x2 if viewport needs it */
-@media(max-width:1000px){
-  .promo-grid{grid-template-columns:repeat(2,1fr);}
 }
 
 /* Each flyer card */
