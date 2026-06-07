@@ -253,7 +253,7 @@ section{position:relative;}
 .promo-grid-outer{max-width:1100px;margin:0 auto;padding:0 2rem;}
 .promo-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,260px));
+  grid-template-columns:repeat(4,1fr);
   justify-content:center;
   gap:1.25rem;
   padding:0.5rem 0 1rem;
@@ -1317,6 +1317,12 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         dotsRow.appendChild(dot);
       }
     });
+    const n = active.length;
+    grid.style.gridTemplateColumns = 'repeat(' + n + ', 1fr)';
+    if (n > 0 && n < 4) {
+      grid.style.maxWidth = (n * 25) + '%';
+      grid.style.margin = '0 auto';
+    }
   }
 })();
 
