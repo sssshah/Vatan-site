@@ -157,7 +157,7 @@ section{position:relative;}
 }
 .hsc-see-all:hover{color:var(--gold-light);}
 .hsc-track{position:relative;height:480px;overflow:hidden;}
-.hsc-item{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;display:flex;flex-direction:column;}
+.hsc-item{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;display:flex;flex-direction:column;cursor:pointer;}
 .hsc-item.active{opacity:1;}
 .hsc-item img{width:100%;flex:1;min-height:0;object-fit:cover;object-position:top center;display:block;}
 .hsc-info{
@@ -1279,6 +1279,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
             '</div>' +
             '<div class="hsc-price">' + promo.price + '</div>' +
           '</div>';
+        (function(idx) { item.onclick = function() { openLightbox(idx); }; })(i);
         track.insertBefore(item, prevBtn);
         const dot = document.createElement('button');
         dot.className = 'hsc-dot' + (i === 0 ? ' active' : '');
