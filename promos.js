@@ -26,6 +26,9 @@
  *  - price     : price string shown on badge
  *  - active    : true = show on page, false = hide
  *  - lightbox  : true = clicking card opens full image (recommended)
+ *  - locations : which locations offer this promo, e.g. "Jersey City"
+ *                or "Jersey City, East Windsor" or "All Locations"
+ *                (case-insensitive; "all locations" → "All Locations")
  * ============================================================
  */
 
@@ -38,7 +41,8 @@ const VATAN_PROMOS = [
     desc:     "Kadai Paneer, Dal Fry, Garlic Rice, Veg Hakka Noodles, Desserts & more",
     price:    "$24.99",
     active:   true,
-    lightbox: true
+    lightbox: true,
+    locations: "East Windsor"
   },
   {
     id:       "tuesday-kathiyawadi",
@@ -48,7 +52,8 @@ const VATAN_PROMOS = [
     desc:     "Rotlo, Undhiyu, Baigan Bhartha, Khichdi, Kadhi, Fresh Mango Ras & more",
     price:    "$19.99",
     active:   true,
-    lightbox: true
+    lightbox: true,
+    locations: "East Windsor"
   },
   {
     id:       "wednesday-chaat",
@@ -58,7 +63,8 @@ const VATAN_PROMOS = [
     desc:     "Pani Puri, Samosa Chat, Papdi Chat, Pav Bhaji, Gulab Jamun & more",
     price:    "$19.99",
     active:   true,
-    lightbox: true
+    lightbox: true,
+    locations: "East Windsor"
   },
   {
     id:       "thursday-dosa",
@@ -68,7 +74,8 @@ const VATAN_PROMOS = [
     desc:     "Plain, Masala, Mysore & Spring Dosas with Sambhar, Chutney & more",
     price:    "$19.99",
     active:   true,
-    lightbox: true
+    lightbox: true,
+    locations: "East Windsor"
   }
 ];
 

@@ -3,7 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Menu | Vatan Indian Vegetarian Cuisine & Bakery</title>
+<title>Menu | Vatan Indian Vegetarian Cuisine & Bakery | New Jersey</title>
+<meta name="description" content="Full menu of Vatan Indian Vegetarian Cuisine & Bakery in New Jersey. Thalis, Chaat, Pav, Dosa, Kathiyawadi specialties, Punjabi curries, Indian sweets, beverages & more. 100% vegetarian.">
+<meta name="keywords" content="Indian vegetarian menu New Jersey, Indian thali menu, Gujarati food menu, Kathiyawadi menu NJ, Dosa menu NJ, Indian chaat menu, vegetarian Indian food Jersey City, Indian restaurant menu East Windsor NJ">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://vatans.com/menu.html">
+<meta name="geo.region" content="US-NJ">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vatans.com/menu.html">
+<meta property="og:title" content="Menu | Vatan Indian Vegetarian Cuisine & Bakery | New Jersey">
+<meta property="og:description" content="Thalis, Chaat, Dosa, Kathiyawadi specialties, Punjabi curries, Indian sweets & more. 100% vegetarian. Jersey City & East Windsor, NJ.">
+<meta property="og:image" content="https://vatans.com/images/logo.png">
+<meta property="og:site_name" content="Vatan Indian Vegetarian Cuisine & Bakery">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Menu | Vatan Indian Vegetarian Cuisine & Bakery | New Jersey">
+<meta name="twitter:description" content="Thalis, Chaat, Dosa, Kathiyawadi specialties & more. 100% vegetarian Indian food in NJ.">
+<meta name="twitter:image" content="https://vatans.com/images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -37,6 +52,25 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .mobile-menu.open{display:block;}
 .mobile-menu a{display:block;color:var(--ivory);text-decoration:none;font-size:1rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:0.9rem 0;border-bottom:1px solid rgba(212,168,83,0.1);}
 .mobile-menu a:hover{color:var(--gold);}
+
+/* CALL US DROPDOWN */
+.nav-call-wrapper{position:relative;display:flex;align-items:center;}
+.nav-call-btn{display:flex;align-items:center;gap:0.4rem;background:none;border:1px solid rgba(212,168,83,0.28);color:rgba(253,246,233,0.82);font-size:0.78rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.44rem 0.7rem;border-radius:6px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.nav-call-btn:hover{color:var(--gold-light);background:rgba(212,168,83,0.1);border-color:rgba(212,168,83,0.5);}
+.nav-call-icon{width:13px;height:13px;flex-shrink:0;}
+.call-chevron{width:10px;height:10px;transition:transform 0.2s;flex-shrink:0;}
+.nav-call-btn[aria-expanded="true"] .call-chevron{transform:rotate(180deg);}
+.nav-call-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:rgba(22,10,4,0.97);backdrop-filter:blur(16px);border:1px solid rgba(212,168,83,0.25);border-radius:10px;padding:0.4rem 0;min-width:200px;box-shadow:0 16px 48px rgba(0,0,0,0.55);z-index:1100;display:none;}
+.nav-call-dropdown.open{display:block;animation:fadeDown 0.15s ease;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.call-loc{padding:0.5rem 1rem;}
+.call-loc-label{font-size:0.66rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem;}
+.call-loc a{display:flex;align-items:center;gap:0.4rem;color:var(--ivory);text-decoration:none;font-size:0.84rem;font-weight:500;transition:color 0.2s;}
+.call-loc a:hover{color:var(--gold-light);}
+.call-loc-soon{padding:0.5rem 1rem;}
+.call-loc-soon .call-loc-label{color:rgba(212,168,83,0.4);}
+.call-loc-soon span{font-size:0.84rem;color:rgba(253,246,233,0.3);}
+.call-sep{height:1px;background:rgba(212,168,83,0.15);margin:0.25rem 0;}
 
 /* HERO BANNER */
 .menu-hero{
@@ -308,6 +342,8 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 @media(max-width:768px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
+  .call-text,.call-chevron{display:none;}
+  .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
   .legend-bar{gap:1rem;padding:0.75rem 1rem;top:70px;}
   .cat-nav{top:calc(70px + 40px);}
   .menu-section{scroll-margin-top:168px;}
@@ -337,6 +373,29 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
     <li><a href="contact.html">Contact</a></li>
     <li><a href="reservations.html" class="nav-cta">Reserve a Table</a></li>
   </ul>
+  <div class="nav-call-wrapper" id="callUsWrapper">
+    <button class="nav-call-btn" id="callUsBtn" onclick="toggleCallDropdown(event)" aria-expanded="false" aria-haspopup="true" aria-label="Call Us">
+      <svg class="nav-call-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      <span class="call-text">Call Us</span>
+      <svg class="call-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="nav-call-dropdown" id="callUsDropdown">
+      <div class="call-loc">
+        <div class="call-loc-label">Jersey City</div>
+        <a href="tel:+12018395426">📞 (201) 839-5426</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc">
+        <div class="call-loc-label">East Windsor</div>
+        <a href="tel:+16093367333">📞 (609) 336-7333</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc-soon">
+        <div class="call-loc-label">Edison</div>
+        <span>Coming Soon</span>
+      </div>
+    </div>
+  </div>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
@@ -889,6 +948,23 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 </div>
 
 <script>
+const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
+
+function toggleCallDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('callUsDropdown');
+  const btn = document.getElementById('callUsBtn');
+  const isOpen = dd.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+document.addEventListener('click', function(e) {
+  const w = document.getElementById('callUsWrapper');
+  if (w && !w.contains(e.target)) {
+    document.getElementById('callUsDropdown').classList.remove('open');
+    document.getElementById('callUsBtn').setAttribute('aria-expanded', 'false');
+  }
+});
+
 // Navbar
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {

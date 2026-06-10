@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Us | Vatan Indian Vegetarian Cuisine & Bakery</title>
+<title>Contact Us | Vatan Indian Vegetarian Cuisine & Bakery | New Jersey</title>
+<meta name="description" content="Contact Vatan Indian Vegetarian Cuisine & Bakery in New Jersey. Jersey City and East Windsor locations (East Windsor is near BAPS Swaminarayan Akshardham, Robbinsville). Hours, directions & contact.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://vatans.com/contact.html">
+<meta name="geo.region" content="US-NJ">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vatans.com/contact.html">
+<meta property="og:title" content="Contact Us | Vatan Indian Vegetarian Cuisine & Bakery">
+<meta property="og:description" content="Find our Jersey City and East Windsor, NJ locations. East Windsor is near BAPS Swaminarayan Akshardham, Robbinsville. Directions, hours & contact.">
+<meta property="og:image" content="https://vatans.com/images/logo.png">
+<meta property="og:site_name" content="Vatan Indian Vegetarian Cuisine & Bakery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Contact Us | Vatan Indian Vegetarian Cuisine & Bakery">
+<meta name="twitter:description" content="Find our New Jersey locations, hours & contact information.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -35,6 +48,25 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .mobile-menu.open{display:block;}
 .mobile-menu a{display:block;color:var(--ivory);text-decoration:none;font-size:1rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:0.9rem 0;border-bottom:1px solid rgba(212,168,83,0.1);}
 .mobile-menu a:hover{color:var(--gold);}
+
+/* CALL US DROPDOWN */
+.nav-call-wrapper{position:relative;display:flex;align-items:center;}
+.nav-call-btn{display:flex;align-items:center;gap:0.4rem;background:none;border:1px solid rgba(212,168,83,0.28);color:rgba(253,246,233,0.82);font-size:0.78rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.44rem 0.7rem;border-radius:6px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.nav-call-btn:hover{color:var(--gold-light);background:rgba(212,168,83,0.1);border-color:rgba(212,168,83,0.5);}
+.nav-call-icon{width:13px;height:13px;flex-shrink:0;}
+.call-chevron{width:10px;height:10px;transition:transform 0.2s;flex-shrink:0;}
+.nav-call-btn[aria-expanded="true"] .call-chevron{transform:rotate(180deg);}
+.nav-call-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:rgba(22,10,4,0.97);backdrop-filter:blur(16px);border:1px solid rgba(212,168,83,0.25);border-radius:10px;padding:0.4rem 0;min-width:200px;box-shadow:0 16px 48px rgba(0,0,0,0.55);z-index:1100;display:none;}
+.nav-call-dropdown.open{display:block;animation:fadeDown 0.15s ease;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.call-loc{padding:0.5rem 1rem;}
+.call-loc-label{font-size:0.66rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem;}
+.call-loc a{display:flex;align-items:center;gap:0.4rem;color:var(--ivory);text-decoration:none;font-size:0.84rem;font-weight:500;transition:color 0.2s;}
+.call-loc a:hover{color:var(--gold-light);}
+.call-loc-soon{padding:0.5rem 1rem;}
+.call-loc-soon .call-loc-label{color:rgba(212,168,83,0.4);}
+.call-loc-soon span{font-size:0.84rem;color:rgba(253,246,233,0.3);}
+.call-sep{height:1px;background:rgba(212,168,83,0.15);margin:0.25rem 0;}
 
 .page-hero{margin-top:70px;min-height:260px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--dark);}
 .page-hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(28,16,8,0.92),rgba(122,28,46,0.6),rgba(28,16,8,0.95));}
@@ -168,6 +200,8 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 @media(max-width:768px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
+  .call-text,.call-chevron{display:none;}
+  .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
   .field-row{grid-template-columns:1fr;}
   .modal-order-grid{grid-template-columns:1fr;}
 }
@@ -187,6 +221,29 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
     <li><a href="contact.html" class="active">Contact</a></li>
     <li><a href="reservations.html" class="nav-cta">Reserve a Table</a></li>
   </ul>
+  <div class="nav-call-wrapper" id="callUsWrapper">
+    <button class="nav-call-btn" id="callUsBtn" onclick="toggleCallDropdown(event)" aria-expanded="false" aria-haspopup="true" aria-label="Call Us">
+      <svg class="nav-call-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      <span class="call-text">Call Us</span>
+      <svg class="call-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="nav-call-dropdown" id="callUsDropdown">
+      <div class="call-loc">
+        <div class="call-loc-label">Jersey City</div>
+        <a href="tel:+12018395426">📞 (201) 839-5426</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc">
+        <div class="call-loc-label">East Windsor</div>
+        <a href="tel:+16093367333">📞 (609) 336-7333</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc-soon">
+        <div class="call-loc-label">Edison</div>
+        <span>Coming Soon</span>
+      </div>
+    </div>
+  </div>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
@@ -247,10 +304,11 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
           <span class="loc-card-badge">Tue–Sun</span>
         </div>
         <div class="loc-card-body">
-          <div class="loc-row"><span class="loc-icon">📍</span><a href="https://maps.app.goo.gl/7EeXnaDAekc8pQC2A" target="_blank" rel="noopener">761 Route 33 West, East Windsor, NJ 08520</a></div>
+          <div class="loc-row"><span class="loc-icon">📍</span><a href="https://maps.app.goo.gl/MLKsugb3sC1oL7od9" target="_blank" rel="noopener">761 Route 33 West, East Windsor, NJ 08520</a></div>
           <div class="loc-row"><span class="loc-icon">📞</span><a href="tel:+16093367333">(609) 336-7333</a></div>
           <div class="loc-row"><span class="loc-icon">🕐</span><span>Mon: Closed &nbsp;|&nbsp; Tue–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span></div>
           <div class="loc-row"><span class="loc-icon">✉️</span><a href="mailto:info@vatans.com">info@vatans.com</a></div>
+          <div class="loc-row"><span class="loc-icon">🛕</span><span style="color:var(--text-muted)">Near BAPS Swaminarayan Akshardham, Robbinsville</span></div>
           <div class="loc-socials">
             <a href="https://www.instagram.com/vatan_restaurant_eastwindsor" target="_blank" rel="noopener" class="social-chip">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -292,7 +350,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.8!2d-74.0627!3d40.7282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c257e4b7c55e4b%3A0x1!2s808+Newark+Ave%2C+Jersey+City%2C+NJ+07306!5e0!3m2!1sen!2sus!4v1" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Vatan Jersey City"></iframe>
       </div>
       <div class="map-frame" id="mapEW" style="display:none;">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3046.0!2d-74.5276!3d40.2676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3f5e4b7c55e4b%3A0x2!2s761+NJ-33%2C+East+Windsor%2C+NJ+08520!5e0!3m2!1sen!2sus!4v1" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Vatan East Windsor"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3046.0!2d-74.5500627!3d40.2575949!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3df6c8cf6428f%3A0x2c1459664ceff894!2sVatan+Indian+Vegetarian+Cuisine+%26+Bakery%2C+East+Windsor!5e0!3m2!1sen!2sus!4v1" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Vatan East Windsor"></iframe>
       </div>
     </div>
 
@@ -322,9 +380,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="form-body">
 
         <div class="form-success" id="formSuccess">
-          <div class="success-icon">💌</div>
-          <div class="success-title">Message Sent!</div>
-          <p class="success-text">Thank you for reaching out. We'll get back to you at <strong id="replyEmail"></strong> within 24 hours.</p>
+          <div class="success-icon">✉️</div>
+          <div class="success-title">One More Step!</div>
+          <p class="success-text">Your email client should have opened with your message pre-filled — <strong>please review and click Send to submit it.</strong> If it didn't open, email us directly at <a href="mailto:info@vatans.com" style="color:var(--saffron)">info@vatans.com</a>.<br><br>Once sent, we'll get back to you at <strong id="replyEmail"></strong> within 24 hours. If you don't hear back, please call us directly — <a href="tel:+12018395426" style="color:var(--saffron)">Jersey City (201) 839-5426</a> or <a href="tel:+16093367333" style="color:var(--saffron)">East Windsor (609) 336-7333</a>.</p>
         </div>
 
         <form id="contactForm" novalidate>
@@ -376,8 +434,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
           <button type="submit" class="btn-send">✉️ &nbsp; Send Message</button>
 
           <p class="form-note">
-            Your message will be sent to <a href="mailto:info@vatans.com">info@vatans.com</a>.
-            For urgent matters please call us directly.
+            Your message will be sent to <a href="mailto:info@vatans.com">info@vatans.com</a>. We typically respond within 24 hours. For faster assistance, call <a href="tel:+12018395426">(201) 839-5426</a> (Jersey City) or <a href="tel:+16093367333">(609) 336-7333</a> (East Windsor).
           </p>
         </form>
       </div>
@@ -427,6 +484,23 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 </div>
 
 <script>
+const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
+
+function toggleCallDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('callUsDropdown');
+  const btn = document.getElementById('callUsBtn');
+  const isOpen = dd.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+document.addEventListener('click', function(e) {
+  const w = document.getElementById('callUsWrapper');
+  if (w && !w.contains(e.target)) {
+    document.getElementById('callUsDropdown').classList.remove('open');
+    document.getElementById('callUsBtn').setAttribute('aria-expanded', 'false');
+  }
+});
+
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', scrollY > 60);
@@ -469,7 +543,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   const body = encodeURIComponent(
     `Name: ${name}\nEmail: ${email}\nPhone: ${phone||'Not provided'}\nLocation: ${loc||'Not specified'}\n\n${message}`
   );
-  window.location.href = `mailto:info@vatans.com?subject=${encodeURIComponent(subject + ' - Vatan Website')}&body=${body}`;
+  window.location.href = `mailto:info@vatans.com?cc=${encodeURIComponent(VATAN_CONTACT_EMAIL)}&subject=${encodeURIComponent(subject + ' - Vatan Website')}&body=${body}`;
   document.getElementById('replyEmail').textContent = email;
   this.style.display = 'none';
   document.getElementById('formSuccess').classList.add('show');
@@ -480,6 +554,14 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, {threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Inject CC into all action mailto links
+document.querySelectorAll('a[href^="mailto:"][href*="subject="]').forEach(function(el) {
+  const href = el.getAttribute('href');
+  if (!href.includes('cc=')) {
+    el.setAttribute('href', href + '&cc=' + encodeURIComponent(VATAN_CONTACT_EMAIL));
+  }
+});
 </script>
 </body>
 </html>

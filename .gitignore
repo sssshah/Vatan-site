@@ -1,0 +1,11 @@
+# Local Netlify folder
+.netlify
+
+# macOS
+.DS_Store
+
+# Claude Code memory (local only)
+.claude/
+
+# Scratch / backups
+index_backup.html

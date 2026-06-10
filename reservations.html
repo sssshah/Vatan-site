@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reservations | Vatan Indian Vegetarian Cuisine & Bakery</title>
+<title>Reserve a Table | Vatan Indian Vegetarian Cuisine & Bakery | New Jersey</title>
+<meta name="description" content="Reserve your table at Vatan Indian Vegetarian Cuisine & Bakery. Jersey City or East Windsor, NJ (near BAPS Swaminarayan Akshardham, Robbinsville). Book a dine-in reservation online.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://vatans.com/reservations.html">
+<meta name="geo.region" content="US-NJ">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vatans.com/reservations.html">
+<meta property="og:title" content="Reserve a Table | Vatan Indian Vegetarian Cuisine & Bakery">
+<meta property="og:description" content="Book a dine-in table at Vatan Indian Vegetarian Cuisine & Bakery — Jersey City or East Windsor, NJ (near BAPS Swaminarayan Akshardham, Robbinsville).">
+<meta property="og:image" content="https://vatans.com/images/logo.png">
+<meta property="og:site_name" content="Vatan Indian Vegetarian Cuisine & Bakery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Reserve a Table | Vatan Indian Vegetarian Cuisine & Bakery">
+<meta name="twitter:description" content="Book a dine-in table at Vatan Indian Vegetarian Cuisine & Bakery in New Jersey.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -36,6 +49,25 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .mobile-menu.open{display:block;}
 .mobile-menu a{display:block;color:var(--ivory);text-decoration:none;font-size:1rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:0.9rem 0;border-bottom:1px solid rgba(212,168,83,0.1);}
 .mobile-menu a:hover{color:var(--gold);}
+
+/* CALL US DROPDOWN */
+.nav-call-wrapper{position:relative;display:flex;align-items:center;}
+.nav-call-btn{display:flex;align-items:center;gap:0.4rem;background:none;border:1px solid rgba(212,168,83,0.28);color:rgba(253,246,233,0.82);font-size:0.78rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.44rem 0.7rem;border-radius:6px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.nav-call-btn:hover{color:var(--gold-light);background:rgba(212,168,83,0.1);border-color:rgba(212,168,83,0.5);}
+.nav-call-icon{width:13px;height:13px;flex-shrink:0;}
+.call-chevron{width:10px;height:10px;transition:transform 0.2s;flex-shrink:0;}
+.nav-call-btn[aria-expanded="true"] .call-chevron{transform:rotate(180deg);}
+.nav-call-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:rgba(22,10,4,0.97);backdrop-filter:blur(16px);border:1px solid rgba(212,168,83,0.25);border-radius:10px;padding:0.4rem 0;min-width:200px;box-shadow:0 16px 48px rgba(0,0,0,0.55);z-index:1100;display:none;}
+.nav-call-dropdown.open{display:block;animation:fadeDown 0.15s ease;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.call-loc{padding:0.5rem 1rem;}
+.call-loc-label{font-size:0.66rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem;}
+.call-loc a{display:flex;align-items:center;gap:0.4rem;color:var(--ivory);text-decoration:none;font-size:0.84rem;font-weight:500;transition:color 0.2s;}
+.call-loc a:hover{color:var(--gold-light);}
+.call-loc-soon{padding:0.5rem 1rem;}
+.call-loc-soon .call-loc-label{color:rgba(212,168,83,0.4);}
+.call-loc-soon span{font-size:0.84rem;color:rgba(253,246,233,0.3);}
+.call-sep{height:1px;background:rgba(212,168,83,0.15);margin:0.25rem 0;}
 
 /* PAGE HERO */
 .page-hero{
@@ -380,6 +412,8 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 @media(max-width:768px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
+  .call-text,.call-chevron{display:none;}
+  .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
   .field-row{grid-template-columns:1fr;}
   .res-gallery{grid-template-columns:1fr;height:200px;}
   .res-gallery-img:not(:first-child){display:none;}
@@ -403,6 +437,29 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
     <li><a href="contact.html">Contact</a></li>
     <li><a href="reservations.html" class="nav-cta active">Reserve a Table</a></li>
   </ul>
+  <div class="nav-call-wrapper" id="callUsWrapper">
+    <button class="nav-call-btn" id="callUsBtn" onclick="toggleCallDropdown(event)" aria-expanded="false" aria-haspopup="true" aria-label="Call Us">
+      <svg class="nav-call-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      <span class="call-text">Call Us</span>
+      <svg class="call-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="nav-call-dropdown" id="callUsDropdown">
+      <div class="call-loc">
+        <div class="call-loc-label">Jersey City</div>
+        <a href="tel:+12018395426">📞 (201) 839-5426</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc">
+        <div class="call-loc-label">East Windsor</div>
+        <a href="tel:+16093367333">📞 (609) 336-7333</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc-soon">
+        <div class="call-loc-label">Edison</div>
+        <span>Coming Soon</span>
+      </div>
+    </div>
+  </div>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
@@ -517,9 +574,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
         <!-- Success state -->
         <div class="form-success" id="formSuccess">
-          <div class="success-icon">🎉</div>
-          <div class="success-title">You're all set!</div>
-          <p class="success-text">Thank you for your reservation request. We'll confirm your booking via email or phone within a few hours. We look forward to welcoming you!</p>
+          <div class="success-icon">✉️</div>
+          <div class="success-title">One More Step!</div>
+          <p class="success-text">Your email client should have opened with your reservation details pre-filled — <strong>please review and click Send to submit your request.</strong> If it didn't open, email us directly at <a href="mailto:info@vatans.com" style="color:var(--saffron)">info@vatans.com</a>.<br><br>Once sent, your reservation is not confirmed until you receive a response from us. We'll follow up via email or phone within a few hours. If you don't hear back within 24 hours, please call your preferred location directly to confirm.</p>
           <button class="btn-another" onclick="resetForm()">Make Another Reservation</button>
         </div>
 
@@ -530,16 +587,17 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
           <div style="margin-bottom:1.2rem;">
             <label style="display:block;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem;">Select Location</label>
             <div class="loc-selector">
-              <div class="loc-btn selected" id="locJC" onclick="selectLoc('JC')">
+              <div class="loc-btn selected" id="locEW" onclick="selectLoc('EW')">
+                <span class="loc-btn-name">East Windsor</span>
+                <span class="loc-btn-addr">761 Route 33 W</span>
+                <span class="loc-btn-addr">Near BAPS Akshardham</span>
+              </div>
+              <div class="loc-btn" id="locJC" onclick="selectLoc('JC')">
                 <span class="loc-btn-name">Jersey City</span>
                 <span class="loc-btn-addr">808 Newark Ave</span>
               </div>
-              <div class="loc-btn" id="locEW" onclick="selectLoc('EW')">
-                <span class="loc-btn-name">East Windsor</span>
-                <span class="loc-btn-addr">761 Route 33 W</span>
-              </div>
             </div>
-            <input type="hidden" id="selectedLocation" value="Jersey City">
+            <input type="hidden" id="selectedLocation" value="East Windsor">
           </div>
 
           <div class="field-row">
@@ -649,8 +707,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
           </button>
 
           <p class="form-note">
-            By submitting you agree to our <a href="#">reservation policy</a>. 
-            We'll reach out to confirm within a few hours.
+            ⚠️ <strong>Your reservation is not confirmed until you receive a response.</strong> We'll reach out within a few hours. If you don't hear back within 24 hours, please call us directly — <a href="tel:+12018395426">Jersey City (201) 839-5426</a> or <a href="tel:+16093367333">East Windsor (609) 336-7333</a>.
           </p>
         </form>
 
@@ -713,6 +770,23 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 </div>
 
 <script>
+const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
+
+function toggleCallDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('callUsDropdown');
+  const btn = document.getElementById('callUsBtn');
+  const isOpen = dd.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+document.addEventListener('click', function(e) {
+  const w = document.getElementById('callUsWrapper');
+  if (w && !w.contains(e.target)) {
+    document.getElementById('callUsDropdown').classList.remove('open');
+    document.getElementById('callUsBtn').setAttribute('aria-expanded', 'false');
+  }
+});
+
 // Nav
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -763,6 +837,47 @@ document.getElementById('resForm').addEventListener('submit', function(e) {
   });
   if (!valid) return;
 
+  // Collect form values
+  const firstName  = document.getElementById('firstName').value.trim();
+  const lastName   = document.getElementById('lastName').value.trim();
+  const email      = document.getElementById('email').value.trim();
+  const phone      = document.getElementById('phone').value.trim();
+  const date       = document.getElementById('resDate').value;
+  const time       = document.getElementById('resTime').value;
+  const partySize  = document.getElementById('partySize').value;
+  const location   = document.getElementById('selectedLocation').value || 'Not specified';
+  const occasion   = document.getElementById('occasion').value;
+  const requests   = document.getElementById('requests').value.trim();
+  const dietary    = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value).join(', ');
+
+  // Format date
+  const dateObj = new Date(date + 'T00:00:00');
+  const dateStr = date ? dateObj.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) : 'Not specified';
+
+  // Build email body
+  const lines = [
+    'RESERVATION REQUEST — VATAN INDIAN VEGETARIAN CUISINE & BAKERY',
+    '',
+    'Location:    ' + location,
+    'Date:        ' + dateStr,
+    'Time:        ' + time,
+    'Party Size:  ' + partySize,
+    '',
+    'Guest Name:  ' + firstName + ' ' + lastName,
+    'Email:       ' + email,
+    'Phone:       ' + phone,
+  ];
+  if (dietary)  lines.push('Dietary:     ' + dietary);
+  if (occasion) lines.push('Occasion:    ' + occasion);
+  if (requests) { lines.push(''); lines.push('Special Requests:'); lines.push(requests); }
+  lines.push('', '---', 'Sent via vatans.com reservation form');
+
+  const subject = 'Reservation Request — ' + firstName + ' ' + lastName + ' — ' + dateStr + ' at ' + location;
+
+  window.location.href = 'mailto:info@vatans.com?cc=' + encodeURIComponent(VATAN_CONTACT_EMAIL)
+    + '&subject=' + encodeURIComponent(subject)
+    + '&body='    + encodeURIComponent(lines.join('\n'));
+
   // Show success
   this.style.display = 'none';
   document.querySelector('.ot-section').style.display = 'none';
@@ -775,7 +890,7 @@ function resetForm() {
   document.querySelector('.ot-section').style.display = '';
   document.getElementById('formSuccess').classList.remove('show');
   // Reset location
-  selectLoc('JC');
+  selectLoc('EW');
 }
 
 // Reveal

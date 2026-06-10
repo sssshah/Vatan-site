@@ -3,7 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vatan Indian Vegetarian Cuisine & Bakery</title>
+<title>Vatan Indian Vegetarian Cuisine & Bakery | New Jersey</title>
+<meta name="description" content="Vatan Indian Vegetarian Cuisine & Bakery — authentic Indian vegetarian food in Jersey City and East Windsor, NJ (near BAPS Swaminarayan Akshardham, Robbinsville). Thalis, Chaat, Dosa, Kathiyawadi cuisine, sweets & catering.">
+<meta name="keywords" content="Indian vegetarian restaurant New Jersey, Indian food Jersey City, Indian food East Windsor, Gujarati restaurant NJ, Kathiyawadi food NJ, Indian curry New Jersey, Indian thali NJ, Dosa restaurant NJ, Chaat restaurant NJ, vegetarian restaurant NJ, Indian bakery New Jersey">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://vatans.com/">
+<meta name="geo.region" content="US-NJ">
+<meta name="geo.placename" content="New Jersey">
+<meta property="og:type" content="restaurant">
+<meta property="og:url" content="https://vatans.com/">
+<meta property="og:title" content="Vatan Indian Vegetarian Cuisine & Bakery | New Jersey">
+<meta property="og:description" content="Authentic Indian vegetarian food in New Jersey — Jersey City & East Windsor (near BAPS Swaminarayan Akshardham, Robbinsville). Thalis, Chaat, Dosa, Kathiyawadi cuisine & more.">
+<meta property="og:image" content="https://vatans.com/images/logo.png">
+<meta property="og:site_name" content="Vatan Indian Vegetarian Cuisine & Bakery">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vatan Indian Vegetarian Cuisine & Bakery | New Jersey">
+<meta name="twitter:description" content="Authentic Indian vegetarian food in New Jersey — Thalis, Chaat, Dosa, Kathiyawadi cuisine & more.">
+<meta name="twitter:image" content="https://vatans.com/images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -53,6 +70,27 @@ nav.scrolled{background:rgba(28,16,8,0.99);box-shadow:0 4px 24px rgba(0,0,0,0.3)
 .mobile-menu a{display:block;color:var(--ivory);text-decoration:none;font-size:1rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:1rem 0;border-bottom:1px solid rgba(212,168,83,0.1);}
 .mobile-menu a:last-child{border-bottom:none;}
 .mobile-menu a:hover{color:var(--gold);}
+
+/* CALL US DROPDOWN */
+.nav-call-wrapper{position:relative;display:flex;align-items:center;}
+.nav-call-btn{display:flex;align-items:center;gap:0.4rem;background:none;border:1px solid rgba(212,168,83,0.28);color:rgba(253,246,233,0.82);font-size:0.78rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.44rem 0.7rem;border-radius:6px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.nav-call-btn:hover{color:var(--gold-light);background:rgba(212,168,83,0.1);border-color:rgba(212,168,83,0.5);}
+.nav-call-icon{width:13px;height:13px;flex-shrink:0;}
+.call-chevron{width:10px;height:10px;transition:transform 0.2s;flex-shrink:0;}
+.nav-call-btn[aria-expanded="true"] .call-chevron{transform:rotate(180deg);}
+.nav-call-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:rgba(22,10,4,0.97);backdrop-filter:blur(16px);border:1px solid rgba(212,168,83,0.25);border-radius:10px;padding:0.4rem 0;min-width:200px;box-shadow:0 16px 48px rgba(0,0,0,0.55);z-index:1100;display:none;}
+.nav-call-dropdown.open{display:block;animation:fadeDown 0.15s ease;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.call-loc{padding:0.5rem 1rem;}
+.call-loc-label{font-size:0.66rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem;}
+.call-loc a{display:flex;align-items:center;gap:0.4rem;color:var(--ivory);text-decoration:none;font-size:0.84rem;font-weight:500;transition:color 0.2s;}
+.call-loc a:hover{color:var(--gold-light);}
+.call-loc-soon{padding:0.5rem 1rem;}
+.call-loc-soon .call-loc-label{color:rgba(212,168,83,0.4);}
+.call-loc-soon span{font-size:0.84rem;color:rgba(253,246,233,0.3);}
+.call-sep{height:1px;background:rgba(212,168,83,0.15);margin:0.25rem 0;}
+.hsc-loc{font-size:0.65rem;color:rgba(253,246,233,0.7);margin-top:0.2rem;line-height:1.2;}
+.flyer-strip-loc{font-size:0.65rem;color:rgba(253,246,233,0.65);margin-top:0.2rem;line-height:1.2;}
 
 /* HERO */
 .hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--dark);}
@@ -555,6 +593,14 @@ section{position:relative;}
 .coming-soon-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--dark);margin-bottom:0.4rem;}
 .coming-soon-text{font-size:0.84rem;color:var(--text-muted);}
 
+/* Location map tabs */
+.loc-map-section{margin-top:2.5rem;}
+.map-tabs{display:flex;gap:0;border-radius:var(--radius) var(--radius) 0 0;overflow:hidden;}
+.map-tab{flex:1;padding:0.7rem 1rem;background:var(--ivory-dark);border:1px solid rgba(212,168,83,0.2);font-size:0.78rem;font-weight:600;color:var(--text-muted);cursor:pointer;text-align:center;transition:all 0.2s;border-bottom:none;font-family:'DM Sans',sans-serif;}
+.map-tab.active{background:var(--saffron);color:white;border-color:var(--saffron);}
+.map-frame{width:100%;height:300px;border:1px solid rgba(212,168,83,0.2);border-radius:0 0 var(--radius) var(--radius);overflow:hidden;}
+.map-frame iframe{width:100%;height:100%;border:none;}
+
 /* CTA BANNER */
 .cta-banner{padding:5rem 2rem;background:linear-gradient(135deg,var(--saffron) 0%,var(--maroon) 100%);text-align:center;position:relative;overflow:hidden;}
 .cta-banner::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
@@ -631,6 +677,8 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
 @media(max-width:768px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
+  .call-text,.call-chevron{display:none;}
+  .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
   .hero-content{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;gap:2rem;text-align:center;}
   .hero-left{text-align:center;}
   .hero-right{display:block;}
@@ -653,6 +701,62 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
   .gallery-track img{width:50%;height:130px;}
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Restaurant",
+      "name": "Vatan Indian Vegetarian Cuisine & Bakery — Jersey City",
+      "url": "https://vatans.com",
+      "logo": "https://vatans.com/images/logo.png",
+      "image": "https://vatans.com/images/logo.png",
+      "servesCuisine": ["Indian", "Vegetarian", "Gujarati", "Kathiyawadi", "South Indian"],
+      "menu": "https://vatans.com/menu.html",
+      "priceRange": "$$",
+      "email": "info@vatans.com",
+      "telephone": "+12018395426",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "808 Newark Ave",
+        "addressLocality": "Jersey City",
+        "addressRegion": "NJ",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {"@type": "OpeningHoursSpecification","dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens": "11:30","closes": "21:30"},
+        {"@type": "OpeningHoursSpecification","dayOfWeek": ["Saturday","Sunday"],"opens": "11:00","closes": "22:00"}
+      ],
+      "sameAs": [
+        "https://www.instagram.com/vatan_restaurant_caterers",
+        "https://www.facebook.com/vatanJC"
+      ]
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Vatan Indian Vegetarian Cuisine & Bakery — East Windsor",
+      "url": "https://vatans.com",
+      "logo": "https://vatans.com/images/logo.png",
+      "servesCuisine": ["Indian", "Vegetarian", "Gujarati", "Kathiyawadi", "South Indian"],
+      "menu": "https://vatans.com/menu.html",
+      "priceRange": "$$",
+      "email": "info@vatans.com",
+      "telephone": "+16093367333",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "761 Route 33 West",
+        "addressLocality": "East Windsor",
+        "addressRegion": "NJ",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://www.instagram.com/vatan_restaurant_eastwindsor",
+        "https://www.facebook.com/VatanIndianrestaurant"
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -671,6 +775,29 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
     <li><a href="contact.html">Contact</a></li>
     <li><a href="reservations.html" class="nav-cta">Reserve a Table</a></li>
   </ul>
+  <div class="nav-call-wrapper" id="callUsWrapper">
+    <button class="nav-call-btn" id="callUsBtn" onclick="toggleCallDropdown(event)" aria-expanded="false" aria-haspopup="true" aria-label="Call Us">
+      <svg class="nav-call-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      <span class="call-text">Call Us</span>
+      <svg class="call-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="nav-call-dropdown" id="callUsDropdown">
+      <div class="call-loc">
+        <div class="call-loc-label">Jersey City</div>
+        <a href="tel:+12018395426">📞 (201) 839-5426</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc">
+        <div class="call-loc-label">East Windsor</div>
+        <a href="tel:+16093367333">📞 (609) 336-7333</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc-soon">
+        <div class="call-loc-label">Edison</div>
+        <span>Coming Soon</span>
+      </div>
+    </div>
+  </div>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -747,7 +874,7 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
         <span style="color:var(--gold)">🪷</span>
         <div class="ornament-line"></div>
       </div>
-      <p>Founded on November 11, 2009, <strong>Vatan Indian Vegetarian Cuisine & Bakery</strong> has been a beloved destination for authentic Indian vegetarian food across New Jersey for over 15 years.</p>
+      <p>Founded on November 11, 2009, <strong>Vatan Indian Vegetarian Cuisine & Bakery</strong> has been a beloved destination for authentic Indian vegetarian food across New Jersey for over 15 years — with locations in <strong>Jersey City</strong> and <strong>East Windsor</strong>, and a third coming soon to <strong>Edison, NJ</strong>.</p>
       <p>We celebrate the vibrant culinary traditions of <strong>Gujarat and Mumbai</strong> — famous for their distinct vegetarian offerings — alongside regional favorites from across India. From legendary Thalis to fresh-baked Indian sweets, every dish is crafted with care and authenticity.</p>
       <p>Whether you're a longtime regular or discovering us for the first time, you'll always be welcomed like a guest of honor at our table.</p>
       <div class="milestones" id="milestones">
@@ -756,8 +883,8 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
           <div class="milestone-label">Years Serving NJ</div>
         </div>
         <div class="milestone">
-          <div class="milestone-num" data-target="2" data-suffix="" data-duration="800">0</div>
-          <div class="milestone-label">Locations</div>
+          <div class="milestone-num" data-target="3" data-suffix="" data-duration="800">0</div>
+          <div class="milestone-label">NJ Locations</div>
         </div>
         <div class="milestone">
           <div class="milestone-num" data-target="100" data-suffix="%" data-duration="1600">0</div>
@@ -803,6 +930,9 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
     </div>
 
   </div><!-- end promo-grid-outer -->
+  <p style="text-align:center;color:rgba(253,246,233,0.72);font-size:0.82rem;margin-top:1.5rem;padding:0 1rem;letter-spacing:0.01em;">
+    ✦ Weekly specials may vary by location. Please call your preferred location to confirm availability before visiting.
+  </p>
 </section>
 
 <!-- LIGHTBOX -->
@@ -1090,6 +1220,7 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
             <li><span class="info-icon">📞</span><a href="tel:+16093367333">(609) 336-7333</a></li>
             <li><span class="info-icon">🕐</span><span>Mon: Closed<br>Tue–Sun: 11:00 AM – 3:00 PM<br>4:30 PM – 9:30 PM</span></li>
             <li><span class="info-icon">✉️</span><a href="mailto:info@vatans.com">info@vatans.com</a></li>
+            <li><span class="info-icon">🛕</span><span style="color:var(--text-muted)">Near BAPS Swaminarayan Akshardham, Robbinsville</span></li>
           </ul>
           <div class="location-socials">
             <a href="https://www.instagram.com/vatan_restaurant_eastwindsor" target="_blank" rel="noopener" class="social-btn social-insta"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg> @vatan_restaurant_eastwindsor</a>
@@ -1116,6 +1247,21 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
       </div>
 
     </div>
+
+    <!-- Map tabs -->
+    <div class="loc-map-section reveal reveal-delay-1">
+      <div class="map-tabs">
+        <button class="map-tab active" onclick="showLocMap('jc',this)">Jersey City</button>
+        <button class="map-tab" onclick="showLocMap('ew',this)">East Windsor</button>
+      </div>
+      <div class="map-frame" id="locMapJC">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.8!2d-74.0627!3d40.7282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c257e4b7c55e4b%3A0x1!2s808+Newark+Ave%2C+Jersey+City%2C+NJ+07306!5e0!3m2!1sen!2sus!4v1" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Vatan Jersey City"></iframe>
+      </div>
+      <div class="map-frame" id="locMapEW" style="display:none;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15000!2d-74.554!3d40.227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3df6c8cf6428f%3A0x2c1459664ceff894!2sVatan+Indian+Vegetarian+Cuisine+%26+Bakery%2C+East+Windsor!5e0!3m2!1sen!2sus!4v1" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Vatan East Windsor — Near BAPS Swaminarayan Akshardham"></iframe>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1137,7 +1283,7 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
     <div class="footer-top">
       <div class="footer-brand">
         <img src="images/logo.png" alt="Vatan">
-        <p>Authentic Indian vegetarian cuisine, served with love and tradition since 2009. Two locations across New Jersey — a third coming soon.</p>
+        <p>Authentic Indian vegetarian cuisine, served with love and tradition since 2009. Jersey City &amp; East Windsor, NJ — Edison coming soon.</p>
         <div class="footer-social-row">
           <a href="https://www.instagram.com/vatan_restaurant_caterers" target="_blank" rel="noopener" class="fsocial" title="Instagram JC">📸</a>
           <a href="https://www.instagram.com/vatan_restaurant_eastwindsor" target="_blank" rel="noopener" class="fsocial" title="Instagram EW">📷</a>
@@ -1211,6 +1357,37 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
 
 <script src="promos.js"></script>
 <script>
+const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
+
+function normalizeLocations(loc) {
+  if (!loc) return null;
+  if (loc.trim().toLowerCase() === 'all locations') return null;
+  return loc.trim();
+}
+
+// Location map tabs
+function showLocMap(loc, btn) {
+  document.getElementById('locMapJC').style.display = loc==='jc' ? 'block' : 'none';
+  document.getElementById('locMapEW').style.display = loc==='ew' ? 'block' : 'none';
+  document.querySelectorAll('.map-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleCallDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('callUsDropdown');
+  const btn = document.getElementById('callUsBtn');
+  const isOpen = dd.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+document.addEventListener('click', function(e) {
+  const w = document.getElementById('callUsWrapper');
+  if (w && !w.contains(e.target)) {
+    document.getElementById('callUsDropdown').classList.remove('open');
+    document.getElementById('callUsBtn').setAttribute('aria-expanded', 'false');
+  }
+});
+
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 60);
@@ -1276,6 +1453,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
             '<div class="hsc-info-text">' +
               '<div class="hsc-day">' + promo.day + '</div>' +
               '<div class="hsc-name">' + promo.name + '</div>' +
+              (normalizeLocations(promo.locations) ? '<div class="hsc-loc">📍 ' + normalizeLocations(promo.locations) + '</div>' : '') +
             '</div>' +
             '<div class="hsc-price">' + promo.price + '</div>' +
           '</div>';
@@ -1304,6 +1482,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
           '<div class="flyer-strip-text">' +
             '<div class="flyer-strip-day">' + promo.day + '</div>' +
             '<div class="flyer-strip-name">' + promo.name + '</div>' +
+            (normalizeLocations(promo.locations) ? '<div class="flyer-strip-loc">📍 ' + normalizeLocations(promo.locations) + '</div>' : '') +
           '</div>' +
           '<span class="flyer-strip-price">' + promo.price + '</span>' +
         '</div>';
