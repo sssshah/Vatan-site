@@ -138,7 +138,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 
 .form-success{display:none;text-align:center;padding:2.5rem 2rem;}
 .form-success.show{display:block;}
-.success-icon{font-size:3.5rem;margin-bottom:1rem;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;}
+.success-icon{display:flex;justify-content:center;margin-bottom:1.2rem;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;}
 @keyframes popIn{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
 .success-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--dark);margin-bottom:0.5rem;}
 .success-text{font-size:0.9rem;color:var(--text-muted);line-height:1.7;}
@@ -380,31 +380,37 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="form-body">
 
         <div class="form-success" id="formSuccess">
-          <div class="success-icon">✉️</div>
-          <div class="success-title">One More Step!</div>
-          <p class="success-text">Your email client should have opened with your message pre-filled — <strong>please review and click Send to submit it.</strong> If it didn't open, email us directly at <a href="mailto:info@vatans.com" style="color:var(--saffron)">info@vatans.com</a>.<br><br>Once sent, we'll get back to you at <strong id="replyEmail"></strong> within 24 hours. If you don't hear back, please call us directly — <a href="tel:+12018395426" style="color:var(--saffron)">Jersey City (201) 839-5426</a> or <a href="tel:+16093367333" style="color:var(--saffron)">East Windsor (609) 336-7333</a>.</p>
+          <div class="success-icon">
+            <svg viewBox="0 0 80 80" width="72" height="72">
+              <circle cx="40" cy="40" r="36" fill="rgba(200,102,10,0.08)" stroke="var(--saffron)" stroke-width="2.5"/>
+              <polyline points="23,40 35,53 57,27" fill="none" stroke="var(--saffron)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="success-title">Message Sent!</div>
+          <p class="success-text">Thank you for reaching out! We've received your message and will reply to <strong id="replyEmail"></strong> within 24 hours.<br><br>Need a faster answer? Call us directly — <a href="tel:+12018395426" style="color:var(--saffron)">Jersey City (201) 839-5426</a> or <a href="tel:+16093367333" style="color:var(--saffron)">East Windsor (609) 336-7333</a>.</p>
         </div>
 
-        <form id="contactForm" novalidate>
+        <form id="contactForm" name="contact" method="POST" data-netlify="true" novalidate>
+          <input type="hidden" name="form-name" value="contact">
           <div class="field-row">
             <div class="field">
               <label for="cfName">Your Name *</label>
-              <input type="text" id="cfName" placeholder="Priya Patel" required>
+              <input type="text" id="cfName" name="name" placeholder="Priya Patel" required>
             </div>
             <div class="field">
               <label for="cfEmail">Email *</label>
-              <input type="email" id="cfEmail" placeholder="you@email.com" required>
+              <input type="email" id="cfEmail" name="email" placeholder="you@email.com" required>
             </div>
           </div>
 
           <div class="field">
             <label for="cfPhone">Phone</label>
-            <input type="tel" id="cfPhone" placeholder="(555) 000-0000">
+            <input type="tel" id="cfPhone" name="phone" placeholder="(555) 000-0000">
           </div>
 
           <div class="field">
             <label for="cfSubject">Subject *</label>
-            <select id="cfSubject" required>
+            <select id="cfSubject" name="subject" required>
               <option value="">Select a topic</option>
               <option>General Question</option>
               <option>Catering Inquiry</option>
@@ -419,7 +425,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
           <div class="field">
             <label for="cfLocation">Location (if applicable)</label>
-            <select id="cfLocation">
+            <select id="cfLocation" name="location">
               <option value="">Both / Not sure</option>
               <option>Jersey City — 808 Newark Ave</option>
               <option>East Windsor — 761 Route 33 W</option>
@@ -428,14 +434,22 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
           <div class="field">
             <label for="cfMessage">Message *</label>
-            <textarea id="cfMessage" placeholder="Tell us how we can help..." required></textarea>
+            <textarea id="cfMessage" name="message" placeholder="Tell us how we can help..." required></textarea>
+          </div>
+
+          <div class="field" style="margin-top:0.5rem;">
+            <label style="display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;font-size:0.85rem;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted);">
+              <input type="checkbox" name="marketing_optin" value="yes" style="margin-top:0.15rem;accent-color:var(--saffron);width:15px;height:15px;flex-shrink:0;">
+              Yes, send me special offers and updates from Vatan
+            </label>
           </div>
 
           <button type="submit" class="btn-send">✉️ &nbsp; Send Message</button>
 
           <p class="form-note">
-            Your message will be sent to <a href="mailto:info@vatans.com">info@vatans.com</a>. We typically respond within 24 hours. For faster assistance, call <a href="tel:+12018395426">(201) 839-5426</a> (Jersey City) or <a href="tel:+16093367333">(609) 336-7333</a> (East Windsor).
+            Your message goes to <a href="mailto:info@vatans.com">info@vatans.com</a>. We typically respond within 24 hours. For faster assistance, call <a href="tel:+12018395426">(201) 839-5426</a> (Jersey City) or <a href="tel:+16093367333">(609) 336-7333</a> (East Windsor).
           </p>
+          <p id="cfFormError" style="display:none;color:#C8220A;font-size:0.82rem;text-align:center;margin-top:0.75rem;">Something went wrong. Please email us directly at <a href="mailto:info@vatans.com" style="color:var(--saffron)">info@vatans.com</a> or call us.</p>
         </form>
       </div>
     </div>
@@ -484,8 +498,6 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 </div>
 
 <script>
-const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
-
 function toggleCallDropdown(e) {
   e.stopPropagation();
   const dd = document.getElementById('callUsDropdown');
@@ -537,16 +549,24 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     else el.style.borderColor='';
   });
   if (!valid) return;
-  // Build mailto link
-  const loc  = document.getElementById('cfLocation').value;
-  const phone = document.getElementById('cfPhone').value;
-  const body = encodeURIComponent(
-    `Name: ${name}\nEmail: ${email}\nPhone: ${phone||'Not provided'}\nLocation: ${loc||'Not specified'}\n\n${message}`
-  );
-  window.location.href = `mailto:info@vatans.com?cc=${encodeURIComponent(VATAN_CONTACT_EMAIL)}&subject=${encodeURIComponent(subject + ' - Vatan Website')}&body=${body}`;
-  document.getElementById('replyEmail').textContent = email;
-  this.style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
+  const btn = this.querySelector('.btn-send');
+  btn.disabled = true;
+  btn.innerHTML = 'Sending…';
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(this)).toString()
+  })
+  .then(() => {
+    document.getElementById('replyEmail').textContent = email;
+    this.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.innerHTML = '✉️ &nbsp; Send Message';
+    document.getElementById('cfFormError').style.display = 'block';
+  });
 });
 
 // Reveal
@@ -554,14 +574,6 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, {threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-// Inject CC into all action mailto links
-document.querySelectorAll('a[href^="mailto:"][href*="subject="]').forEach(function(el) {
-  const href = el.getAttribute('href');
-  if (!href.includes('cc=')) {
-    el.setAttribute('href', href + '&cc=' + encodeURIComponent(VATAN_CONTACT_EMAIL));
-  }
-});
 </script>
 </body>
 </html>

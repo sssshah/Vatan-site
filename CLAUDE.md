@@ -78,6 +78,13 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
 ## Changelog
 
+### v1.2 — 2026-06-13
+- **Netlify forms:** Both `contact.html` and `reservations.html` forms now use `data-netlify="true"` with async `fetch()` POST — no mail client required. All fields have `name` attributes; hidden `form-name` input included per Netlify spec. Netlify routes submissions to `info@vatans.com` (configure email notification in Netlify dashboard under Settings > Forms).
+- **Marketing opt-in:** Added "Yes, send me special offers and updates from Vatan" checkbox (`name="marketing_optin"`) to both forms. Captured in Netlify submission data; no API integration yet.
+- **Success states:** Replaced "One More Step / email client" flow with animated SVG checkmark + friendly confirmation copy ("Message Sent!" / "Request Received!").
+- **CC removed:** `VATAN_CONTACT_EMAIL` constant and all silent-CC logic removed from both pages. `info@vatans.com` is now the sole recipient via Netlify.
+- **Microsoft 365 / GoDaddy:** `info@vatans.com` is live on M365.
+
 ### v1.1 — 2026-06-10
 - **SEO:** Added `<title>`, `<meta description>`, Open Graph, Twitter Card, canonical, geo meta, and `robots` tags to all 5 pages. Added JSON-LD Restaurant structured data (both locations) to `index.html`.
 - **Call Us nav dropdown:** Added phone icon button to every page's nav; opens a dropdown with Jersey City, East Windsor, and Edison (Coming Soon). On mobile (≤768px), collapses to a round icon. Closes on outside click.
