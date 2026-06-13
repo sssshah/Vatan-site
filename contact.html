@@ -539,9 +539,13 @@ function showMap(loc, btn) {
 // Update email subject based on topic selection
 document.getElementById('cfSubject').addEventListener('change', function() {
   const subjectEl = document.getElementById('emailSubject');
-  subjectEl.value = this.value === 'Catering Inquiry'
-    ? 'New Catering Request — Vatan'
-    : 'New Contact Request — Vatan';
+  if (!this.value) {
+    subjectEl.value = 'New Contact Request — Vatan';
+  } else if (this.value === 'Catering Inquiry') {
+    subjectEl.value = 'New Catering Request — Vatan';
+  } else {
+    subjectEl.value = 'New Contact Request: ' + this.value + ' — Vatan';
+  }
 });
 
 // Contact form
