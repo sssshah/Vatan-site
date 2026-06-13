@@ -35,7 +35,7 @@
 const VATAN_PROMOS = [
   {
     id:       "sunday-buffet",
-    file:     "Sunday_Buffet.jpg",
+    file:     "June Lunch Buffet.PNG",
     day:      "Every Sunday",
     name:     "Unlimited Buffet",
     desc:     "Kadai Paneer, Dal Fry, Garlic Rice, Veg Hakka Noodles, Desserts & more",
