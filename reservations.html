@@ -588,6 +588,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         <!-- Actual form -->
         <form id="resForm" name="reservation" method="POST" data-netlify="true" novalidate>
           <input type="hidden" name="form-name" value="reservation">
+          <input type="hidden" name="subject" value="New Reservation Request — Vatan">
 
           <!-- Location selector -->
           <div style="margin-bottom:1.2rem;">
@@ -708,9 +709,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
             <textarea id="requests" name="special_requests" placeholder="Allergies, seating preferences, accessibility needs..."></textarea>
           </div>
 
-          <div class="field" style="margin-top:0.5rem;">
+          <div style="margin:0.75rem 0 1rem;">
             <label style="display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;font-size:0.85rem;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted);">
-              <input type="checkbox" name="marketing_optin" value="yes" style="margin-top:0.15rem;accent-color:var(--saffron);width:15px;height:15px;flex-shrink:0;">
+              <input type="checkbox" name="marketing_optin" value="yes" style="margin-top:0.15rem;accent-color:var(--saffron);width:15px;height:15px;flex-shrink:0;padding:0;border:none;appearance:auto;-webkit-appearance:auto;">
               Yes, send me special offers and updates from Vatan
             </label>
           </div>

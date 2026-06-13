@@ -392,6 +392,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
         <form id="contactForm" name="contact" method="POST" data-netlify="true" novalidate>
           <input type="hidden" name="form-name" value="contact">
+          <input type="hidden" name="subject" id="emailSubject" value="New Contact Request — Vatan">
           <div class="field-row">
             <div class="field">
               <label for="cfName">Your Name *</label>
@@ -410,7 +411,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
           <div class="field">
             <label for="cfSubject">Subject *</label>
-            <select id="cfSubject" name="subject" required>
+            <select id="cfSubject" name="topic" required>
               <option value="">Select a topic</option>
               <option>General Question</option>
               <option>Catering Inquiry</option>
@@ -437,9 +438,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
             <textarea id="cfMessage" name="message" placeholder="Tell us how we can help..." required></textarea>
           </div>
 
-          <div class="field" style="margin-top:0.5rem;">
+          <div style="margin:0.75rem 0 1rem;">
             <label style="display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;font-size:0.85rem;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted);">
-              <input type="checkbox" name="marketing_optin" value="yes" style="margin-top:0.15rem;accent-color:var(--saffron);width:15px;height:15px;flex-shrink:0;">
+              <input type="checkbox" name="marketing_optin" value="yes" style="margin-top:0.15rem;accent-color:var(--saffron);width:15px;height:15px;flex-shrink:0;padding:0;border:none;appearance:auto;-webkit-appearance:auto;">
               Yes, send me special offers and updates from Vatan
             </label>
           </div>
@@ -534,6 +535,14 @@ function showMap(loc, btn) {
   document.querySelectorAll('.map-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
 }
+
+// Update email subject based on topic selection
+document.getElementById('cfSubject').addEventListener('change', function() {
+  const subjectEl = document.getElementById('emailSubject');
+  subjectEl.value = this.value === 'Catering Inquiry'
+    ? 'New Catering Request — Vatan'
+    : 'New Contact Request — Vatan';
+});
 
 // Contact form
 document.getElementById('contactForm').addEventListener('submit', function(e) {
