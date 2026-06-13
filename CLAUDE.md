@@ -60,6 +60,42 @@ All JS is at the bottom of `index.html` as an inline `<script>`. It handles:
 - `images/promos/` — weekly special flyer images (JPG); filenames referenced in `promos.js` and hardcoded in `index.html`
 - `images/logo.png` — site logo used in nav and footer across all pages
 
+## Infrastructure
+
+### DNS — GoDaddy
+GoDaddy owns `vatans.com` and manages all DNS records:
+- **A / CNAME records** → point `vatans.com` to Netlify (site is served from Netlify's CDN)
+- **MX records** → point to Microsoft 365 (all `@vatans.com` email routes to M365)
+
+### Hosting — Netlify
+- Serves the static site files from GitHub (auto-deploys on every push to `main`)
+- GitHub repo: `sssshah/Vatan-site`
+- Form handling: `data-netlify="true"` on both forms — Netlify intercepts POST submissions, stores them in the Netlify dashboard, and sends email notifications to `info@vatans.com`
+- Form detection must be **enabled** in Netlify dashboard (Site configuration > Forms) for this to work
+- Form notification emails are configured under: Netlify dashboard > Sites > Forms > Form notifications
+
+### Email — Microsoft 365 via GoDaddy
+- `info@vatans.com` is a live M365 mailbox (set up through GoDaddy)
+- Receives Netlify form notification emails
+- Netlify sends notifications from its own email infrastructure — the sender display name reflects the Netlify account name, not `vatans.com`
+
+### Form submission flow
+```
+User submits form on vatans.com
+        ↓
+fetch() POSTs to Netlify (async, no mail client opens)
+        ↓
+Netlify stores submission in dashboard + sends notification email
+        ↓
+Notification arrives at info@vatans.com (M365 via GoDaddy MX records)
+```
+
+### Forms
+- `contact.html` → Netlify form name: `contact`
+- `reservations.html` → Netlify form name: `reservation`
+- Both forms capture a `marketing_optin` checkbox field (not yet wired to any marketing service)
+- All submissions are visible in Netlify dashboard regardless of email delivery — check there if emails are missed
+
 ## Locations
 
 - **Jersey City**: 808 Newark Ave, NJ 07306 · (201) 839-5426 · `tel:+12018395426`
