@@ -13,13 +13,14 @@ python3 -m http.server 8080
 
 ## Architecture
 
-This is a **pure static site** — no frameworks, no bundler, no package.json. Five self-contained HTML pages with all CSS inlined in `<style>` blocks:
+This is a **pure static site** — no frameworks, no bundler, no package.json. Six self-contained HTML pages with all CSS inlined in `<style>` blocks:
 
 - `index.html` — homepage (hero, about, promotions, dishes, gallery, reviews, locations)
 - `menu.html` — full menu with filterable categories
 - `reservations.html` — reservation form (embeds third-party booking widget)
 - `catering.html` — catering inquiry page
 - `contact.html` — location cards with hours, maps, social links
+- `order.html` — direct pickup order form (v1.3+); builds menu from `menu-data.js`
 
 ### Key patterns
 
@@ -34,11 +35,32 @@ This is a **pure static site** — no frameworks, no bundler, no package.json. F
 
 **Fonts:** Cormorant Garamond (headings/display, serif) + DM Sans (body, sans-serif), loaded from Google Fonts.
 
-### `promos.js` — the only shared JS config
+### `promos.js` — weekly specials config
 
 Weekly specials are configured in `promos.js` as the `VATAN_PROMOS` array. Fields: `id`, `file` (filename inside `images/promos/`), `day`, `name`, `desc`, `price`, `active`, `lightbox`, `locations`. Set `active: false` to hide a promo without deleting it. `locations` can be `"All Locations"` (case-insensitive) or a comma-separated list like `"Jersey City, East Windsor"`.
 
 The hero carousel (`#heroSpecialsCarousel`) and promo grid (`#promoGrid`) are built dynamically from `VATAN_PROMOS` in the inline `<script>` at the bottom of `index.html`. The `locations` field renders as a small `📍` line in both the carousel info strip and the grid card strip.
+
+### `menu-data.js` — single source of truth for menu items
+
+All 19 menu categories and their items are defined in `menu-data.js` as the `VATAN_MENU` array. This is the **only place prices need to be updated** — both `order.html` and any future dynamic `menu.html` render from it.
+
+```js
+// Structure
+{ id, name, emoji, label, tagline, headerImg, items: [
+  { id, name, desc, price, img, tags, note, section, active }
+]}
+```
+
+- `active: false` hides an item from the order form without deleting it
+- `tags`: `["J"]` = Jain, `["S"]` = Spicy, `["J","S"]` = both
+- `section`: sub-heading within a category (e.g. `"Tandoor Breads"`, `"Bakery Pastries"`)
+- `img`: path inside `images/food/` or `null` if no image yet
+- Items with `section` group under a sub-header in the order accordion
+
+**Non-technical price updates:** Edit `menu-data.js` directly on GitHub.com (pencil icon → change the number → commit). Netlify auto-deploys within ~1 minute. No local pull needed for price-only changes.
+
+The file ends with `if (typeof module !== 'undefined') module.exports = VATAN_MENU;` so it works in both browser (`<script src>`) and Node (future tooling).
 
 ### Shared nav pattern (v1.1+)
 
@@ -93,8 +115,10 @@ Notification arrives at info@vatans.com (M365 via GoDaddy MX records)
 ### Forms
 - `contact.html` → Netlify form name: `contact`
 - `reservations.html` → Netlify form name: `reservation`
-- Both forms capture a `marketing_optin` checkbox field (not yet wired to any marketing service)
+- `order.html` → Netlify form name: `takeout-order`
+- All forms capture a `marketing_optin` checkbox field (not yet wired to any marketing service)
 - All submissions are visible in Netlify dashboard regardless of email delivery — check there if emails are missed
+- **After first deploy of `order.html`:** add email notification for `takeout-order` in Netlify dashboard → Sites → Forms → Form notifications → add `info@vatans.com`
 
 ## Locations
 
@@ -106,13 +130,44 @@ Notification arrives at info@vatans.com (M365 via GoDaddy MX records)
 
 _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
+- [ ] **Set up Netlify email notification for `takeout-order` form** — do this immediately after first deploy of order.html: Netlify dashboard → Sites → Forms → Form notifications → `info@vatans.com`
+- [ ] Refactor `menu.html` to render dynamically from `menu-data.js` (Step 2 of menu-data plan) — v1.4
+- [ ] Add item images to `menu-data.js` as `images/food/` paths are confirmed — ongoing
 - [ ] Edison location: add full card to locations section and footer when open — v1.2
 - [ ] Update promo `locations` field when Edison launches to reflect which specials it offers — ongoing
 - [ ] Consider a shared nav include (SSI or templating) to avoid per-page duplication — v2.0
 - [ ] Google Search Console verification meta tag — when site goes live
 - [ ] Sitemap.xml — when site goes live
 
+## Design principles & gotchas
+
+**`display:flex` on `<li>` breaks bullet rendering.** Every child element (including `<strong>`, `<a>`) becomes a flex item with its own box, creating unexpected gaps. Use `position:relative` + `padding-left` on the `li` and `position:absolute;left:0` on `li::before` for the bullet instead.
+
+**`position:sticky` in CSS Grid requires `align-self:stretch` on the grid item.** If the grid uses `align-items:start`, the right column shrinks to its content height — the sticky child's containing block is only as tall as the element itself, so sticky never scrolls. Fix: add `align-self:stretch` to the sidebar column so its containing block extends the full grid row height.
+
+**`menu-data.js` is the single source of truth for prices.** Never hard-code prices in `order.html` or `menu.html`. Update `menu-data.js` only — once for both pages.
+
+**URL params for pre-selected state.** `order.html?loc=jc` / `?loc=ew` auto-checks the matching location radio on load. Use this pattern on any page that needs context from a referring link (location cards, modal CTAs, etc.).
+
+**Netlify form auto-registration.** Any form with `data-netlify="true"` and a `name` attribute is automatically detected and registered by Netlify at deploy time — no manual dashboard step needed to create the form. Email notifications, however, must be configured manually per form.
+
+**GitHub web editor workflow for non-technical updates.** Editing `menu-data.js` (or `promos.js`) via the GitHub.com pencil icon creates a commit directly on `main`. Netlify auto-deploys within ~1 minute. If you also work locally, always `git pull` before editing — otherwise your local branch will be behind `origin/main` and the next push will require a merge.
+
+**`-webkit-line-clamp:2` for multi-line text truncation in item rows.** Use `display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden; -webkit-line-clamp:2` instead of `white-space:nowrap` — `nowrap` causes horizontal overflow on long item names/descriptions.
+
 ## Changelog
+
+### v1.3 — 2026-06-14
+- **`order.html`:** New direct pickup order page. Customers browse all 19 menu categories in collapsible accordions, add items with +/− controls, and submit via Netlify form (`takeout-order`). Restaurant calls back within 15 minutes to confirm.
+- **`menu-data.js`:** New shared JS file — single source of truth for all menu items, prices, descriptions, and images. `order.html` loads it via `<script src="menu-data.js">`. Future `menu.html` refactor will use it too.
+- **Order Direct entry points:** "Order Direct" button added to the Order Online modal in `index.html`, `menu.html`, and `contact.html`. Also added to each location card in `index.html` (Jersey City → `order.html?loc=jc`, East Windsor → `order.html?loc=ew`).
+- **Location auto-select:** `order.html` reads `?loc=jc` / `?loc=ew` URL param on load and pre-checks the matching location radio, skipping manual selection for users arriving from a specific location card.
+- **Business hours time slots:** Available pickup times are generated from a `BIZ_HOURS` object (per-location, per-day). Times already past (+ 30-minute lead time) are excluded when the selected date is today. EW is closed Mondays; shows warning and disables time select on that day.
+- **Sticky summary panel:** "Your Order" sidebar stays fixed as the user scrolls through the accordion. Fixed by adding `align-self:stretch` to the summary column so its containing block spans the full grid row height.
+- **Back-to-top button:** Floating round button appears after 400px scroll; sits above the mobile bar on small screens.
+- **Clear Order:** "Clear All" button in the desktop summary and "Clear" link in the mobile bottom bar reset all quantities and refresh the UI.
+- **Mobile bottom bar:** Fixed bar at bottom of screen (≤900px) shows item count, estimated total, "Clear" link, and "Place Order" button.
+- **Netlify form — `takeout-order`:** Uses `data-netlify="true"` and `netlify-honeypot="bot-field"`. Order items serialized to `order_items` hidden field as plain text before submit. **After first deploy, add email notification in Netlify dashboard → Forms → `takeout-order` → Notifications → `info@vatans.com`.**
 
 ### v1.2 — 2026-06-13
 - **Netlify forms:** Both `contact.html` and `reservations.html` forms now use `data-netlify="true"` with async `fetch()` POST — no mail client required. All fields have `name` attributes; hidden `form-name` input included per Netlify spec. Netlify routes submissions to `info@vatans.com` (configure email notification in Netlify dashboard under Settings > Forms).
@@ -120,6 +175,9 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 - **Success states:** Replaced "One More Step / email client" flow with animated SVG checkmark + friendly confirmation copy ("Message Sent!" / "Request Received!").
 - **CC removed:** `VATAN_CONTACT_EMAIL` constant and all silent-CC logic removed from both pages. `info@vatans.com` is now the sole recipient via Netlify.
 - **Microsoft 365 / GoDaddy:** `info@vatans.com` is live on M365.
+- **Email subjects:** Contact form now sets subject dynamically based on selected topic (e.g. "New Feedback / Compliment — Vatan"); reservation form subject is "New Reservation — Vatan". Honeypot (`netlify-honeypot="bot-field"`) added to both forms to reduce spam.
+- **Contact form note field:** Hidden `note` field moved to end of form so it appears last in Netlify submission emails.
+- **Policy list rendering fix:** `reservations.html` "Good to Know" list switched from `display:flex` to `position:relative` + `padding-left` for bullet — fixes extra whitespace gaps around `<strong>` and `<a>` tags that flex was creating.
 
 ### v1.1 — 2026-06-10
 - **SEO:** Added `<title>`, `<meta description>`, Open Graph, Twitter Card, canonical, geo meta, and `robots` tags to all 5 pages. Added JSON-LD Restaurant structured data (both locations) to `index.html`.

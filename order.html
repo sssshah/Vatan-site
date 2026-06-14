@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order for Pickup | Vatan Indian Vegetarian Cuisine & Bakery | New Jersey</title>
+<meta name="description" content="Order directly from Vatan for pickup — no delivery fees. Fresh Indian vegetarian food in Jersey City & East Windsor, NJ.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://vatans.com/order.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vatans.com/order.html">
+<meta property="og:title" content="Order for Pickup | Vatan Indian Vegetarian Cuisine & Bakery">
+<meta property="og:image" content="https://vatans.com/images/logo.png">
+<meta property="og:site_name" content="Vatan Indian Vegetarian Cuisine & Bakery">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --saffron:#C8660A; --saffron-light:#E8820F; --maroon:#7A1C2E; --maroon-deep:#5A1020;
+  --gold:#D4A853; --gold-light:#F0C878; --ivory:#FDF6E9; --ivory-dark:#F5EDD8;
+  --dark:#1C1008; --dark-mid:#2E1A0E; --text-body:#3D2010; --text-muted:#7A5C40;
+  --white:#FFFFFF; --radius:10px; --radius-lg:18px;
+  --shadow-card:0 4px 24px rgba(28,16,8,0.10);
+  --shadow-hover:0 12px 40px rgba(28,16,8,0.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--text-body);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(28,16,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,168,83,0.25);padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between;}
+nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
+.nav-logo img{height:46px;}
+.nav-links{display:flex;align-items:center;gap:0.2rem;list-style:none;}
+.nav-links a{color:rgba(253,246,233,0.82);text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.5rem 0.65rem;border-radius:6px;transition:all 0.2s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold-light);background:rgba(212,168,83,0.1);}
+.nav-cta{background:linear-gradient(135deg,var(--saffron),var(--maroon))!important;color:var(--white)!important;padding:0.5rem 1.1rem!important;border-radius:50px!important;font-weight:600!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--gold);border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:rgba(22,10,4,0.98);backdrop-filter:blur(16px);z-index:999;padding:1.5rem 2rem 2rem;border-bottom:1px solid rgba(212,168,83,0.2);}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;color:var(--ivory);text-decoration:none;font-size:1rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:0.9rem 0;border-bottom:1px solid rgba(212,168,83,0.1);}
+.mobile-menu a:hover{color:var(--gold);}
+
+/* CALL US DROPDOWN */
+.nav-call-wrapper{position:relative;display:flex;align-items:center;}
+.nav-call-btn{display:flex;align-items:center;gap:0.4rem;background:none;border:1px solid rgba(212,168,83,0.28);color:rgba(253,246,233,0.82);font-size:0.78rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.44rem 0.7rem;border-radius:6px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.nav-call-btn:hover{color:var(--gold-light);background:rgba(212,168,83,0.1);border-color:rgba(212,168,83,0.5);}
+.nav-call-icon{width:13px;height:13px;flex-shrink:0;}
+.call-chevron{width:10px;height:10px;transition:transform 0.2s;flex-shrink:0;}
+.nav-call-btn[aria-expanded="true"] .call-chevron{transform:rotate(180deg);}
+.nav-call-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:rgba(22,10,4,0.97);backdrop-filter:blur(16px);border:1px solid rgba(212,168,83,0.25);border-radius:10px;padding:0.4rem 0;min-width:200px;box-shadow:0 16px 48px rgba(0,0,0,0.55);z-index:1100;display:none;}
+.nav-call-dropdown.open{display:block;animation:fadeDown 0.15s ease;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+.call-loc{padding:0.5rem 1rem;}
+.call-loc-label{font-size:0.66rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem;}
+.call-loc a{display:flex;align-items:center;gap:0.4rem;color:var(--ivory);text-decoration:none;font-size:0.84rem;font-weight:500;transition:color 0.2s;}
+.call-loc a:hover{color:var(--gold-light);}
+.call-loc-soon{padding:0.5rem 1rem;}
+.call-loc-soon .call-loc-label{color:rgba(212,168,83,0.4);}
+.call-loc-soon span{font-size:0.84rem;color:rgba(253,246,233,0.3);}
+.call-sep{height:1px;background:rgba(212,168,83,0.15);margin:0.25rem 0;}
+
+/* HERO */
+.order-hero{
+  margin-top:70px;
+  background:linear-gradient(135deg,var(--dark) 0%,var(--dark-mid) 40%,var(--maroon-deep) 100%);
+  padding:3rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden;
+}
+.order-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(212,168,83,0.10) 0%,transparent 65%);}
+.order-hero-inner{position:relative;z-index:1;max-width:600px;margin:0 auto;}
+.order-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:600;color:var(--ivory);line-height:1.1;margin-bottom:0.5rem;}
+.order-hero h1 em{font-style:italic;color:var(--gold-light);font-weight:300;}
+.order-hero p{color:rgba(253,246,233,0.6);font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;margin-bottom:1rem;}
+.hero-divider{width:50px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 1rem;}
+.hero-badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;}
+.hero-badge{background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:50px;}
+
+/* LAYOUT */
+.order-wrap{max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem 4rem;display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start;}
+
+/* SUCCESS STATE */
+.success-state{text-align:center;padding:4rem 2rem;background:var(--white);border-radius:var(--radius-lg);border:1px solid rgba(212,168,83,0.2);box-shadow:var(--shadow-card);}
+.success-icon{width:72px;height:72px;margin:0 auto 1.5rem;background:linear-gradient(135deg,var(--saffron),var(--maroon));border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.success-icon svg{width:36px;height:36px;stroke:white;stroke-width:2.5;}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--dark);margin-bottom:0.75rem;}
+.success-text{color:var(--text-muted);font-size:0.95rem;line-height:1.7;max-width:400px;margin:0 auto 1.5rem;}
+.success-phones{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;}
+.success-phones a{color:var(--saffron);text-decoration:none;font-weight:600;font-size:0.9rem;}
+
+/* FORM SECTIONS */
+.form-section{background:var(--white);border:1px solid rgba(212,168,83,0.18);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem;box-shadow:var(--shadow-card);}
+.form-section-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--dark);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+.form-section-title span{font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--saffron);background:rgba(200,102,10,0.08);padding:0.2rem 0.55rem;border-radius:50px;}
+
+/* LOCATION CARDS */
+.loc-options{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+.loc-opt input[type="radio"]{position:absolute;opacity:0;width:0;height:0;}
+.loc-opt{cursor:pointer;}
+.loc-card{display:block;border:2px solid rgba(212,168,83,0.2);border-radius:var(--radius);padding:1rem;transition:all 0.2s;background:var(--ivory);}
+.loc-opt input:checked + .loc-card{border-color:var(--saffron);background:rgba(200,102,10,0.05);}
+.loc-card-name{font-weight:600;font-size:0.95rem;color:var(--dark);margin-bottom:0.2rem;}
+.loc-card-detail{font-size:0.78rem;color:var(--text-muted);}
+.loc-card-hours{font-size:0.72rem;color:var(--text-muted);margin-top:0.15rem;}
+.loc-closed-note{display:none;font-size:0.75rem;color:#C8220A;margin-top:0.5rem;}
+
+/* FIELDS */
+.field{margin-bottom:1rem;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;}
+.field input,.field select,.field textarea{width:100%;background:var(--ivory);border:1px solid rgba(212,168,83,0.3);border-radius:8px;padding:0.65rem 0.85rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text-body);transition:border-color 0.2s;outline:none;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--saffron);}
+.field textarea{resize:vertical;min-height:80px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.field-note{font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;}
+.closed-warning{display:none;background:#FFF3F3;border:1px solid #FFAAAA;border-radius:8px;padding:0.6rem 0.85rem;font-size:0.82rem;color:#C8220A;margin-top:0.5rem;}
+
+/* ACCORDION */
+.acc-panel{border:1px solid rgba(212,168,83,0.18);border-radius:var(--radius);margin-bottom:0.6rem;overflow:hidden;background:var(--white);}
+.acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;color:var(--dark);text-align:left;transition:background 0.15s;}
+.acc-head:hover{background:rgba(212,168,83,0.06);}
+.acc-head-left{display:flex;align-items:center;gap:0.5rem;}
+.acc-emoji{font-size:1.1rem;}
+.acc-count{font-size:0.72rem;font-weight:700;color:var(--saffron);background:rgba(200,102,10,0.1);padding:0.15rem 0.5rem;border-radius:50px;display:none;}
+.acc-count.visible{display:inline-block;}
+.acc-chevron{width:16px;height:16px;transition:transform 0.25s;flex-shrink:0;color:var(--text-muted);}
+.acc-panel.open .acc-chevron{transform:rotate(180deg);}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
+.acc-panel.open .acc-body{max-height:5000px;}
+.acc-inner{padding:0.5rem 1rem 1rem;}
+.acc-sub{font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin:1rem 0 0.5rem;padding-top:0.75rem;border-top:1px solid rgba(212,168,83,0.15);}
+.acc-sub:first-child{border-top:none;margin-top:0;}
+
+/* ITEM ROWS */
+.item-row{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0;border-bottom:1px solid rgba(212,168,83,0.1);}
+.item-row:last-child{border-bottom:none;}
+.item-row-info{flex:1;min-width:0;}
+.item-row-name{font-size:0.88rem;font-weight:500;color:var(--dark);line-height:1.3;}
+.item-row-desc{font-size:0.74rem;color:var(--text-muted);line-height:1.4;margin-top:0.1rem;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.item-row-badges{display:inline-flex;gap:0.2rem;margin-left:0.3rem;vertical-align:middle;}
+.ibadge{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;font-size:0.55rem;font-weight:700;line-height:1;}
+.ibadge-j{background:#2E7D32;color:#fff;}
+.ibadge-s{background:#1565C0;color:#fff;}
+.item-row-price{font-size:0.85rem;font-weight:600;color:var(--text-body);white-space:nowrap;flex-shrink:0;}
+.qty-ctrl{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+.qty-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(212,168,83,0.4);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;color:var(--text-body);transition:all 0.15s;font-weight:500;}
+.qty-btn:hover:not(:disabled){border-color:var(--saffron);color:var(--saffron);background:rgba(200,102,10,0.06);}
+.qty-btn:disabled{opacity:0.3;cursor:default;}
+.qty-num{min-width:20px;text-align:center;font-size:0.88rem;font-weight:600;color:var(--dark);}
+
+/* MARKETING OPT-IN */
+.marketing-row{margin-top:0.75rem;}
+.marketing-row label{display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;font-size:0.84rem;font-weight:400;color:var(--text-muted);}
+.marketing-row input[type="checkbox"]{margin-top:0.15rem;accent-color:var(--saffron);width:15px;height:15px;flex-shrink:0;appearance:auto;-webkit-appearance:auto;}
+
+/* SUMMARY PANEL */
+.order-summary-col{align-self:stretch;}
+.summary-panel{position:sticky;top:86px;background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-card);max-height:calc(100vh - 100px);overflow-y:auto;}
+.summary-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(212,168,83,0.15);}
+.summary-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--dark);}
+.clear-order-btn{background:none;border:none;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:0.2rem 0.5rem;border-radius:4px;transition:color 0.2s;}
+.clear-order-btn:hover{color:#C8220A;}
+.summary-empty{font-size:0.85rem;color:var(--text-muted);text-align:center;padding:1.5rem 0;font-style:italic;}
+.summary-lines{margin-bottom:0.75rem;}
+.summary-line{display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;padding:0.4rem 0;border-bottom:1px solid rgba(212,168,83,0.1);}
+.summary-line:last-child{border-bottom:none;}
+.summary-line-name{font-size:0.83rem;color:var(--text-body);flex:1;}
+.summary-line-qty{font-size:0.78rem;color:var(--text-muted);white-space:nowrap;}
+.summary-line-price{font-size:0.83rem;font-weight:600;color:var(--dark);white-space:nowrap;}
+.summary-total{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0;border-top:2px solid rgba(212,168,83,0.25);margin-top:0.5rem;}
+.summary-total-label{font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);}
+.summary-total-amount{font-size:1.15rem;font-weight:700;color:var(--dark);}
+.summary-disclaimer{font-size:0.72rem;color:var(--text-muted);margin:0.5rem 0 1rem;line-height:1.5;}
+.btn-order{width:100%;background:linear-gradient(135deg,var(--saffron),var(--maroon));color:var(--white);border:none;border-radius:50px;padding:0.9rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.04em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem;}
+.btn-order:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,102,10,0.4);}
+.btn-order:disabled{opacity:0.5;cursor:default;transform:none;box-shadow:none;}
+.form-error{display:none;font-size:0.8rem;color:#C8220A;text-align:center;margin-top:0.75rem;line-height:1.5;}
+.form-error a{color:var(--saffron);}
+
+/* MOBILE BOTTOM BAR */
+.mobile-order-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:800;background:var(--dark);border-top:1px solid rgba(212,168,83,0.25);padding:0.85rem 1.25rem;align-items:center;justify-content:space-between;gap:1rem;}
+.mob-bar-info{flex:1;min-width:0;}
+.mob-bar-top{display:flex;align-items:center;gap:0.6rem;}
+.mob-bar-count{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(253,246,233,0.5);}
+.mob-clear-btn{background:none;border:none;color:rgba(253,246,233,0.35);font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;padding:0;text-decoration:underline;display:none;}
+.mob-clear-btn:hover{color:rgba(253,246,233,0.65);}
+.mob-bar-total{font-size:1rem;font-weight:700;color:var(--ivory);}
+.mob-bar-btn{background:linear-gradient(135deg,var(--saffron),var(--maroon));color:var(--white);border:none;border-radius:50px;padding:0.7rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0;}
+.mob-bar-btn:disabled{opacity:0.5;cursor:default;}
+
+/* BACK TO TOP */
+.back-to-top{position:fixed;right:1.5rem;bottom:2rem;width:40px;height:40px;background:var(--dark);border:1px solid rgba(212,168,83,0.35);border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:700;transition:all 0.2s;box-shadow:0 2px 12px rgba(0,0,0,0.3);}
+.back-to-top:hover{background:var(--dark-mid);border-color:var(--gold);}
+.back-to-top svg{width:16px;height:16px;stroke:var(--gold);stroke-width:2.5;}
+.back-to-top.visible{display:flex;}
+@media(max-width:900px){.back-to-top{bottom:80px;}}
+
+/* FOOTER */
+footer{background:var(--dark);padding:2rem 2rem 1.5rem;border-top:1px solid rgba(212,168,83,0.15);}
+.footer-bottom{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
+.footer-bottom p{font-size:0.78rem;color:rgba(253,246,233,0.3);}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{color:rgba(253,246,233,0.45);text-decoration:none;font-size:0.82rem;transition:color 0.2s;}
+.footer-links a:hover{color:var(--ivory);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .order-wrap{grid-template-columns:1fr;}
+  .order-summary-col{display:none;}
+  .mobile-order-bar{display:flex;}
+  body{padding-bottom:72px;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .call-text,.call-chevron{display:none;}
+  .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
+  .loc-options{grid-template-columns:1fr;}
+  .field-row{grid-template-columns:1fr;}
+  .item-row-desc{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Vatan"></a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="index.html#promotions">Specials</a></li>
+    <li><a href="index.html#locations">Locations</a></li>
+    <li><a href="catering.html">Catering</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="reservations.html" class="nav-cta">Reserve a Table</a></li>
+  </ul>
+  <div class="nav-call-wrapper" id="callUsWrapper">
+    <button class="nav-call-btn" id="callUsBtn" onclick="toggleCallDropdown(event)" aria-expanded="false" aria-haspopup="true" aria-label="Call Us">
+      <svg class="nav-call-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      <span class="call-text">Call Us</span>
+      <svg class="call-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="nav-call-dropdown" id="callUsDropdown">
+      <div class="call-loc">
+        <div class="call-loc-label">Jersey City</div>
+        <a href="tel:+12018395426">📞 (201) 839-5426</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc">
+        <div class="call-loc-label">East Windsor</div>
+        <a href="tel:+16093367333">📞 (609) 336-7333</a>
+      </div>
+      <div class="call-sep"></div>
+      <div class="call-loc-soon">
+        <div class="call-loc-label">Edison</div>
+        <span>Coming Soon</span>
+      </div>
+    </div>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="menu.html">Our Menu</a>
+  <a href="index.html#promotions">Weekly Specials</a>
+  <a href="index.html#locations">Locations</a>
+  <a href="catering.html">Catering</a>
+  <a href="contact.html">Contact Us</a>
+  <a href="reservations.html" style="color:var(--gold);font-weight:700;">Reserve a Table</a>
+</div>
+
+<!-- HERO -->
+<div class="order-hero">
+  <div class="order-hero-inner">
+    <div class="hero-divider"></div>
+    <h1>Order for <em>Pickup</em></h1>
+    <p>Fresh, made-to-order — no delivery fees</p>
+    <div class="hero-badges">
+      <span class="hero-badge">🌿 100% Vegetarian</span>
+      <span class="hero-badge">🛍️ Pickup Only</span>
+      <span class="hero-badge">📞 We'll Call to Confirm</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="order-wrap">
+
+  <!-- LEFT: FORM -->
+  <div class="order-form-col">
+
+    <!-- Success state -->
+    <div class="success-state" id="orderSuccess" style="display:none;">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="success-title">Order Received!</div>
+      <p class="success-text">
+        Thanks, <strong id="successName"></strong>! We've received your pickup request and will call
+        <strong id="successPhone"></strong> within 15 minutes to confirm your order and estimated ready time.
+        <br><br>
+        If you don't hear from us, please call us directly:
+      </p>
+      <div class="success-phones">
+        <a href="tel:+12018395426">Jersey City — (201) 839-5426</a>
+        <a href="tel:+16093367333">East Windsor — (609) 336-7333</a>
+      </div>
+    </div>
+
+    <!-- The form -->
+    <form id="orderForm" name="takeout-order" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="takeout-order">
+      <p style="display:none;"><input name="bot-field"></p>
+      <input type="hidden" name="order_items" id="orderItemsField">
+      <input type="hidden" name="order_total" id="orderTotalField">
+
+      <!-- 1. LOCATION -->
+      <div class="form-section">
+        <div class="form-section-title">Location <span>Step 1</span></div>
+        <div class="loc-options">
+          <label class="loc-opt">
+            <input type="radio" name="location" value="East Windsor — 761 Route 33 W" id="locEW" required>
+            <span class="loc-card">
+              <div class="loc-card-name">East Windsor</div>
+              <div class="loc-card-detail">761 Route 33 W, NJ 08520</div>
+              <div class="loc-card-hours">Tue–Sun &middot; 11 AM–3 PM &amp; 4:30–9:30 PM</div>
+            </span>
+          </label>
+          <label class="loc-opt">
+            <input type="radio" name="location" value="Jersey City — 808 Newark Ave" id="locJC">
+            <span class="loc-card">
+              <div class="loc-card-name">Jersey City</div>
+              <div class="loc-card-detail">808 Newark Ave, NJ 07306</div>
+              <div class="loc-card-hours">Open Daily &middot; 11 AM–3 PM &amp; 4:30–9:30 PM</div>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 2. PICKUP DATE & TIME -->
+      <div class="form-section">
+        <div class="form-section-title">Pickup Date &amp; Time <span>Step 2</span></div>
+        <div class="field-row">
+          <div class="field">
+            <label for="pickupDate">Date *</label>
+            <input type="date" name="pickup_date" id="pickupDate" required>
+          </div>
+          <div class="field">
+            <label for="pickupTime">Time *</label>
+            <select name="pickup_time" id="pickupTime" required>
+              <option value="">Select location &amp; date first</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-note">Please order at least 30 minutes before pickup. We'll call to confirm.</div>
+        <div class="closed-warning" id="closedWarning">
+          East Windsor is closed on Mondays. Please choose a different day.
+        </div>
+      </div>
+
+      <!-- 3. CONTACT -->
+      <div class="form-section">
+        <div class="form-section-title">Your Info <span>Step 3</span></div>
+        <div class="field-row">
+          <div class="field">
+            <label for="custName">Name *</label>
+            <input type="text" name="name" id="custName" placeholder="Priya Patel" required>
+          </div>
+          <div class="field">
+            <label for="custPhone">Phone *</label>
+            <input type="tel" name="phone" id="custPhone" placeholder="(555) 000-0000" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="custEmail">Email</label>
+          <input type="email" name="email" id="custEmail" placeholder="you@email.com">
+        </div>
+      </div>
+
+      <!-- 4. ITEMS -->
+      <div class="form-section">
+        <div class="form-section-title">Select Items <span>Step 4</span></div>
+        <div id="itemsAccordion"></div>
+      </div>
+
+      <!-- 5. NOTES -->
+      <div class="form-section">
+        <div class="form-section-title">Notes &amp; Preferences <span>Step 5</span></div>
+        <div class="field">
+          <label for="specialReq">Special Requests / Dietary Notes</label>
+          <textarea name="special_requests" id="specialReq" placeholder="No onion, no garlic, extra spicy, allergies…"></textarea>
+        </div>
+        <div class="marketing-row">
+          <label>
+            <input type="checkbox" name="marketing_optin" value="yes" style="margin-top:0.15rem;accent-color:var(--saffron);width:15px;height:15px;flex-shrink:0;padding:0;border:none;appearance:auto;-webkit-appearance:auto;">
+            Yes, send me special offers and updates from Vatan
+          </label>
+        </div>
+      </div>
+
+      <input type="hidden" name="note" value="Takeout pickup order via vatans.com. Please call customer to confirm order and estimated ready time.">
+    </form>
+
+  </div><!-- /order-form-col -->
+
+  <!-- RIGHT: SUMMARY -->
+  <div class="order-summary-col">
+    <div class="summary-panel">
+      <div class="summary-title-row">
+        <div class="summary-title">Your Order</div>
+        <button class="clear-order-btn" id="clearBtn" onclick="clearOrder()" style="display:none;">Clear All</button>
+      </div>
+      <div id="summaryEmpty" class="summary-empty">No items yet — add from the menu</div>
+      <div id="summaryLines" class="summary-lines" style="display:none;"></div>
+      <div id="summaryTotal" class="summary-total" style="display:none;">
+        <span class="summary-total-label">Est. Total</span>
+        <span class="summary-total-amount" id="totalAmount">$0.00</span>
+      </div>
+      <p class="summary-disclaimer">Estimated total before tax. We'll call you within 15 minutes to confirm your order and ready time. You can also call us directly: <a href="tel:+16093367333" style="color:var(--saffron);text-decoration:none;">East Windsor (609) 336-7333</a> or <a href="tel:+12018395426" style="color:var(--saffron);text-decoration:none;">Jersey City (201) 839-5426</a>.</p>
+      <button type="submit" form="orderForm" class="btn-order" id="submitBtn" disabled>
+        Add items to order
+      </button>
+      <div class="form-error" id="formError">
+        Something went wrong. Please call us directly at
+        <a href="tel:+12018395426">(201) 839-5426</a> or
+        <a href="tel:+16093367333">(609) 336-7333</a>.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /order-wrap -->
+
+<!-- MOBILE BOTTOM BAR -->
+<div class="mobile-order-bar" id="mobileBar">
+  <div class="mob-bar-info">
+    <div class="mob-bar-top">
+      <div class="mob-bar-count" id="mobBarCount">0 items</div>
+      <button class="mob-clear-btn" id="mobClearBtn" onclick="clearOrder()">Clear</button>
+    </div>
+    <div class="mob-bar-total" id="mobBarTotal">$0.00 est.</div>
+  </div>
+  <button class="mob-bar-btn" id="mobBarBtn" onclick="submitFromMobile()" disabled>Place Order</button>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Vatan Indian Vegetarian Cuisine &amp; Bakery. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="reservations.html">Reservations</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="menu-data.js"></script>
+<script>
+const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
+
+// ── Business hours ──────────────────────────────────────────
+// Each entry: array of {start, end} in "HH:MM" 24h. Empty = closed.
+const BIZ_HOURS = {
+  'jc': { // Jersey City — open every day
+    0:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    1:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    2:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    3:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    4:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    5:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    6:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}]
+  },
+  'ew': { // East Windsor — closed Monday
+    0:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    1:[], // Monday closed
+    2:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    3:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    4:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    5:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}],
+    6:[{s:'11:00',e:'15:00'},{s:'16:30',e:'21:30'}]
+  }
+};
+
+// ── State ────────────────────────────────────────────────────
+const orderState = {}; // { itemId: qty }
+const itemLookup = {}; // { itemId: item object }
+
+// Build item lookup from VATAN_MENU
+VATAN_MENU.forEach(cat => {
+  cat.items.forEach(item => {
+    if (item.active !== false) itemLookup[item.id] = item;
+  });
+});
+
+// ── Nav ──────────────────────────────────────────────────────
+function toggleCallDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('callUsDropdown');
+  const btn = document.getElementById('callUsBtn');
+  const isOpen = dd.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+document.addEventListener('click', function(e) {
+  const w = document.getElementById('callUsWrapper');
+  if (w && !w.contains(e.target)) {
+    document.getElementById('callUsDropdown').classList.remove('open');
+    document.getElementById('callUsBtn').setAttribute('aria-expanded','false');
+  }
+});
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+const hb = document.getElementById('hamburger');
+const mm = document.getElementById('mobileMenu');
+hb.addEventListener('click', () => { hb.classList.toggle('open'); mm.classList.toggle('open'); });
+document.addEventListener('click', e => {
+  if (!hb.contains(e.target) && !mm.contains(e.target)) { hb.classList.remove('open'); mm.classList.remove('open'); }
+});
+
+// ── Date setup ───────────────────────────────────────────────
+(function() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  const todayStr = `${yyyy}-${mm}-${dd}`;
+  const dateEl = document.getElementById('pickupDate');
+  dateEl.min = todayStr;
+  dateEl.value = todayStr;
+})();
+
+// ── Location & date change handlers ─────────────────────────
+document.querySelectorAll('input[name="location"]').forEach(r => r.addEventListener('change', updateTimeSlots));
+document.getElementById('pickupDate').addEventListener('change', updateTimeSlots);
+
+function getLocKey() {
+  const r = document.querySelector('input[name="location"]:checked');
+  if (!r) return null;
+  return r.value.startsWith('Jersey') ? 'jc' : 'ew';
+}
+
+function updateTimeSlots() {
+  const locKey = getLocKey();
+  const dateStr = document.getElementById('pickupDate').value;
+  const sel = document.getElementById('pickupTime');
+  const warning = document.getElementById('closedWarning');
+
+  warning.style.display = 'none';
+  sel.innerHTML = '';
+
+  if (!locKey || !dateStr) {
+    sel.innerHTML = '<option value="">Select location & date first</option>';
+    return;
+  }
+
+  // Parse date — use local time (avoid UTC offset shifting the day)
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const date = new Date(y, m-1, d);
+  const dow = date.getDay();
+  const slots = BIZ_HOURS[locKey][dow];
+
+  if (!slots || !slots.length) {
+    sel.innerHTML = '<option value="">Closed on Mondays — please choose another day</option>';
+    warning.style.display = 'block';
+    return;
+  }
+
+  const now = new Date();
+  const isToday = (y === now.getFullYear() && m === now.getMonth()+1 && d === now.getDate());
+  const minMs = now.getTime() + 30 * 60 * 1000; // now + 30 minutes
+
+  const options = [];
+  slots.forEach(({s,e}) => {
+    const [sh,sm] = s.split(':').map(Number);
+    const [eh,em] = e.split(':').map(Number);
+    let h = sh, min = sm;
+    while (h < eh || (h === eh && min < em)) {
+      if (!isToday || new Date(y, m-1, d, h, min) >= new Date(minMs)) {
+        options.push({ value: `${pad(h)}:${pad(min)}`, label: fmtTime(h,min) });
+      }
+      min += 15;
+      if (min >= 60) { h++; min -= 60; }
+    }
+  });
+
+  if (!options.length) {
+    sel.innerHTML = '<option value="">No available times today (order 2 hrs ahead)</option>';
+    return;
+  }
+
+  sel.innerHTML = '<option value="">Choose a time</option>';
+  options.forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o.value;
+    opt.textContent = o.label;
+    sel.appendChild(opt);
+  });
+}
+
+function pad(n) { return String(n).padStart(2,'0'); }
+function fmtTime(h,m) {
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hour = h > 12 ? h-12 : (h === 0 ? 12 : h);
+  return `${hour}:${pad(m)} ${ampm}`;
+}
+
+// ── Build accordion ──────────────────────────────────────────
+function buildAccordion() {
+  const container = document.getElementById('itemsAccordion');
+  VATAN_MENU.forEach((cat, idx) => {
+    const activeItems = cat.items.filter(i => i.active !== false);
+    if (!activeItems.length) return;
+
+    const panel = document.createElement('div');
+    panel.className = 'acc-panel';
+    panel.dataset.catId = cat.id;
+
+    panel.innerHTML = `
+      <button class="acc-head" type="button">
+        <span class="acc-head-left">
+          <span class="acc-emoji">${cat.emoji}</span>
+          <span>${cat.name}</span>
+          <span class="acc-count" id="acc-count-${cat.id}">0</span>
+        </span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-body"><div class="acc-inner" id="acc-inner-${cat.id}"></div></div>
+    `;
+
+    container.appendChild(panel);
+
+    panel.querySelector('.acc-head').addEventListener('click', () => {
+      panel.classList.toggle('open');
+    });
+
+    // Group by section
+    const sectionMap = {};
+    activeItems.forEach(item => {
+      const sec = item.section || '';
+      if (!sectionMap[sec]) sectionMap[sec] = [];
+      sectionMap[sec].push(item);
+    });
+
+    const inner = panel.querySelector('.acc-inner');
+    Object.entries(sectionMap).forEach(([sec, items]) => {
+      if (sec) {
+        const sub = document.createElement('div');
+        sub.className = 'acc-sub';
+        sub.textContent = sec;
+        inner.appendChild(sub);
+      }
+      items.forEach(item => inner.appendChild(buildItemRow(item)));
+    });
+  });
+}
+
+function buildItemRow(item) {
+  const row = document.createElement('div');
+  row.className = 'item-row';
+  row.id = 'row-' + item.id;
+
+  const badges = item.tags.map(t =>
+    `<span class="ibadge ibadge-${t.toLowerCase()}">${t}</span>`
+  ).join('');
+
+  row.innerHTML = `
+    <div class="item-row-info">
+      <div class="item-row-name">${item.name}${badges ? '<span class="item-row-badges">'+badges+'</span>' : ''}</div>
+      <div class="item-row-desc">${item.desc}</div>
+    </div>
+    <div class="item-row-price">$${item.price.toFixed(2)}</div>
+    <div class="qty-ctrl">
+      <button type="button" class="qty-btn" id="dec-${item.id}" onclick="updateQty('${item.id}',-1)" disabled>−</button>
+      <span class="qty-num" id="qty-${item.id}">0</span>
+      <button type="button" class="qty-btn" id="inc-${item.id}" onclick="updateQty('${item.id}',1)">+</button>
+    </div>
+  `;
+  return row;
+}
+
+// ── Qty logic ────────────────────────────────────────────────
+function updateQty(itemId, delta) {
+  const current = orderState[itemId] || 0;
+  const newQty = Math.max(0, current + delta);
+  if (newQty === 0) delete orderState[itemId];
+  else orderState[itemId] = newQty;
+
+  document.getElementById('qty-' + itemId).textContent = newQty;
+  document.getElementById('dec-' + itemId).disabled = (newQty === 0);
+
+  updateCategoryCount(itemId);
+  updateSummary();
+}
+
+function updateCategoryCount(itemId) {
+  VATAN_MENU.forEach(cat => {
+    const inCat = cat.items.some(i => i.id === itemId);
+    if (!inCat) return;
+    const total = cat.items.reduce((sum, i) => sum + (orderState[i.id] || 0), 0);
+    const el = document.getElementById('acc-count-' + cat.id);
+    if (!el) return;
+    el.textContent = total;
+    el.classList.toggle('visible', total > 0);
+  });
+}
+
+// ── Summary ──────────────────────────────────────────────────
+function updateSummary() {
+  const entries = Object.entries(orderState).filter(([,q]) => q > 0);
+  const total = entries.reduce((sum,[id,q]) => sum + (itemLookup[id]?.price || 0) * q, 0);
+  const count = entries.reduce((sum,[,q]) => sum + q, 0);
+  const hasItems = entries.length > 0;
+
+  // Desktop summary
+  const emptyEl = document.getElementById('summaryEmpty');
+  const linesEl = document.getElementById('summaryLines');
+  const totalEl = document.getElementById('summaryTotal');
+  const totalAmtEl = document.getElementById('totalAmount');
+
+  if (!hasItems) {
+    emptyEl.style.display = '';
+    linesEl.style.display = 'none';
+    totalEl.style.display = 'none';
+  } else {
+    emptyEl.style.display = 'none';
+    linesEl.style.display = '';
+    totalEl.style.display = '';
+    linesEl.innerHTML = entries.map(([id,q]) => {
+      const item = itemLookup[id];
+      return `<div class="summary-line">
+        <span class="summary-line-name">${item.name}</span>
+        <span class="summary-line-qty">×${q}</span>
+        <span class="summary-line-price">$${(item.price*q).toFixed(2)}</span>
+      </div>`;
+    }).join('');
+    totalAmtEl.textContent = '$' + total.toFixed(2);
+  }
+
+  // Clear buttons
+  const clearBtn = document.getElementById('clearBtn');
+  const mobClearBtn = document.getElementById('mobClearBtn');
+  if (clearBtn) clearBtn.style.display = hasItems ? '' : 'none';
+  if (mobClearBtn) mobClearBtn.style.display = hasItems ? '' : 'none';
+
+  // Mobile bar
+  document.getElementById('mobBarCount').textContent = count + (count === 1 ? ' item' : ' items');
+  document.getElementById('mobBarTotal').textContent = '$' + total.toFixed(2) + ' est.';
+
+  // Submit button state
+  const submitBtn = document.getElementById('submitBtn');
+  const mobBtn = document.getElementById('mobBarBtn');
+  submitBtn.disabled = !hasItems;
+  mobBtn.disabled = !hasItems;
+  submitBtn.textContent = hasItems ? '🛍️  Place Order' : 'Add items to order';
+}
+
+// ── Clear order ──────────────────────────────────────────────
+function clearOrder() {
+  Object.keys(orderState).forEach(id => {
+    delete orderState[id];
+    const qtyEl = document.getElementById('qty-' + id);
+    const decEl = document.getElementById('dec-' + id);
+    if (qtyEl) qtyEl.textContent = '0';
+    if (decEl) decEl.disabled = true;
+  });
+  VATAN_MENU.forEach(cat => {
+    const el = document.getElementById('acc-count-' + cat.id);
+    if (el) { el.textContent = '0'; el.classList.remove('visible'); }
+  });
+  updateSummary();
+}
+
+// ── Serialize order for email ────────────────────────────────
+function serializeOrder() {
+  const entries = Object.entries(orderState).filter(([,q]) => q > 0);
+  const lines = entries.map(([id,q]) => {
+    const item = itemLookup[id];
+    return `${item.name} × ${q}  —  $${(item.price*q).toFixed(2)}`;
+  });
+  const total = entries.reduce((sum,[id,q]) => sum + (itemLookup[id]?.price || 0)*q, 0);
+  lines.push('');
+  lines.push('Est. Total: $' + total.toFixed(2) + ' (before tax)');
+  return lines.join('\n');
+}
+
+// ── Form submit ──────────────────────────────────────────────
+document.getElementById('orderForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+
+  // Validate items
+  const hasItems = Object.values(orderState).some(q => q > 0);
+  if (!hasItems) {
+    alert('Please add at least one item to your order.');
+    return;
+  }
+
+  // Validate required fields
+  const loc = document.querySelector('input[name="location"]:checked');
+  const date = document.getElementById('pickupDate').value;
+  const time = document.getElementById('pickupTime').value;
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+
+  if (!loc) { alert('Please select a pickup location.'); return; }
+  if (!date) { alert('Please select a pickup date.'); return; }
+  if (!time) { alert('Please select a pickup time.'); return; }
+  if (!name) { alert('Please enter your name.'); return; }
+  if (!phone) { alert('Please enter your phone number.'); return; }
+
+  // Populate hidden fields
+  const total = Object.entries(orderState).reduce((sum,[id,q]) => sum + (itemLookup[id]?.price||0)*q, 0);
+  document.getElementById('orderItemsField').value = serializeOrder();
+  document.getElementById('orderTotalField').value = '$' + total.toFixed(2);
+
+  // Disable buttons, show loading
+  const submitBtn = document.getElementById('submitBtn');
+  const mobBtn = document.getElementById('mobBarBtn');
+  const origText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  mobBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+  document.getElementById('formError').style.display = 'none';
+
+  try {
+    const data = new FormData(form);
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: {'Content-Type':'application/x-www-form-urlencoded'},
+      body: new URLSearchParams(data).toString()
+    });
+
+    if (res.ok) {
+      // Show success
+      document.getElementById('successName').textContent = name;
+      document.getElementById('successPhone').textContent = phone;
+      form.style.display = 'none';
+      document.getElementById('orderSuccess').style.display = '';
+      document.getElementById('mobileBar').style.display = 'none';
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else {
+      throw new Error('Server error');
+    }
+  } catch {
+    submitBtn.disabled = false;
+    mobBtn.disabled = false;
+    submitBtn.textContent = origText;
+    document.getElementById('formError').style.display = 'block';
+  }
+});
+
+function submitFromMobile() {
+  document.getElementById('orderForm').dispatchEvent(new Event('submit', {cancelable:true,bubbles:true}));
+}
+
+// ── Back to top ──────────────────────────────────────────────
+(function() {
+  const btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => btt.classList.toggle('visible', scrollY > 400));
+  btt.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+})();
+
+// ── Init ─────────────────────────────────────────────────────
+buildAccordion();
+updateSummary();
+
+// Pre-select location from URL param (?loc=jc or ?loc=ew)
+(function() {
+  const p = new URLSearchParams(window.location.search).get('loc');
+  if (p === 'jc') document.getElementById('locJC').checked = true;
+  else if (p === 'ew') document.getElementById('locEW').checked = true;
+  updateTimeSlots();
+})();
+</script>
+</body>
+</html>
