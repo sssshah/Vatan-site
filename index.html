@@ -1592,8 +1592,12 @@ let lbCurrent = 0;
 (function() {
   const active = (typeof VATAN_PROMOS !== 'undefined') ? VATAN_PROMOS.filter(p => p.active) : [];
   promoImages = active.map(function(p) {
+    const lbFile = p.file.replace(/(\.[^.]+)$/, '_lb$1');
+    const img = new Image();
+    img.src = 'images/promos/' + lbFile;
     return {
-      src: 'images/promos/' + p.file.replace(/(\.[^.]+)$/, '_lb$1'),
+      src: 'images/promos/' + lbFile,
+      fallback: 'images/promos/' + p.file,
       alt: p.name
     };
   });
@@ -1603,8 +1607,10 @@ function openLightbox(idx) {
   lbCurrent = idx;
   const lb = document.getElementById('lightbox');
   const img = document.getElementById('lightboxImg');
-  img.src = promoImages[idx].src;
-  img.alt = promoImages[idx].alt;
+  const entry = promoImages[idx];
+  img.onerror = function() { this.onerror=null; this.src = entry.fallback; };
+  img.src = entry.src;
+  img.alt = entry.alt;
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
