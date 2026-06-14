@@ -586,8 +586,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         </div>
 
         <!-- Actual form -->
-        <form id="resForm" name="reservation" method="POST" data-netlify="true" novalidate>
+        <form id="resForm" name="reservation" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="reservation">
+          <p style="display:none;"><input name="bot-field"></p>
           <input type="hidden" name="subject" value="New Reservation — Vatan">
 
           <!-- Location selector -->

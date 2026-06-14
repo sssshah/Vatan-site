@@ -390,8 +390,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
           <p class="success-text">Thank you for reaching out! We've received your message and will reply to <strong id="replyEmail"></strong> within 24 hours.<br><br>Need a faster answer? Call us directly — <a href="tel:+12018395426" style="color:var(--saffron)">Jersey City (201) 839-5426</a> or <a href="tel:+16093367333" style="color:var(--saffron)">East Windsor (609) 336-7333</a>.</p>
         </div>
 
-        <form id="contactForm" name="contact" method="POST" data-netlify="true" novalidate>
+        <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="contact">
+          <p style="display:none;"><input name="bot-field"></p>
           <input type="hidden" name="subject" id="emailSubject" value="New Contact Request — Vatan">
           <div class="field-row">
             <div class="field">
