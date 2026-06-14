@@ -175,11 +175,11 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 
 .policy-list{list-style:none;margin-top:0.75rem;}
 .policy-list li{
-  display:flex;align-items:flex-start;gap:0.7rem;
+  position:relative;padding-left:1.1rem;
   font-size:0.86rem;color:var(--text-muted);
-  padding:0.4rem 0;line-height:1.5;
+  padding-top:0.4rem;padding-bottom:0.4rem;line-height:1.5;
 }
-.policy-list li::before{content:'•';color:var(--gold);font-size:1rem;flex-shrink:0;margin-top:-0.05rem;}
+.policy-list li::before{content:'•';color:var(--gold);font-size:1rem;position:absolute;left:0;top:0.4rem;}
 
 /* FORM SIDE */
 .res-form-wrap{
@@ -547,7 +547,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <ul class="policy-list">
         <li>Reservations are recommended, especially on weekends and during special events.</li>
         <li>We hold reserved tables for up to <strong>15 minutes</strong> past the booking time.</li>
-        <li>Our entire menu is&nbsp;<strong>100%&nbsp;vegetarian</strong>&nbsp;— with extensive Jain, Swaminarayan, and vegan options.</li>
+        <li>Our entire menu is <strong>100% vegetarian</strong> — with extensive Jain, Swaminarayan, and vegan options.</li>
         <li>Please note any dietary restrictions or allergies in the special requests field.</li>
         <li>For catering inquiries or private events, please visit our <a href="contact.html" style="color:var(--saffron);font-weight:500;">Contact page</a>.</li>
         <li>Walk-ins are always welcome, subject to availability.</li>
