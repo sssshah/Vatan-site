@@ -847,6 +847,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
       form.style.display = 'none';
       document.getElementById('orderSuccess').style.display = '';
       document.getElementById('mobileBar').style.display = 'none';
+      document.querySelector('.order-summary-col').style.display = 'none';
       window.scrollTo({top:0, behavior:'smooth'});
     } else {
       throw new Error('Server error');
