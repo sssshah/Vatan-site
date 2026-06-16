@@ -63,7 +63,7 @@ const VATAN_PROMOS = [
     name:     "Unlimited Buffet",
     desc:     "Kadai Paneer, Dal Fry, Garlic Rice, Veg Hakka Noodles, Desserts & more",
     price:    "$24.99",
-    active:   true,
+    active:   false,
     lightbox: true,
     locations: "East Windsor"
   },
