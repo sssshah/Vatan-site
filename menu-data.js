@@ -6,7 +6,7 @@
  *
  *  HOW TO UPDATE A PRICE:
  *  Find the item below and change its price field. That's it.
- *  Both menu.html and order.html will reflect the new price.
+ *  Both all-menu.html and order.html will reflect the new price.
  *
  *  HOW TO ADD AN ITEM:
  *  Copy an existing item object and paste it into the right

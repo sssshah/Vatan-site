@@ -16,7 +16,7 @@ python3 -m http.server 8080
 This is a **pure static site** — no frameworks, no bundler, no package.json. Six self-contained HTML pages with all CSS inlined in `<style>` blocks:
 
 - `index.html` — homepage (hero, about, promotions, dishes, gallery, reviews, locations)
-- `menu.html` — full menu with filterable categories
+- `all-menu.html` — full menu with filterable categories
 - `reservations.html` — reservation form (embeds third-party booking widget)
 - `catering.html` — catering inquiry page
 - `contact.html` — location cards with hours, maps, social links
@@ -43,7 +43,7 @@ The hero carousel (`#heroSpecialsCarousel`) and promo grid (`#promoGrid`) are bu
 
 ### `menu-data.js` — single source of truth for menu items
 
-All 19 menu categories and their items are defined in `menu-data.js` as the `VATAN_MENU` array. This is the **only place prices need to be updated** — both `order.html` and any future dynamic `menu.html` render from it.
+All 19 menu categories and their items are defined in `menu-data.js` as the `VATAN_MENU` array. This is the **only place prices need to be updated** — both `order.html` and any future dynamic `all-menu.html` render from it.
 
 ```js
 // Structure
@@ -131,7 +131,7 @@ Notification arrives at info@vatans.com (M365 via GoDaddy MX records)
 _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
 - [ ] **Set up Netlify email notification for `takeout-order` form** — do this immediately after first deploy of order.html: Netlify dashboard → Sites → Forms → Form notifications → `info@vatans.com`
-- [ ] Refactor `menu.html` to render dynamically from `menu-data.js` (Step 2 of menu-data plan) — v1.4
+- [ ] Refactor `all-menu.html` to render dynamically from `menu-data.js` (Step 2 of menu-data plan) — v1.4
 - [ ] Add item images to `menu-data.js` as `images/food/` paths are confirmed — ongoing
 - [ ] Edison location: add full card to locations section and footer when open — v1.2
 - [ ] Update promo `locations` field when Edison launches to reflect which specials it offers — ongoing
@@ -145,7 +145,7 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
 **`position:sticky` in CSS Grid requires `align-self:stretch` on the grid item.** If the grid uses `align-items:start`, the right column shrinks to its content height — the sticky child's containing block is only as tall as the element itself, so sticky never scrolls. Fix: add `align-self:stretch` to the sidebar column so its containing block extends the full grid row height.
 
-**`menu-data.js` is the single source of truth for prices.** Never hard-code prices in `order.html` or `menu.html`. Update `menu-data.js` only — once for both pages.
+**`menu-data.js` is the single source of truth for prices.** Never hard-code prices in `order.html` or `all-menu.html`. Update `menu-data.js` only — once for both pages.
 
 **URL params for pre-selected state.** `order.html?loc=jc` / `?loc=ew` auto-checks the matching location radio on load. Use this pattern on any page that needs context from a referring link (location cards, modal CTAs, etc.).
 
@@ -159,8 +159,8 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
 ### v1.3 — 2026-06-14
 - **`order.html`:** New direct pickup order page. Customers browse all 19 menu categories in collapsible accordions, add items with +/− controls, and submit via Netlify form (`takeout-order`). Restaurant calls back within 15 minutes to confirm.
-- **`menu-data.js`:** New shared JS file — single source of truth for all menu items, prices, descriptions, and images. `order.html` loads it via `<script src="menu-data.js">`. Future `menu.html` refactor will use it too.
-- **Order Direct entry points:** "Order Direct" button added to the Order Online modal in `index.html`, `menu.html`, and `contact.html`. Also added to each location card in `index.html` (Jersey City → `order.html?loc=jc`, East Windsor → `order.html?loc=ew`).
+- **`menu-data.js`:** New shared JS file — single source of truth for all menu items, prices, descriptions, and images. `order.html` loads it via `<script src="menu-data.js">`. Future `all-menu.html` refactor will use it too.
+- **Order Direct entry points:** "Order Direct" button added to the Order Online modal in `index.html`, `all-menu.html`, and `contact.html`. Also added to each location card in `index.html` (Jersey City → `order.html?loc=jc`, East Windsor → `order.html?loc=ew`).
 - **Location auto-select:** `order.html` reads `?loc=jc` / `?loc=ew` URL param on load and pre-checks the matching location radio, skipping manual selection for users arriving from a specific location card.
 - **Business hours time slots:** Available pickup times are generated from a `BIZ_HOURS` object (per-location, per-day). Times already past (+ 30-minute lead time) are excluded when the selected date is today. EW is closed Mondays; shows warning and disables time select on that day.
 - **Sticky summary panel:** "Your Order" sidebar stays fixed as the user scrolls through the accordion. Fixed by adding `align-self:stretch` to the summary column so its containing block spans the full grid row height.
