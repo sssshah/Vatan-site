@@ -1481,7 +1481,10 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   const grid = document.getElementById('promoGrid');
   const dotsRow = document.getElementById('carouselDotsRow');
   if (grid) {
+    let gridCount = 0;
     active.forEach(function(promo, i) {
+      if (promo.heroOnly) return;
+      gridCount++;
       const card = document.createElement('div');
       card.className = 'promo-flyer-card';
       card.innerHTML =
@@ -1508,7 +1511,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         dotsRow.appendChild(dot);
       }
     });
-    const n = active.length;
+    const n = gridCount;
     grid.style.gridTemplateColumns = 'repeat(' + n + ', 1fr)';
     if (n > 0 && n < 4) {
       grid.style.maxWidth = (n * 25) + '%';

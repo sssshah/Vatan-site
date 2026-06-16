@@ -34,6 +34,18 @@
 
 const VATAN_PROMOS = [
   {
+    id:       "fathers-day-hero",
+    file:     "Fathers Day.jpg",
+    day:      "This Sunday",
+    name:     "Grand Lunch Buffet",
+    desc:     "Gobi 65, Samosa Chat, Pani Puri, Live Dosas, Veg Chilly Noodles, Veg Fried Rice, Undiyu & more",
+    price:    "$27.99",
+    active:   true,
+    lightbox: true,
+    locations: "East Windsor",
+    heroOnly: true
+  },
+  {
     id:       "Father's Day",
     file:     "Fathers Day.jpg",
     day:      "This Sunday",
