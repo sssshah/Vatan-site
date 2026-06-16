@@ -195,9 +195,14 @@ section{position:relative;}
 }
 .hsc-see-all:hover{color:var(--gold-light);}
 .hsc-track{position:relative;height:480px;overflow:hidden;}
-.hsc-item{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;display:flex;flex-direction:column;cursor:pointer;}
-.hsc-item.active{opacity:1;}
-.hsc-item img{width:100%;flex:1;min-height:0;object-fit:cover;object-position:top center;display:block;}
+.hsc-item{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;display:flex;flex-direction:column;cursor:pointer;pointer-events:none;}
+.hsc-item.active{opacity:1;pointer-events:auto;}
+.hsc-img-wrap{position:relative;flex:1;min-height:0;overflow:hidden;}
+.hsc-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.hsc-hover-cta{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:transparent;transition:background 0.25s;}
+.hsc-hover-cta span{color:white;font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0;transition:opacity 0.25s;background:rgba(0,0,0,0.55);padding:0.45rem 1.1rem;border-radius:50px;border:1px solid rgba(255,255,255,0.25);}
+.hsc-item.active:hover .hsc-hover-cta{background:rgba(0,0,0,0.2);}
+.hsc-item.active:hover .hsc-hover-cta span{opacity:1;}
 .hsc-info{
   flex-shrink:0;
   padding:0.75rem 1.1rem;
@@ -1451,7 +1456,10 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         const item = document.createElement('div');
         item.className = 'hsc-item' + (i === 0 ? ' active' : '');
         item.innerHTML =
-          '<img src="images/promos/' + promo.file + '" alt="' + promo.name + '" loading="lazy">' +
+          '<div class="hsc-img-wrap">' +
+            '<img src="images/promos/' + promo.file + '" alt="' + promo.name + '" loading="lazy">' +
+            '<div class="hsc-hover-cta"><span>View Full Image</span></div>' +
+          '</div>' +
           '<div class="hsc-info">' +
             '<div class="hsc-info-text">' +
               '<div class="hsc-day">' + promo.day + '</div>' +
