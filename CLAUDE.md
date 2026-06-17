@@ -157,6 +157,23 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
 ## Changelog
 
+### v1.4 — 2026-06-16
+- **Blog section:** Reconstructed 10 blog articles from Wayback Machine cache and added a `blog.html` index page. Articles span Nov 28, 2025 – Feb 12, 2026 covering Indian cuisine, seasonal dishes, catering, and street food.
+- **`blog.html`:** Blog index with 10 article cards in a 3-column responsive grid. Cards include category badge, date, excerpt (3-line clamp), and full-card click target. Linked from nav and footer on all pages.
+- **10 article pages:** Each is a self-contained HTML file following the site's CSS-per-page pattern. Layout: dark hero (title/meta at bottom), cover image below hero, `max-width:800px` content body with h2 sections, FAQ box, and CTA block. Cover images use original `vatans.com/wp-content/uploads/` URLs.
+  - `blog-why-indian-cuisine-ultimate-romantic-date-night.html` — Feb 12, 2026
+  - `blog-discover-best-indian-thali-east-windsor.html` — Jan 30, 2026
+  - `blog-why-vatan-best-choice-vegetarian-food-east-windsor.html` — Jan 30, 2026
+  - `blog-discovering-heart-indian-vegetarian-cuisine-east-windsor.html` — Jan 27, 2026
+  - `blog-best-indian-lunch-dinner-snacks-east-windsor-winter.html` — Dec 23, 2025
+  - `blog-best-family-friendly-indian-dishes-december.html` — Dec 18, 2025
+  - `blog-how-to-choose-perfect-indian-catering-menu-holiday-parties.html` — Dec 10, 2025
+  - `blog-10-most-popular-indian-street-food-items.html` — Dec 6, 2025
+  - `blog-why-november-best-time-dal-khichdi.html` — Nov 29, 2025
+  - `blog-why-indian-food-perfect-for-winter.html` — Nov 28, 2025
+- **Nav update:** "Blog" link added between Contact and Reserve a Table on all 6 existing pages (`index.html`, `all-menu.html`, `reservations.html`, `catering.html`, `contact.html`, `order.html`) — both desktop nav and mobile menu.
+- **Footer update:** `index.html` footer blog link updated from `https://vatans.com/blog/` to `blog.html`.
+
 ### v1.3 — 2026-06-14
 - **`order.html`:** New direct pickup order page. Customers browse all 19 menu categories in collapsible accordions, add items with +/− controls, and submit via Netlify form (`takeout-order`). Restaurant calls back within 15 minutes to confirm.
 - **`menu-data.js`:** New shared JS file — single source of truth for all menu items, prices, descriptions, and images. `order.html` loads it via `<script src="menu-data.js">`. Future `all-menu.html` refactor will use it too.
