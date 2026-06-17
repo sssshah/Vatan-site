@@ -650,6 +650,24 @@ function buildMenu() {
 
 buildMenu();
 
+// ─── MOBILE CAT-NAV STICKY FIX ───────────────────────────────────────────────
+// iOS Safari: position:sticky silently fails when the element contains an
+// overflow:auto child (the scrollable tab strip). Workaround: switch to
+// position:fixed on mobile and add matching margin-top to the menu body
+// to fill the gap left in the normal flow.
+(function(){
+  if (window.innerWidth > 768) return;
+  var catWrap = document.getElementById('catNavWrapper');
+  var legend  = document.querySelector('.legend-bar');
+  var mBody   = document.getElementById('menuBody');
+  if (!catWrap || !legend || !mBody) return;
+  catWrap.style.position = 'fixed';
+  catWrap.style.top      = (70 + legend.offsetHeight) + 'px';
+  catWrap.style.left     = '0';
+  catWrap.style.right    = '0';
+  mBody.style.marginTop  = catWrap.offsetHeight + 'px';
+})();
+
 // ─── NAV BEHAVIOURS ───────────────────────────────────────────────────────────
 
 function toggleCallDropdown(e) {
