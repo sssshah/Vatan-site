@@ -318,6 +318,7 @@ footer{background:var(--dark);padding:2rem 2rem 1.5rem;border-top:1px solid rgba
     <form id="orderForm" name="takeout-order" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="takeout-order">
       <p style="display:none;"><input name="bot-field"></p>
+      <input type="hidden" name="subject" id="orderSubjectField" value="New Takeout Order — Vatan">
       <input type="hidden" name="order_items" id="orderItemsField">
       <input type="hidden" name="order_total" id="orderTotalField">
 
@@ -822,6 +823,8 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
 
   // Populate hidden fields
   const total = Object.entries(orderState).reduce((sum,[id,q]) => sum + (itemLookup[id]?.price||0)*q, 0);
+  const locLabel = loc.value.split('—')[0].trim();
+  document.getElementById('orderSubjectField').value = 'New Takeout Order — ' + locLabel + ' — Vatan';
   document.getElementById('orderItemsField').value = serializeOrder();
   document.getElementById('orderTotalField').value = '$' + total.toFixed(2);
 
