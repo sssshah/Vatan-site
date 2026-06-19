@@ -84,7 +84,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .legend-bar{
   background:var(--ivory-dark);
   border-bottom:1px solid rgba(212,168,83,0.2);
-  padding:0.85rem 2rem;
+  padding:0.35rem 2rem;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -96,21 +96,21 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   z-index:900;
   backdrop-filter:blur(8px);
 }
-.legend-item{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;font-weight:500;color:var(--text-body);}
+.legend-item{display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;font-weight:500;color:var(--text-body);}
 .legend-badge{
-  width:22px;height:22px;border-radius:50%;
+  width:20px;height:20px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:0.65rem;font-weight:800;flex-shrink:0;
+  font-size:0.6rem;font-weight:800;flex-shrink:0;
 }
 .badge-j{background:#2E7D32;color:white;}
 .badge-s{background:#1565C0;color:white;}
-.legend-sep{width:1px;height:16px;background:rgba(212,168,83,0.3);}
+.legend-sep{width:1px;height:12px;background:rgba(212,168,83,0.3);}
 
 /* CATEGORY NAV TABS */
 .cat-nav-wrapper{
   position:-webkit-sticky;
   position:sticky;
-  top:calc(70px + 44px);
+  top:calc(70px + 32px);
   z-index:890;
   background:var(--white);
   border-bottom:2px solid var(--ivory-dark);
@@ -141,21 +141,6 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .cat-nav-wrapper.fade-left::before{opacity:1;}
 .cat-nav-wrapper.no-fade-right::after{opacity:0;}
 
-/* Scroll arrow indicators */
-.cat-nav-arrow{
-  position:absolute;top:50%;transform:translateY(-50%);
-  z-index:2;width:22px;height:22px;border-radius:50%;
-  background:var(--dark);border:1px solid rgba(212,168,83,0.45);
-  color:var(--gold-light);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;opacity:0;pointer-events:none;
-  transition:opacity 0.2s ease, background 0.15s;
-  box-shadow:0 2px 8px rgba(0,0,0,0.35);
-}
-.cat-nav-arrow svg{width:10px;height:10px;flex-shrink:0;stroke-width:3.5;}
-.cat-nav-arrow:hover{background:var(--dark-mid);}
-.cat-nav-arrow.left{left:6px;}
-.cat-nav-arrow.right{right:6px;}
-.cat-nav-arrow.visible{opacity:1;pointer-events:auto;}
 
 .cat-nav{
   background:transparent;
@@ -175,25 +160,21 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   text-transform:uppercase;
   color:var(--text-muted);
   text-decoration:none;
-  border-bottom:2px solid transparent;
-  margin-bottom:-2px;
-  transition:all 0.2s;
+  border:none;
+  transition:color 0.2s, box-shadow 0.2s;
   white-space:nowrap;
   cursor:pointer;
   background:none;
-  border-top:none;
-  border-left:none;
-  border-right:none;
   font-family:'DM Sans',sans-serif;
 }
 .cat-tab:hover{color:var(--saffron);}
-.cat-tab.active{color:var(--saffron);border-bottom-color:var(--saffron);}
+.cat-tab.active{color:var(--saffron);box-shadow:inset 0 -2px 0 var(--saffron);}
 
 /* MAIN LAYOUT */
 .menu-body{max-width:1200px;margin:0 auto;padding:2.5rem 1.5rem 6rem;}
 
 /* CATEGORY SECTION */
-.menu-section{margin-bottom:4rem;scroll-margin-top:168px;}
+.menu-section{margin-bottom:4rem;scroll-margin-top:150px;}
 .section-header{
   display:flex;align-items:center;gap:1.5rem;
   margin-bottom:2rem;
@@ -351,9 +332,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   .hamburger{display:flex;}
   .call-text,.call-chevron{display:none;}
   .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
-  .legend-bar{gap:1rem;padding:0.75rem 1rem;top:70px;}
-  .cat-nav-wrapper{top:calc(70px + 40px);}
-  .menu-section{scroll-margin-top:168px;}
+  .legend-bar{gap:1rem;padding:0.35rem 1rem;top:70px;}
+  .cat-nav-wrapper{top:calc(70px + 30px);}
+  .menu-section{scroll-margin-top:150px;}
   .items-grid{grid-template-columns:1fr;}
   .thali-grid{grid-template-columns:1fr 1fr;}
   .modal-order-grid{grid-template-columns:1fr;}
@@ -451,13 +432,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
 <!-- CATEGORY NAV — built by JS -->
 <div class="cat-nav-wrapper" id="catNavWrapper">
-  <button class="cat-nav-arrow left" id="catArrowLeft" aria-label="Scroll categories left">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
   <div class="cat-nav" id="catNav"></div>
-  <button class="cat-nav-arrow right" id="catArrowRight" aria-label="Scroll categories right">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-  </button>
 </div>
 
 <!-- MENU BODY — built by JS -->
@@ -515,17 +490,19 @@ const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
 
 // ─── SECTION HEADER IMAGE FALLBACKS ───────────────────────────────────────────
 const HEADER_FALLBACKS = {
-  'thali':          'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&q=80',
+  'thali':          'https://images.pexels.com/photos/32797056/pexels-photo-32797056.jpeg?auto=compress&cs=tinysrgb&w=700',
   'gujarati-app':   'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=700&q=80',
-  'indochinese':    'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80',
+  'indochinese':    'https://images.pexels.com/photos/2764905/pexels-photo-2764905.jpeg?auto=compress&cs=tinysrgb&w=700',
   'halke':          'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=700&q=80',
-  'rolls':          'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80',
-  'desi-pizza':     'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80',
-  'tandoor':        'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=700&q=80',
-  'rice':           'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700&q=80',
+  'rolls':          'https://images.pexels.com/photos/29173093/pexels-photo-29173093.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'desi-pizza':     'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=700&q=80',
+  'tandoor':        'https://images.pexels.com/photos/37223237/pexels-photo-37223237.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'rice':           'https://images.pexels.com/photos/7593253/pexels-photo-7593253.jpeg?auto=compress&cs=tinysrgb&w=700',
   'soups':          'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=700&q=80',
-  'sizzlers':       'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80',
-  'beverages':      'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=700&q=80',
+  'sizzlers':       'https://images.pexels.com/photos/13522187/pexels-photo-13522187.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'beverages':      'https://images.pexels.com/photos/14930476/pexels-photo-14930476.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'pav':            'images/food/Vadapavv.jpg',
+  'accompaniments': 'https://images.pexels.com/photos/34507153/pexels-photo-34507153.jpeg?auto=compress&cs=tinysrgb&w=700',
 };
 const DEFAULT_IMG = 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80';
 
@@ -703,24 +680,17 @@ document.getElementById('orderModal').addEventListener('click', e => {
 // ─── CAT-NAV SCROLL FADE MASKS & ARROWS ──────────────────────────────────────
 
 (function() {
-  const scroller   = document.getElementById('catNav');
-  const wrapper    = document.getElementById('catNavWrapper');
-  const arrowLeft  = document.getElementById('catArrowLeft');
-  const arrowRight = document.getElementById('catArrowRight');
-  const SCROLL_AMT = 240;
+  const scroller = document.getElementById('catNav');
+  const wrapper  = document.getElementById('catNavWrapper');
 
   function updateFades() {
     const { scrollLeft, scrollWidth, clientWidth } = scroller;
     const atStart = scrollLeft <= 8;
     const atEnd   = scrollLeft + clientWidth >= scrollWidth - 8;
-    wrapper.classList.toggle('fade-left',     !atStart);
-    wrapper.classList.toggle('no-fade-right',  atEnd);
-    arrowLeft.classList.toggle('visible',  !atStart);
-    arrowRight.classList.toggle('visible', !atEnd);
+    wrapper.classList.toggle('fade-left',    !atStart);
+    wrapper.classList.toggle('no-fade-right', atEnd);
   }
 
-  arrowLeft.addEventListener('click',  () => scroller.scrollBy({ left: -SCROLL_AMT, behavior: 'smooth' }));
-  arrowRight.addEventListener('click', () => scroller.scrollBy({ left:  SCROLL_AMT, behavior: 'smooth' }));
   scroller.addEventListener('scroll', updateFades, { passive: true });
   requestAnimationFrame(updateFades);
 })();

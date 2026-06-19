@@ -2099,10 +2099,10 @@ const VATAN_MENU = [
   {
     id: "accompaniments",
     name: "Extras & Accompaniments",
-    emoji: "🫙",
+    emoji: "🧂",
     label: "Add-Ons",
     tagline: "Complete your meal with these little essentials",
-    headerImg: "images/food/GJ.jpg",
+    headerImg: null,
     items: [
       {
         id: "roasted-papad",
