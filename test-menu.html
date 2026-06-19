@@ -627,6 +627,42 @@ function buildMenu() {
 
 buildMenu();
 
+// ─── MOBILE CAT-NAV PIN ───────────────────────────────────────────────────────
+// iOS Safari: position:sticky collapses to ~0 height when the element contains
+// an overflow:auto child. Fix: measure the natural scroll trigger point at load,
+// then switch to position:fixed only once the user scrolls past that point.
+(function(){
+  if (window.innerWidth > 768) return;
+  var catWrap  = document.getElementById('catNavWrapper');
+  var mBody    = document.getElementById('menuBody');
+  if (!catWrap || !mBody) return;
+
+  var fixedTop = 70 + (document.querySelector('.legend-bar')?.offsetHeight || 30);
+  var catH     = catWrap.offsetHeight;
+  // Distance from page top at which cat-nav should pin
+  var triggerY = catWrap.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - fixedTop;
+  var pinned   = false;
+
+  function pin() {
+    if (pinned) return;
+    pinned = true;
+    catWrap.style.cssText = 'position:fixed;top:' + fixedTop + 'px;left:0;right:0;';
+    mBody.style.marginTop = catH + 'px';
+  }
+  function unpin() {
+    if (!pinned) return;
+    pinned = false;
+    catWrap.style.cssText = '';
+    mBody.style.marginTop = '';
+  }
+
+  window.addEventListener('scroll', function() {
+    ((window.scrollY || window.pageYOffset) >= triggerY) ? pin() : unpin();
+  }, { passive: true });
+
+  // Handle page loaded already mid-scroll (e.g. back-navigation)
+  if ((window.scrollY || window.pageYOffset) >= triggerY) pin();
+})();
 
 // ─── NAV BEHAVIOURS ───────────────────────────────────────────────────────────
 

@@ -155,6 +155,10 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
 **`-webkit-line-clamp:2` for multi-line text truncation in item rows.** Use `display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden; -webkit-line-clamp:2` instead of `white-space:nowrap` — `nowrap` causes horizontal overflow on long item names/descriptions.
 
+**iOS Safari: `position:sticky` collapses to ~0 height when it contains an `overflow:auto` child.** This affects the category tab bar in `test-menu.html` — on iPhone, the sticky bar shrinks to just a bottom border line when the user scrolls. Do NOT use `position:sticky` on `.cat-nav-wrapper` on mobile. The fix in `test-menu.html` is a JS scroll listener (labelled `MOBILE CAT-NAV PIN`) that measures the element's natural document position on page load (`triggerY`), then switches to `position:fixed` only once the user scrolls past that point. This avoids both failure modes: (1) applying `fixed` immediately on load (which pinned the bar over the hero section before the page had scrolled), and (2) using `sticky` while scrolled (which triggered the iOS collapse bug). **Never remove or rewrite this IIFE without re-testing on a real iPhone or the iOS Simulator.** To test locally on mobile without burning a Netlify deploy: start the server (`python3 -m http.server 8080`), find your Mac's local IP (`ipconfig getifaddr en0`), and open `http://[ip]:8080/test-menu.html` in iPhone Safari on the same WiFi network.
+
+**Active tab underline on `.cat-tab` uses `box-shadow`, not `border-bottom`.** The `.cat-nav` strip has `overflow-x:auto`, which implicitly sets `overflow-y:auto` and clips any negative-margin bleed. Using `border-bottom:2px solid + margin-bottom:-2px` (the standard tab underline trick) is clipped by the overflow container and only shows intermittently across browsers. The fix: `box-shadow:inset 0 -2px 0 var(--saffron)` renders inside the element's own box and is never clipped. Do not revert to `border-bottom` for this indicator.
+
 ## Changelog
 
 ### v1.4 — 2026-06-16
