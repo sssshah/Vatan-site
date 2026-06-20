@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Saffron orange background circle -->
+  <circle cx="16" cy="16" r="16" fill="#C8660A"/>
+  <!-- Gold inner ring -->
+  <circle cx="16" cy="16" r="14" fill="none" stroke="#D4A853" stroke-width="0.8" opacity="0.6"/>
+  <!-- Ivory "V" lettermark -->
+  <text x="16" y="22" font-family="Georgia, serif" font-size="17" font-weight="700"
+        fill="#FDF6E9" text-anchor="middle" letter-spacing="-0.5">V</text>
+</svg>

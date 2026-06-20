@@ -1,40 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- Main pages -->
   <url>
     <loc>https://vatans.com/</loc>
+    <lastmod>2026-06-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://vatans.com/all-menu.html</loc>
+    <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://vatans.com/order.html</loc>
+    <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://vatans.com/reservations.html</loc>
+    <lastmod>2026-06-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://vatans.com/catering.html</loc>
+    <lastmod>2026-06-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://vatans.com/contact.html</loc>
+    <lastmod>2026-06-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- Blog index -->
+  <url>
+    <loc>https://vatans.com/blog.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog articles -->
+  <url>
+    <loc>https://vatans.com/blog/blog-why-indian-cuisine-ultimate-romantic-date-night.html</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-manchow-tomato-soup-comfort-food.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-dal-makhani-ultimate-winter-comfort.html</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-discover-best-indian-thali-east-windsor.html</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-why-vatan-best-choice-vegetarian-food-east-windsor.html</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-discovering-heart-indian-vegetarian-cuisine-east-windsor.html</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-7-reasons-to-love-paneer-tikka.html</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-gajar-halva-6-mistakes-to-avoid.html</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-best-indian-lunch-dinner-snacks-east-windsor-winter.html</loc>
+    <lastmod>2025-12-23</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-best-family-friendly-indian-dishes-december.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-how-to-choose-perfect-indian-catering-menu-holiday-parties.html</loc>
+    <lastmod>2025-12-10</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-10-most-popular-indian-street-food-items.html</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-creamy-tomato-soup-recipe.html</loc>
+    <lastmod>2022-01-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-why-november-best-time-dal-khichdi.html</loc>
+    <lastmod>2025-11-29</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-why-indian-food-perfect-for-winter.html</loc>
+    <lastmod>2025-11-28</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>
