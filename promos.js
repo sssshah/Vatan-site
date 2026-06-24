@@ -40,7 +40,7 @@ const VATAN_PROMOS = [
     name:     "Grand Lunch Buffet",
     desc:     "Gobi 65, Samosa Chat, Pani Puri, Live Dosas, Veg Chilly Noodles, Veg Fried Rice, Undiyu & more",
     price:    "$27.99",
-    active:   true,
+    active:   false,
     lightbox: true,
     locations: "East Windsor",
     heroOnly: true
@@ -52,7 +52,7 @@ const VATAN_PROMOS = [
     name:     "Grand Lunch Buffet",
     desc:     "Gobi 65, Samosa Chat, Pani Puri, Live Dosas, Veg Chilly Noodles, Veg Fried Rice, Undiyu & more",
     price:    "$27.99",
-    active:   true,
+    active:   false,
     lightbox: true,
     locations: "East Windsor"
   },

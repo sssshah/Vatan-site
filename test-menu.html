@@ -116,6 +116,8 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   background:var(--white);
   border-bottom:2px solid var(--ivory-dark);
   box-shadow:0 2px 12px rgba(28,16,8,0.06);
+  display:flex;
+  align-items:stretch;
 }
 /* Fade masks — signal overflow on both sides */
 .cat-nav-wrapper::before,
@@ -144,6 +146,8 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 
 
 .cat-nav{
+  flex:1;
+  min-width:0;
   background:transparent;
   padding:0 1rem;
   display:flex;
@@ -152,6 +156,26 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   scrollbar-width:none;
 }
 .cat-nav::-webkit-scrollbar{display:none;}
+
+/* SCROLL ARROWS — desktop only */
+.cat-arrow{
+  display:none;
+  flex-shrink:0;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  border:none;
+  background:var(--white);
+  color:var(--text-muted);
+  cursor:pointer;
+  transition:color 0.2s,background 0.2s;
+  z-index:2;
+}
+.cat-arrow:hover{color:var(--saffron);background:rgba(212,168,83,0.06);}
+.cat-arrow-left{border-right:1px solid rgba(212,168,83,0.15);}
+.cat-arrow-right{border-left:1px solid rgba(212,168,83,0.15);}
+.cat-arrow.hidden{opacity:0;pointer-events:none;}
+
 .cat-tab{
   flex-shrink:0;
   padding:0.9rem 1.1rem;
@@ -346,6 +370,10 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   .section-header-img{width:100%;height:140px;}
   .hero-badges{flex-wrap:wrap;}
 }
+@media(min-width:769px){
+  .cat-arrow{display:flex;}
+  .cat-nav-wrapper::before,.cat-nav-wrapper::after{display:none;}
+}
 </style>
 </head>
 <body>
@@ -431,7 +459,13 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
 <!-- CATEGORY NAV — built by JS -->
 <div class="cat-nav-wrapper" id="catNavWrapper">
+  <button class="cat-arrow cat-arrow-left hidden" id="catArrowLeft" aria-label="Scroll categories left">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
   <div class="cat-nav" id="catNav"></div>
+  <button class="cat-arrow cat-arrow-right" id="catArrowRight" aria-label="Scroll categories right">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
 </div>
 
 <!-- MENU BODY — built by JS -->
@@ -711,6 +745,25 @@ document.getElementById('orderModal').addEventListener('click', e => {
 
   scroller.addEventListener('scroll', updateFades, { passive: true });
   requestAnimationFrame(updateFades);
+})();
+
+// ─── SCROLL ARROW BUTTONS (desktop only) ─────────────────────────────────────
+(function(){
+  const scroller   = document.getElementById('catNav');
+  const arrowLeft  = document.getElementById('catArrowLeft');
+  const arrowRight = document.getElementById('catArrowRight');
+  const STEP = 220;
+
+  function syncArrows(){
+    const {scrollLeft,scrollWidth,clientWidth} = scroller;
+    arrowLeft.classList.toggle('hidden',  scrollLeft <= 4);
+    arrowRight.classList.toggle('hidden', scrollLeft + clientWidth >= scrollWidth - 4);
+  }
+
+  arrowLeft.addEventListener('click',  () => scroller.scrollBy({left:-STEP,behavior:'smooth'}));
+  arrowRight.addEventListener('click', () => scroller.scrollBy({left: STEP,behavior:'smooth'}));
+  scroller.addEventListener('scroll', syncArrows, {passive:true});
+  requestAnimationFrame(syncArrows);
 })();
 
 // ─── CATEGORY TAB SCROLL ─────────────────────────────────────────────────────
