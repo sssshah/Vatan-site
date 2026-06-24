@@ -163,8 +163,11 @@ section{position:relative;}
 
 .milestone-label{font-size:0.78rem;color:var(--text-muted);font-weight:500;letter-spacing:0.04em;}
 .about-visual{position:relative;}
-.about-card-main{border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:4/5;background:linear-gradient(160deg,#3D1508 0%,#7A1C2E 50%,#C8660A 100%);box-shadow:var(--shadow-deep);display:flex;align-items:center;justify-content:center;position:relative;}
+.about-card-main{border-radius:50%;overflow:hidden;width:min(380px,100%);aspect-ratio:1/1;background:var(--ivory);margin:0 auto;box-shadow:0 0 0 3px #7A1C2E,0 0 0 10px rgba(122,28,46,0.12),0 20px 60px rgba(28,16,8,0.35);border:none;display:flex;align-items:center;justify-content:center;position:relative;animation:elephantGlow 4s ease-in-out infinite;}
+.about-card-main::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--ivory);mix-blend-mode:multiply;pointer-events:none;z-index:1;}
 .about-card-main img{width:100%;height:100%;object-fit:cover;}
+.about-logo-video{width:100%;height:100%;object-fit:contain;display:block;}
+@keyframes elephantGlow{0%,100%{box-shadow:0 0 0 3px #7A1C2E,0 0 0 10px rgba(122,28,46,0.1),0 20px 60px rgba(28,16,8,0.3);}50%{box-shadow:0 0 0 3px #5A1020,0 0 0 14px rgba(122,28,46,0.16),0 20px 80px rgba(28,16,8,0.4);}}
 .about-card-float{position:absolute;bottom:-1.5rem;left:-1.5rem;background:var(--white);border-radius:var(--radius);padding:1rem 1.4rem;box-shadow:var(--shadow-warm);border:1px solid rgba(212,168,83,0.2);}
 .float-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--saffron);line-height:1;}
 .float-label{font-size:0.72rem;color:var(--text-muted);font-weight:500;}
@@ -930,11 +933,9 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
     </div>
     <div class="about-visual reveal reveal-delay-2">
       <div class="about-card-main">
-        <img src="images/food/Paneerbuttermasala.jpg" alt="Paneer Butter Masala">
-      </div>
-      <div class="about-card-float">
-        <div class="float-num">15+</div>
-        <div class="float-label">Years of Authentic<br>Indian Cuisine</div>
+        <video class="about-logo-video" autoplay muted loop playsinline>
+          <source src="images/logo-elephant.mov" type="video/mp4">
+        </video>
       </div>
     </div>
   </div>

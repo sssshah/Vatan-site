@@ -1025,7 +1025,7 @@ const VATAN_MENU = [
         name: "Chhole Bhature",
         desc: "2 fried Indian breads with curried chickpeas, onions, raita & papad",
         price: 13.99,
-        img: "images/food/chole-bhature.jpg",
+        img: null,
         tags: ["J","S"],
         note: null,
         active: true

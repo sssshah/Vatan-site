@@ -34,10 +34,10 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--text-body);overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--text-body);}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(28,16,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,168,83,0.25);padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between;}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(28,16,8,0.96);backdrop-filter:blur(12px);border-bottom:2px solid var(--saffron);padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between;}
 nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .nav-logo img{height:46px;}
 .nav-links{display:flex;align-items:center;gap:0.2rem;list-style:none;}
@@ -75,7 +75,6 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 
 /* HERO BANNER */
 .menu-hero{
-  margin-top:70px;
   background:linear-gradient(135deg,var(--dark) 0%,var(--dark-mid) 40%,var(--maroon-deep) 100%);
   padding:4rem 2rem;
   text-align:center;
@@ -84,6 +83,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 }
 .menu-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(212,168,83,0.12) 0%,transparent 65%);}
 .menu-hero-inner{position:relative;z-index:1;max-width:700px;margin:0 auto;}
+.hero-badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:nowrap;}
 .menu-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,6vw,4rem);font-weight:600;color:var(--ivory);line-height:1.1;margin-bottom:0.5rem;}
 .menu-hero h1 em{font-style:italic;color:var(--gold-light);font-weight:300;}
 .menu-hero p{color:rgba(253,246,233,0.6);font-size:1rem;margin-bottom:2rem;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15rem;}
@@ -93,43 +93,97 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .legend-bar{
   background:var(--ivory-dark);
   border-bottom:1px solid rgba(212,168,83,0.2);
-  padding:0.85rem 2rem;
+  padding:0.35rem 2rem;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:2rem;
   flex-wrap:wrap;
+  position:-webkit-sticky;
   position:sticky;
   top:70px;
   z-index:900;
   backdrop-filter:blur(8px);
 }
-.legend-item{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;font-weight:500;color:var(--text-body);}
+.legend-item{display:flex;align-items:center;gap:0.4rem;font-size:0.78rem;font-weight:500;color:var(--text-body);}
 .legend-badge{
-  width:22px;height:22px;border-radius:50%;
+  width:20px;height:20px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:0.65rem;font-weight:800;flex-shrink:0;
+  font-size:0.6rem;font-weight:800;flex-shrink:0;
 }
 .badge-j{background:#2E7D32;color:white;}
 .badge-s{background:#1565C0;color:white;}
-.badge-v{background:#558B2F;color:white;border:2px solid #8BC34A;}
-.legend-sep{width:1px;height:16px;background:rgba(212,168,83,0.3);}
+.legend-sep{width:1px;height:12px;background:rgba(212,168,83,0.3);}
 
 /* CATEGORY NAV TABS */
-.cat-nav{
+.cat-nav-wrapper{
+  position:-webkit-sticky;
+  position:sticky;
+  top:calc(70px + 32px);
+  z-index:890;
   background:var(--white);
   border-bottom:2px solid var(--ivory-dark);
+  box-shadow:0 2px 12px rgba(28,16,8,0.06);
+  display:flex;
+  align-items:stretch;
+}
+/* Fade masks — signal overflow on both sides */
+.cat-nav-wrapper::before,
+.cat-nav-wrapper::after{
+  content:'';
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:72px;
+  z-index:1;
+  pointer-events:none;
+  transition:opacity 0.25s ease;
+}
+.cat-nav-wrapper::before{
+  left:0;
+  background:linear-gradient(to right, var(--white) 15%, transparent);
+  opacity:0;
+}
+.cat-nav-wrapper::after{
+  right:0;
+  background:linear-gradient(to left, var(--white) 15%, transparent);
+  opacity:1;
+}
+.cat-nav-wrapper.fade-left::before{opacity:1;}
+.cat-nav-wrapper.no-fade-right::after{opacity:0;}
+
+
+.cat-nav{
+  flex:1;
+  min-width:0;
+  background:transparent;
   padding:0 1rem;
   display:flex;
   gap:0;
   overflow-x:auto;
   scrollbar-width:none;
-  position:sticky;
-  top:calc(70px + 44px);
-  z-index:890;
-  box-shadow:0 2px 12px rgba(28,16,8,0.06);
 }
 .cat-nav::-webkit-scrollbar{display:none;}
+
+/* SCROLL ARROWS — desktop only */
+.cat-arrow{
+  display:none;
+  flex-shrink:0;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  border:none;
+  background:var(--white);
+  color:var(--text-muted);
+  cursor:pointer;
+  transition:color 0.2s,background 0.2s;
+  z-index:2;
+}
+.cat-arrow:hover{color:var(--saffron);background:rgba(212,168,83,0.06);}
+.cat-arrow-left{border-right:1px solid rgba(212,168,83,0.15);}
+.cat-arrow-right{border-left:1px solid rgba(212,168,83,0.15);}
+.cat-arrow.hidden{opacity:0;pointer-events:none;}
+
 .cat-tab{
   flex-shrink:0;
   padding:0.9rem 1.1rem;
@@ -139,25 +193,21 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   text-transform:uppercase;
   color:var(--text-muted);
   text-decoration:none;
-  border-bottom:2px solid transparent;
-  margin-bottom:-2px;
-  transition:all 0.2s;
+  border:none;
+  transition:color 0.2s, box-shadow 0.2s;
   white-space:nowrap;
   cursor:pointer;
   background:none;
-  border-top:none;
-  border-left:none;
-  border-right:none;
   font-family:'DM Sans',sans-serif;
 }
 .cat-tab:hover{color:var(--saffron);}
-.cat-tab.active{color:var(--saffron);border-bottom-color:var(--saffron);}
+.cat-tab.active{color:var(--saffron);box-shadow:inset 0 -2px 0 var(--saffron);}
 
 /* MAIN LAYOUT */
 .menu-body{max-width:1200px;margin:0 auto;padding:2.5rem 1.5rem 6rem;}
 
 /* CATEGORY SECTION */
-.menu-section{margin-bottom:4rem;scroll-margin-top:168px;}
+.menu-section{margin-bottom:4rem;scroll-margin-top:150px;}
 .section-header{
   display:flex;align-items:center;gap:1.5rem;
   margin-bottom:2rem;
@@ -183,11 +233,20 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .section-name em{font-style:italic;color:var(--maroon);font-weight:300;}
 .section-tagline{font-size:0.85rem;color:var(--text-muted);margin-top:0.3rem;font-style:italic;}
 
+/* SUBSECTION LABEL */
+.subsec-label{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--gold);
+  margin:2rem 0 1rem;
+}
+.subsec-label:first-child{margin-top:0;}
+
 /* ITEM GRID */
 .items-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
   gap:1rem;
+  margin-bottom:0.5rem;
 }
 
 /* MENU ITEM CARD */
@@ -221,6 +280,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   font-size:1.1rem;font-weight:600;color:var(--dark);
   margin-bottom:0.25rem;line-height:1.2;
 }
+.item-note{font-size:0.72rem;color:var(--text-muted);font-style:italic;font-weight:400;}
 .item-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.55;margin-bottom:0.6rem;}
 .item-footer{display:flex;align-items:center;justify-content:space-between;}
 .item-price{
@@ -236,42 +296,12 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .ibadge-j{background:#2E7D32;color:white;}
 .ibadge-s{background:#1565C0;color:white;}
 
-/* FEATURED ITEM (full width with large image) */
-.item-featured{
-  grid-column:1/-1;
-  background:var(--white);
-  border:1px solid rgba(212,168,83,0.2);
-  border-radius:var(--radius-lg);
-  overflow:hidden;
-  display:grid;
-  grid-template-columns:320px 1fr;
-  box-shadow:var(--shadow-card);
-  transition:all 0.3s;
-}
-.item-featured:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px);}
-.item-featured .feat-img{
-  width:100%;height:100%;object-fit:cover;min-height:200px;
-}
-.item-featured .feat-body{
-  padding:2rem;display:flex;flex-direction:column;justify-content:center;
-}
-.feat-label{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:0.5rem;}
-.feat-name{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--dark);margin-bottom:0.5rem;line-height:1.1;}
-.feat-desc{font-size:0.88rem;color:var(--text-muted);line-height:1.65;margin-bottom:1rem;}
-.feat-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--saffron);}
-.feat-badges{display:flex;gap:0.4rem;margin-top:0.75rem;flex-wrap:wrap;}
-.feat-badge-pill{
-  background:var(--ivory-dark);border:1px solid rgba(212,168,83,0.2);
-  color:var(--text-muted);font-size:0.7rem;font-weight:600;
-  padding:0.2rem 0.65rem;border-radius:50px;
-}
-
-/* THALI CARDS — special 3-col highlight */
+/* THALI CARDS */
 .thali-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:1rem;
-  margin-bottom:4rem;
+  margin-bottom:0;
 }
 .thali-card{
   background:linear-gradient(160deg,var(--dark) 0%,var(--dark-mid) 100%);
@@ -293,15 +323,9 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   color:var(--white);font-size:0.9rem;font-weight:700;
   padding:0.3rem 1rem;border-radius:50px;
 }
+.thali-note{font-size:0.7rem;color:rgba(253,246,233,0.45);margin-top:0.5rem;}
 
-/* SECTION DIVIDER */
-.section-divider{
-  display:flex;align-items:center;gap:1rem;
-  margin:3rem 0 2rem;
-}
-.div-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,83,0.3),transparent);}
-
-/* ORDER CTA FLOAT */
+/* FLOAT BUTTONS */
 .float-order{position:fixed;bottom:1.5rem;right:1.5rem;z-index:500;background:linear-gradient(135deg,var(--saffron),var(--maroon));color:var(--white);text-decoration:none;padding:0.8rem 1.4rem;border-radius:50px;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;display:flex;align-items:center;gap:0.5rem;box-shadow:0 4px 20px rgba(200,102,10,0.5);transition:all 0.3s;cursor:pointer;border:none;}
 .float-order:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 8px 30px rgba(200,102,10,0.6);}
 .float-top{position:fixed;bottom:1.5rem;left:1.5rem;z-index:500;background:rgba(28,16,8,0.85);border:1px solid rgba(212,168,83,0.3);color:var(--gold);width:42px;height:42px;border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:all 0.3s;text-decoration:none;backdrop-filter:blur(8px);}
@@ -336,18 +360,14 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 .reveal.visible{opacity:1;transform:translateY(0);}
 
 /* RESPONSIVE */
-@media(max-width:900px){
-  .item-featured{grid-template-columns:1fr;}
-  .item-featured .feat-img{height:220px;width:100%;}
-}
 @media(max-width:768px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
   .call-text,.call-chevron{display:none;}
   .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
-  .legend-bar{gap:1rem;padding:0.75rem 1rem;top:70px;}
-  .cat-nav{top:calc(70px + 40px);}
-  .menu-section{scroll-margin-top:168px;}
+  .legend-bar{gap:1rem;padding:0.35rem 1rem;top:70px;}
+  .cat-nav-wrapper{top:calc(70px + 30px);}
+  .menu-section{scroll-margin-top:150px;}
   .items-grid{grid-template-columns:1fr;}
   .thali-grid{grid-template-columns:1fr 1fr;}
   .modal-order-grid{grid-template-columns:1fr;}
@@ -356,6 +376,11 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   .thali-grid{grid-template-columns:1fr;}
   .section-header{flex-direction:column;align-items:flex-start;gap:0.75rem;}
   .section-header-img{width:100%;height:140px;}
+  .hero-badges{flex-wrap:wrap;}
+}
+@media(min-width:769px){
+  .cat-arrow{display:flex;}
+  .cat-nav-wrapper::before,.cat-nav-wrapper::after{display:none;}
 }
 </style>
 </head>
@@ -412,17 +437,18 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   <a href="reservations.html" style="color:var(--gold);font-weight:700;">Reserve a Table</a>
 </div>
 
+
 <!-- HERO -->
 <div class="menu-hero">
   <div class="menu-hero-inner">
     <div class="menu-hero-divider"></div>
     <h1>Our <em>Menu</em></h1>
     <p>Authentic flavors of India — crafted fresh, served with love.</p>
-    <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
-      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:0.35rem 0.9rem;border-radius:50px;">🌿 100% Vegetarian</span>
-      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:0.35rem 0.9rem;border-radius:50px;">🫙 Jain Options</span>
-      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:0.35rem 0.9rem;border-radius:50px;">🙏 Swaminarayan Friendly</span>
-      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:0.35rem 0.9rem;border-radius:50px;">🌱 Vegan Available</span>
+    <div class="hero-badges">
+      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:50px;white-space:nowrap;">🌿 100% Vegetarian</span>
+      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:50px;white-space:nowrap;">🫙 Jain Options</span>
+      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:50px;white-space:nowrap;">🙏 Swaminarayan Friendly</span>
+      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:50px;white-space:nowrap;">🌱 Vegan Available</span>
     </div>
   </div>
 </div>
@@ -432,484 +458,27 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   <div class="legend-item"><div class="legend-badge badge-j">J</div><span>Jain Friendly</span></div>
   <div class="legend-sep"></div>
   <div class="legend-item"><div class="legend-badge badge-s">S</div><span>Swaminarayan Friendly</span></div>
-  <div class="legend-sep"></div>
-  <div class="legend-item"><span style="font-size:0.82rem;color:var(--text-muted);">Both badges = item qualifies for both diets</span></div>
 </div>
 
-<!-- CATEGORY NAV -->
-<div class="cat-nav" id="catNav">
-  <button class="cat-tab active" data-target="thali">🍛 Thali</button>
-  <button class="cat-tab" data-target="chaat">🍡 Chaat</button>
-  <button class="cat-tab" data-target="pav">🥖 Pav</button>
-  <button class="cat-tab" data-target="gujarati-app">🫔 Gujarati Starters</button>
-  <button class="cat-tab" data-target="indochinese">🥢 Indo-Chinese</button>
-  <button class="cat-tab" data-target="punjabi">🫕 Punjabi Curries</button>
-  <button class="cat-tab" data-target="shaak">🥘 Shaak Vaak</button>
-  <button class="cat-tab" data-target="halke">🫓 Halke Phulke</button>
-  <button class="cat-tab" data-target="sandwich">🥪 Sandwiches</button>
-  <button class="cat-tab" data-target="rolls">🌯 Rolls &amp; Frankies</button>
-  <button class="cat-tab" data-target="desi-pizza">🍕 Desi Pizzas</button>
-  <button class="cat-tab" data-target="tandoor">🔥 Tandoor</button>
-  <button class="cat-tab" data-target="rice">🍚 Rice</button>
-  <button class="cat-tab" data-target="soups">🍵 Soups</button>
-  <button class="cat-tab" data-target="fries">🍟 Fries</button>
-  <button class="cat-tab" data-target="sizzlers">✨ Sizzlers</button>
-  <button class="cat-tab" data-target="desserts">🍮 Desserts</button>
-  <button class="cat-tab" data-target="beverages">🥤 Beverages</button>
-  <button class="cat-tab" data-target="accompaniments">🫙 Extras</button>
+<!-- CATEGORY NAV — built by JS -->
+<div class="cat-nav-wrapper" id="catNavWrapper">
+  <button class="cat-arrow cat-arrow-left hidden" id="catArrowLeft" aria-label="Scroll categories left">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="cat-nav" id="catNav"></div>
+  <button class="cat-arrow cat-arrow-right" id="catArrowRight" aria-label="Scroll categories right">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
 </div>
 
-<!-- MENU BODY -->
-<div class="menu-body">
-
-<!-- ═══ THALI ═══ -->
-<div class="menu-section" id="thali">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&q=80" alt="Thali" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Signature</span>
-      <h2 class="section-name">Our <em>Thalis</em></h2>
-      <p class="section-tagline">A complete royal feast — everything served fresh, unlimited refills on select items</p>
-    </div>
-  </div>
-  <div class="thali-grid">
-    <div class="thali-card reveal">
-      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&q=80" alt="Vatan Special Thali" class="thali-img" loading="lazy">
-      <div class="thali-body">
-        <div class="thali-name">Vatan Special Thali</div>
-        <div class="thali-desc">3 vegetables, one kathol, rice, khichdi, kadhi, dal, pickle, jaggery, garlic chutney, sweet, raita, papad & farsan. Choice of 2 rotla / 5 roti / 5 poori / 3 methi thepla / 3 puran poli</div>
-        <span class="thali-price">$20.99</span>
-      </div>
-    </div>
-    <div class="thali-card reveal">
-      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&q=80" alt="Punjabi Thali" class="thali-img" loading="lazy">
-      <div class="thali-body">
-        <div class="thali-name">Punjabi Thali</div>
-        <div class="thali-desc">2 veg curries, Dal fry, Jeera rice, Butter Naan, Gulab Jamun, Achar, Chaas, papad, salad</div>
-        <span class="thali-price">$20.99</span>
-      </div>
-    </div>
-    <div class="thali-card reveal">
-      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&q=80" alt="Swaminarayan Thali" class="thali-img" loading="lazy">
-      <div class="thali-body">
-        <div class="thali-name">Swaminarayan Thali <span class="ibadge ibadge-s" style="display:inline-flex;vertical-align:middle;margin-left:4px;">S</span></div>
-        <div class="thali-desc">2 vegetables, one kathol, rice, khichdi, kadhi, dal, pickle, jaggery, sweet, raita, papad & farsan</div>
-        <span class="thali-price">$21.99</span>
-      </div>
-    </div>
-    <div class="thali-card reveal">
-      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&q=80" alt="Jain Thali" class="thali-img" loading="lazy">
-      <div class="thali-body">
-        <div class="thali-name">Jain Thali <span class="ibadge ibadge-j" style="display:inline-flex;vertical-align:middle;margin-left:4px;">J</span></div>
-        <div class="thali-desc">2 vegetables, one kathol, rice, khichdi, kadhi, dal, pickle, jaggery, sweet, raita, papad & farsan</div>
-        <span class="thali-price">$20.99</span>
-      </div>
-    </div>
-    <div class="thali-card reveal">
-      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&q=80" alt="Corporate Lunch" class="thali-img" loading="lazy">
-      <div class="thali-body">
-        <div class="thali-name">Vatan Corporate Lunch</div>
-        <div class="thali-desc">One appetizer, two vegetables, dal, rice, 3 rotis, raita & pickle</div>
-        <span class="thali-price">$12.99</span>
-      </div>
-    </div>
-    <div class="thali-card reveal">
-      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&q=80" alt="Student Special" class="thali-img" loading="lazy">
-      <div class="thali-body">
-        <div class="thali-name">Student Special <span style="font-size:0.7rem;color:rgba(253,246,233,0.5);">(To-Go only)</span></div>
-        <div class="thali-desc">2 vegetables, dal, rice, 3 rotis and raita</div>
-        <span class="thali-price">$10.99</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ CHAAT ═══ -->
-<div class="menu-section" id="chaat">
-  <div class="section-header reveal">
-    <img src="images/food/Panipuri.jpg" alt="Chaat" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Street Food</span>
-      <h2 class="section-name">Chatak Matak <em>Chaat</em></h2>
-      <p class="section-tagline">Mumbai's iconic street flavors — tangy, sweet, spicy & utterly addictive</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card has-img reveal">
-      <img src="images/food/Panipuri.jpg" alt="Pani Puri Shots" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Pani Poori Shots</div>
-        <div class="item-desc">Bite sized flour shell stuffed with potatoes & chickpeas dipped in 6 different sauces</div>
-        <div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div>
-      </div>
-    </div>
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Sev Poori</div><div class="item-desc">Crispy wheat poori topped with potatoes, onion, tomatoes, spicy mint, sweet tamarind, garlic chutney & fine sev</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Dahi Batata Poori</div><div class="item-desc">Crispy puff poori stuffed with potatoes, onion, tomatoes, spicy mint, sweet tamarind, garlic chutney & fine sev</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Samosa (3 Pcs.)</div><div class="item-desc">Crispy triangular pastry filled with spiced potatoes & peas, served with mint chutney</div><div class="item-footer"><span class="item-price">$7.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Samosa Chaat</div><div class="item-desc">Samosa with chickpeas curry, onion, tomatoes, spicy mint, sweet tamarind, garlic chutney & fine sev</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Papdi Chaat</div><div class="item-desc">Crushed pooris with potatoes, onion, tomatoes, spicy mint, sweet tamarind, garlic chutney, sweetened yogurt & fine sev</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Ragda Pattice</div><div class="item-desc">Potato patties & white peas curry garnished with onion, tomatoes, spicy mint, sweet tamarind, garlic chutney, sweetened yogurt & fine sev</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Bhel</div><div class="item-desc">Slightly sweet, spicy & sour puffed rice tossed with chaat chutneys, veggies & sev</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chaat Thali</div><div class="item-desc">Three pieces of pani puri, bhel, one piece of ragda pattice & three pieces of dahi puri</div><div class="item-footer"><span class="item-price">$16.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ PAV KA KAMAL ═══ -->
-<div class="menu-section" id="pav">
-  <div class="section-header reveal">
-    <img src="images/food/Misal.jpg" alt="Pav" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Mumbai Street Classics</span>
-      <h2 class="section-name">Pav Ka <em>Kamal</em></h2>
-      <p class="section-tagline">The magic of Mumbai's beloved pav — done Vatan's way</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card has-img reveal">
-      <img src="images/food/Misal.jpg" alt="Misal Pav" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Misal Pav</div>
-        <div class="item-desc">Famous Maharashtrian dish of spicy gravy & sprouts topped with gram flour crisps, served with pav & onions</div>
-        <div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div>
-      </div>
-    </div>
-    <div class="item-card has-img reveal">
-      <img src="images/food/Vadapavv.jpg" alt="Vada Pav" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Vada Pav</div>
-        <div class="item-desc">Indian style burger stuffed with spiced potato dumplings, deep fried & served with chutneys</div>
-        <div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div>
-      </div>
-    </div>
-    <div class="item-card has-img reveal">
-      <img src="images/food/Dabeli.jpg" alt="Dabeli" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Dabeli</div>
-        <div class="item-desc">Sweet & spicy potato mixture topped with garlic chutney & pomegranate seeds, served in pav</div>
-        <div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div>
-      </div>
-    </div>
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Pav Bhaji</div><div class="item-desc">Mumbai style mixed vegetables cooked with Indian spices, served with pav & onions</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Cheese Pav Bhaji</div><div class="item-desc">Mixed vegetables cooked with Indian spices & topped with Amul cheese, served with pav & onions</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Pav</div><div class="item-desc">Pav filled with mixed vegetable curry, served with onions</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Cheese Masala Pav</div><div class="item-desc">Pav filled with mixed vegetable curry & topped with Amul cheese, served with onions</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Szechwan Vada Pav</div><div class="item-desc">Indian style burger with spiced potato dumplings & fiery szechwan sauce</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Samosa Pav</div><div class="item-desc">Indian style burger stuffed with samosas & onions</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ GUJARATI STARTERS ═══ -->
-<div class="menu-section" id="gujarati-app">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=700&q=80" alt="Gujarati Starters" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">From Gujarat with Love</span>
-      <h2 class="section-name">Gujarati <em>Appetizers</em></h2>
-      <p class="section-tagline">Authentic Gujarati snacks — steamed, fried & full of flavor</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Methi Gota</div><div class="item-desc">Fried dumplings made of fenugreek leaves with chickpea flour</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Dokla Ka Mokla</div><div class="item-desc">Khaman dhokla cut into pieces, served with sweet & spicy sauce and yogurt</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Khichu</div><div class="item-desc">Authentic steamed rice flour served with spicy oil</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Bhungra Batata</div><div class="item-desc">Fried fryums served with garlic & spicy potato</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Muthiya</div><div class="item-desc">Steamed mix of rice, wheat & chickpea flour with Indian herbs</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Khaman Dhokla</div><div class="item-desc">Steamed savory cake with gram flour, topped with mustard, cumin & green chili tempering</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ INDO CHINESE ═══ -->
-<div class="menu-section" id="indochinese">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80" alt="Indo Chinese" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">East Meets India</span>
-      <h2 class="section-name">Indo-Chinese <em>Delights</em></h2>
-      <p class="section-tagline">The legendary fusion — Indian spices with Chinese techniques</p>
-    </div>
-  </div>
-  <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Starters</h4>
-  <div class="items-grid" style="margin-bottom:2rem;">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Spring Roll (3 Pcs.)</div><div class="item-desc">Crispy wheat wrap filled with shredded vegetables</div><div class="item-footer"><span class="item-price">$7.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chilly Milly Potatoes</div><div class="item-desc">Potato wedges cooked with szechwan sauce</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chinese Bhel</div><div class="item-desc">Vegetables tossed with fried noodles — served cold</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Gobi 65</div><div class="item-desc">Crunchy cauliflower florets batter fried with chilies & spices</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer 65</div><div class="item-desc">Crunchy paneer florets batter fried with chilies & spices</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Vegetable Manchurian (Dry)</div><div class="item-desc">Vegetable fried dumplings tossed in spicy tangy sauce & Indo-Chinese spices</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Gobi Manchurian (Dry)</div><div class="item-desc">Cauliflower fried dumplings tossed with spicy tangy sauce & Indo-Chinese spices</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Special Paneer Lollipops</div><div class="item-desc">Cottage cheese balls — crispy outside, soft inside — served on a stick</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Chilly (Dry)</div><div class="item-desc">Cottage cheese & green pepper tossed in spicy chili sauce with Indo-Chinese seasonings</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Okra Tempura</div><div class="item-desc">Bhindi stuffed with spices, coated with tempura batter & deep fried</div><div class="item-footer"><span class="item-price">$12.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-  <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Mains</h4>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Veg Hakka Noodles</div><div class="item-desc">Boiled wheat noodles & stir vegetables in soy-ginger sauce & Chinese seasonings</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Szechwan Noodles</div><div class="item-desc">Boiled wheat noodles & stir vegetables in spicy szechwan sauce</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Szechwan Noodles</div><div class="item-desc">Wheat noodles, stir vegetables & cottage cheese in spicy szechwan sauce</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Veg Fried Rice</div><div class="item-desc">Boiled rice & stir vegetables in soy-ginger sauce & Chinese seasonings</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Szechwan Fried Rice</div><div class="item-desc">Boiled rice & stir vegetables in spicy szechwan sauce</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Triple Szechwan Fried Rice</div><div class="item-desc">Layers of szechwan fried rice, noodles & veg manchurian gravy</div><div class="item-footer"><span class="item-price">$16.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Gobi Manchurian Gravy</div><div class="item-desc">Cauliflower fried dumplings tossed with spicy tangy sauce & Indo-Chinese spices with gravy</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Vegetable Manchurian Gravy</div><div class="item-desc">Vegetable fried dumplings tossed in spicy tangy sauce & Indo-Chinese spices with gravy</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Chilly Gravy</div><div class="item-desc">Cottage cheese & green pepper tossed in spicy chili sauce with gravy</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ PUNJABI CURRIES ═══ -->
-<div class="menu-section" id="punjabi">
-  <div class="section-header reveal">
-    <img src="images/food/Paneerbuttermasala.jpg" alt="Punjabi Curries" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">North Indian Classics</span>
-      <h2 class="section-name">Punjabi <em>Curries</em></h2>
-      <p class="section-tagline">Rich, creamy, boldly spiced — the heart of North Indian vegetarian cooking</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card has-img reveal">
-      <img src="images/food/Paneerbuttermasala.jpg" alt="Paneer Butter Masala" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Paneer Makhani</div>
-        <div class="item-desc">Cubes of homemade cottage cheese simmered in fresh tomato & butter cream sauce</div>
-        <div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div>
-      </div>
-    </div>
-    <div class="item-card has-img reveal">
-      <img src="images/food/Palakpaneer.jpg" alt="Saag Paneer" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Saag Paneer</div>
-        <div class="item-desc">Finely chopped garden fresh spinach cooked with homemade cottage cheese</div>
-        <div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div>
-      </div>
-    </div>
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Tikka Masala</div><div class="item-desc">Fire roasted cubes of marinated cottage cheese & green pepper in flavorful curry sauce</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Shahi Paneer</div><div class="item-desc">Rich Mughlai dish with cottage cheese in battered onion & cashew cream sauce</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Kadai Paneer</div><div class="item-desc">Homemade cottage cheese stir fried in onion & tomato curry paste</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Mutter Paneer</div><div class="item-desc">Peas cooked with homemade cottage cheese in creamy onion & tomato sauce</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Bhurji</div><div class="item-desc">Grated cottage cheese cooked in fresh tomato & butter cream sauce</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Navratan Korma</div><div class="item-desc">Mixed vegetables cooked in creamy mild sauce garnished with dry fruits</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Veg Jalfrezi</div><div class="item-desc">Fresh garden vegetables marinated in ginger-garlic, cooked with Indian spices</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Veg Kolhapuri</div><div class="item-desc">Spicy mixed vegetables marinated in ginger-garlic, cooked with Indian spices</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Peshawari Chole</div><div class="item-desc">Tender chickpeas cooked with Indian spices & simmered in onion gravy</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Bhindi Masala</div><div class="item-desc">Tender okra stir fried with Indian spices, onions & green peas</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Methi Mutter Malai</div><div class="item-desc">North Indian dish made from fenugreek leaves, green peas & heavy cream</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Cheese Butter Masala</div><div class="item-desc">Indian cottage cheese cubes in a creamy tomato sauce</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Malai Kofta</div><div class="item-desc">Potato & cottage cheese balls stuffed with dry fruit in a delicate cream sauce</div><div class="item-footer"><span class="item-price">$16.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Aloo Jeera</div><div class="item-desc">Boiled potatoes tossed in simple masalas & coarsely crushed roasted cumin seeds</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Aloo Palak</div><div class="item-desc">Finely chopped garden fresh spinach cooked with potatoes</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Aloo Mutter</div><div class="item-desc">Green peas & potatoes cooked with Indian spices in ginger-garlic tomato sauce</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Lasooni Palak</div><div class="item-desc">Finely cut garden fresh spinach cooked in garlic flavored sauce</div><div class="item-footer"><span class="item-price">$16.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Koya Kaju</div><div class="item-desc">Curry made with toasted cashew laced in a creamy sauce</div><div class="item-footer"><span class="item-price">$16.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Sham Severa</div><div class="item-desc">Exotic combination of spinach & cottage cheese dumplings in a creamy sauce</div><div class="item-footer"><span class="item-price">$16.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Dal Tadka</div><div class="item-desc">Delicate blend of yellow lentils with tempered spices</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Dal Makhani</div><div class="item-desc">Mix lentils cooked in thick buttery stew & garnished with fresh cream</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ SHAAK VAAK ═══ -->
-<div class="menu-section" id="shaak">
-  <div class="section-header reveal">
-    <img src="images/food/Bharta.jpg" alt="Shaak Vaak" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Gujarati Vegetable Curries</span>
-      <h2 class="section-name">Shaak <em>Vaak</em></h2>
-      <p class="section-tagline">Traditional Gujarati vegetable dishes — rustic, wholesome & deeply flavorful</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card has-img reveal">
-      <img src="images/food/Bharta.jpg" alt="Baigan Bharta" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Baigan Bharta</div>
-        <div class="item-desc">Roasted eggplant cooked in masala paste made of green onions & sesame seeds</div>
-        <div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div>
-      </div>
-    </div>
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Undhiyu</div><div class="item-desc">Traditional & authentic mix vegetables cooked with grated coconut, peanuts & spices</div><div class="item-footer"><span class="item-price">$15.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Sev Tameta</div><div class="item-desc">Tomato cooked with chef special spices, garnished with chickpea noodles</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Rasawala Lasaniya Batata</div><div class="item-desc">Potato cooked with garlic & special spices</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Turiya Patra</div><div class="item-desc">Ridge gourd mixed with colocasia leaf with authentic spices</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Sukhi Bhaji</div><div class="item-desc">Dry boiled potato with special spices</div><div class="item-footer"><span class="item-price">$14.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ HALKE PHULKE ═══ -->
-<div class="menu-section" id="halke">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=700&q=80" alt="Halke Phulke" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Bread & Curry Combos</span>
-      <h2 class="section-name">Halke <em>Phulke</em></h2>
-      <p class="section-tagline">Light & satisfying bread-curry combinations — comfort food at its finest</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Dal Dhokli</div><div class="item-desc">Whole wheat dumplings cooked in lentil soup</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Vagharelo Rotlo</div><div class="item-desc">Millet flour bread cooked in buttermilk & spices</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Khichdi</div><div class="item-desc">Rice cooked with lentils, vegetables & Indian spices</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Dal Khichdi</div><div class="item-desc">Mixture of yellow lentils with rice blended with special chef tadka</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Rotla Shak</div><div class="item-desc">2 millet flour breads with choice of Gujarati shak or curry of the day, pickle, jaggery, garlic chutney, papad & raita</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Thepla Shak</div><div class="item-desc">2 fenugreek leaves bread served with choice of Gujarati shak or curry of the day, pickle, papad & raita</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Puran Poli Shak</div><div class="item-desc">2 sweet lentil breads served with choice of Gujarati shak or curry, pickle, papad & raita</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Poori Shak</div><div class="item-desc">4 whole wheat deep fried breads with choice of Gujarati shak or curry, pickle, papad & raita</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Rotli Shak</div><div class="item-desc">3 wheat breads with choice of Gujarati shak or curry, pickle, papad & raita</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chhole Bhature</div><div class="item-desc">2 fried Indian breads with curried chickpeas, onions, raita & papad</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chhole Poori</div><div class="item-desc">4 whole wheat deep fried breads with curried chickpeas, onions, raita & papad</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Poori Bhaji</div><div class="item-desc">4 whole wheat deep fried breads with dry potato curry, raita & papad</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Makki di Roti Sarson da Saag</div><div class="item-desc">2 corn flour breads with special North Indian mustard flavored curry</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ SANDWICHES ═══ -->
-<div class="menu-section" id="sandwich">
-  <div class="section-header reveal">
-    <img src="images/food/Sandwiches.jpg" alt="Sandwiches" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Rekdi Wali</span>
-      <h2 class="section-name">Indian <em>Sandwiches</em></h2>
-      <p class="section-tagline">Mumbai's street-style sandwiches — layered, toasted & packed with flavor</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card has-img reveal">
-      <img src="images/food/Sandwiches.jpg" alt="Veg Sandwich" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Vegetable Sandwich</div>
-        <div class="item-desc">3 layers of bread stuffed with potato, cucumber, onion & tomato with green mint & red garlic chutney</div>
-        <div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div>
-      </div>
-    </div>
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Vegetable Cheese Sandwich</div><div class="item-desc">3 layers with potato, cucumber, onion & tomato, mint & garlic chutney, garnished with Amul cheese</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Toast Sandwich</div><div class="item-desc">3 layers of toasted bread stuffed with masala aloo, cucumber, onion & tomato with chutneys</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Cheese Toast Sandwich</div><div class="item-desc">3 layers toasted bread with masala aloo, cucumber, onion & tomato, garnished with Amul cheese</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Samosa Grill Sandwich</div><div class="item-desc">3 layers of toasted bread stuffed with samosa, green mint & red garlic chutney</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Cheese Samosa Grill Sandwich</div><div class="item-desc">Toasted bread stuffed with samosa, chutneys, garnished with Amul cheese</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Cheese Chilly Grill Toast</div><div class="item-desc">2 layers of toasted bread stuffed with Amul cheese & green chili stuffing</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Modi Sandwich</div><div class="item-desc">4 layers of bread with melted Vatan's signature filling</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Vegetable Jumbo Junglee Sandwich</div><div class="item-desc">Home-style round bread stuffed with mayonnaise, lettuce, potatoes, cucumber, onion & tomatoes with mint & garlic chutney</div><div class="item-footer"><span class="item-price">$17.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Jumbo Junglee Sandwich</div><div class="item-desc">Home-style round bread stuffed with tandoori paneer, bell peppers & onions, spiced with mint & garlic chutney</div><div class="item-footer"><span class="item-price">$17.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ ROLLS & FRANKIES ═══ -->
-<div class="menu-section" id="rolls">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80" alt="Rolls" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Chithi Aayi Hai</span>
-      <h2 class="section-name">Rolls & <em>Frankies</em></h2>
-      <p class="section-tagline">Wrapped, spiced & rolled — perfect on the go</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Veg Frankie</div><div class="item-desc">Classic vegetarian Frankie roll</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Veg Cheese Frankie</div><div class="item-desc">Classic Frankie roll with melted cheese</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Szechwan Cheese Roll</div><div class="item-desc">Roti wrapped with spiced mashed potatoes in szechwan sauce & Amul cheese</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Szechwan Roll</div><div class="item-desc">Roti wrapped with spiced mashed potatoes in szechwan sauce</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Tikka Kathi Roll</div><div class="item-desc">Grilled paneer wrapped in flat paratha with onions & green pepper</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Mix Vegetable Kathi Roll</div><div class="item-desc">Mixed vegetables wrapped in flat paratha in ground spices</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Aachari Aloo Kathi Roll</div><div class="item-desc">Spiced potato patty marinated in pickle, wrapped in flat paratha</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chana Masala Kathi Roll</div><div class="item-desc">Chickpeas wrapped in flat paratha in ground spices</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ DESI PIZZAS ═══ -->
-<div class="menu-section" id="desi-pizza">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80" alt="Desi Pizzas" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Indian Style</span>
-      <h2 class="section-name">Desi <em>Pizzas</em></h2>
-      <p class="section-tagline">Pizza with an Indian heart — Amul cheese, desi toppings, Vatan's magic</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Cheese Pizza</div><div class="item-desc">Classic cheese pizza with Amul cheese on Indian bread base</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Cheese Chilly Pizza</div><div class="item-desc">Cheese pizza with a fiery chili kick</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Mix Vegetable Pizza</div><div class="item-desc">Loaded with fresh seasonal vegetables & Amul cheese</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Pizza</div><div class="item-desc">Spiced cottage cheese on Indian pizza bread with cheese</div><div class="item-footer"><span class="item-price">$10.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ TANDOOR ═══ -->
-<div class="menu-section" id="tandoor">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=700&q=80" alt="Tandoor" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">From the Clay Oven</span>
-      <h2 class="section-name">Tandoor <em>Breads</em></h2>
-      <p class="section-tagline">Hand-stretched breads, baked fresh in our clay tandoor</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Tandoori Roti</div><div class="item-desc">Leavened whole wheat bread baked in clay oven</div><div class="item-footer"><span class="item-price">$3.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Butter Tandoori Roti</div><div class="item-desc">Leavened whole wheat bread baked in clay oven, topped with butter</div><div class="item-footer"><span class="item-price">$4.49</span><div class="item-badges"><span class="ibadge ibadge-j">J</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Plain Naan</div><div class="item-desc">Leavened white flour bread baked in tandoor oven</div><div class="item-footer"><span class="item-price">$2.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Butter Naan</div><div class="item-desc">Leavened white flour bread baked in clay oven, topped with butter</div><div class="item-footer"><span class="item-price">$3.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Garlic Naan</div><div class="item-desc">Leavened white flour bread baked in clay oven with chopped garlic</div><div class="item-footer"><span class="item-price">$4.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chili Naan</div><div class="item-desc">Finely chopped fresh chilies mixed with spices, baked in white flour dough</div><div class="item-footer"><span class="item-price">$4.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chili Garlic Naan</div><div class="item-desc">Finely chopped chilies & chopped garlic baked in white flour dough</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Onion Kulcha</div><div class="item-desc">Finely chopped fresh onions mixed with spices, baked in white flour dough</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Kulcha</div><div class="item-desc">Finely chopped cottage cheese mixed with spices, baked in white flour dough</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Kashmiri Kulcha</div><div class="item-desc">Tandoor-baked Indian bread stuffed with roasted nuts & dry fruits</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Vatan Assorted Basket</div><div class="item-desc">A combination of butter naan, garlic naan & tandoor roti — 1 each</div><div class="item-footer"><span class="item-price">$11.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Plain Paratha</div><div class="item-desc">Bread made from whole wheat dough</div><div class="item-footer"><span class="item-price">$4.49</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Stuffed Paratha</div><div class="item-desc">Choice of: Aloo / Gobi / Onion / Cabbage / Mix Veg / Jalapeño / Cheese (+$1) / Paneer (+$1) — includes yogurt, pickle & salad</div><div class="item-footer"><span class="item-price">$6.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-  <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin:2rem 0 1rem;">Gujarati Breads</h4>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Fulka / Chapati (2 Pcs.)</div><div class="item-desc">Thin whole wheat bread</div><div class="item-footer"><span class="item-price">$0.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Poori (2 Pcs.)</div><div class="item-desc">Whole wheat deep fried bread</div><div class="item-footer"><span class="item-price">$0.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Rotla</div><div class="item-desc">Bread made with millet flour</div><div class="item-footer"><span class="item-price">$3.49</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Thepla</div><div class="item-desc">Bread made with fenugreek leaves</div><div class="item-footer"><span class="item-price">$2.49</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Puran Poli</div><div class="item-desc">Bread stuffed with sweet lentils</div><div class="item-footer"><span class="item-price">$3.49</span><div class="item-badges"></div></div></div></div>
-  </div>
-  <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin:2rem 0 1rem;">Tandoor Barbeque</h4>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Mix Grilled Vegetables</div><div class="item-desc">Mixed vegetables marinated in yogurt-based chef special curry, cooked in tandoor</div><div class="item-footer"><span class="item-price">$16.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Tikka</div><div class="item-desc">Cubes of cottage cheese marinated in yogurt-based chef special curry with bell pepper & onion, cooked in tandoor</div><div class="item-footer"><span class="item-price">$16.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ RICE ═══ -->
-<div class="menu-section" id="rice">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700&q=80" alt="Rice" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Aromatic</span>
-      <h2 class="section-name">Rice <em>Preparations</em></h2>
-      <p class="section-tagline">Fragrant basmati rice cooked with love and the finest spices</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Jeera Rice</div><div class="item-desc">Basmati rice cooked & topped with cumin seeds</div><div class="item-footer"><span class="item-price">$6.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Tawa Pulav</div><div class="item-desc">Basmati rice cooked with seasonal vegetables & Indian herbs</div><div class="item-footer"><span class="item-price">$12.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Veg Biryani</div><div class="item-desc">Slow-cooked basmati rice with vegetables, aromatic herbs & exotic spices — gluten free</div><div class="item-footer"><span class="item-price">$12.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Paneer Biryani</div><div class="item-desc">Slow-cooked basmati rice with vegetables, aromatic herbs, cottage cheese & exotic spices — gluten free</div><div class="item-footer"><span class="item-price">$13.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ SOUPS ═══ -->
-<div class="menu-section" id="soups">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=700&q=80" alt="Soups" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Garma Garam</span>
-      <h2 class="section-name">Hot <em>Soups</em></h2>
-      <p class="section-tagline">Warming, nourishing bowls to start your meal right</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Hot & Sour Soup</div><div class="item-desc">An exotic soup of chopped mixed vegetables with fresh onions, garlic & ginger</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Manchow Soup</div><div class="item-desc">Indo-Chinese soup with oriental vegetables & spices</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Tomato Soup</div><div class="item-desc">Smooth tomato soup seasoned with herbs & a touch of cream</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Mulligatawny Soup</div><div class="item-desc">Delicately seasoned split lentil soup topped with fresh garlic & ginger</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Sweet Corn Soup</div><div class="item-desc">Light vegetable soup made with slightly sweet corn kernels</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Lemon and Coriander Soup</div><div class="item-desc">Indo-Chinese soup made with fresh coriander, lemon & Indian spices</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ FRIES ═══ -->
-<div class="menu-section" id="fries">
-  <div class="section-header reveal">
-    <img src="images/food/Frenchfries.jpg" alt="Fries" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Crispy Sides</span>
-      <h2 class="section-name">Our <em>Fries</em></h2>
-      <p class="section-tagline">Golden, crispy & perfectly seasoned</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card has-img reveal">
-      <img src="images/food/Frenchfries.jpg" alt="French Fries" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">French Fries</div>
-        <div class="item-desc">Classic golden crispy fries, served with ketchup & mayo</div>
-        <div class="item-footer"><span class="item-price">$6.99</span><div class="item-badges"></div></div>
-      </div>
-    </div>
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Cheese Fries</div><div class="item-desc">Golden fries topped with melted cheese</div><div class="item-footer"><span class="item-price">$7.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Black Pepper / White Pepper / Peri Peri Fries</div><div class="item-desc">Choose your seasoning — bold, zesty or fiery</div><div class="item-footer"><span class="item-price">$6.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ SIZZLERS ═══ -->
-<div class="menu-section" id="sizzlers">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80" alt="Sizzlers" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Show Stoppers</span>
-      <h2 class="section-name">Spectacular <em>Sizzlers</em></h2>
-      <p class="section-tagline">Arriving at your table sizzling hot — a feast for the senses</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Veggie Sizzler</div><div class="item-desc">Cottage cheese cutlets flavoured with BBQ sauce on a bed of rice/noodles with stir fried exotic veggies & masala fries</div><div class="item-footer"><span class="item-price">$17.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Chinese Sizzler</div><div class="item-desc">Manchurian or chilli cottage cheese in szechwan sauce on a bed of rice/noodles with stir fried exotic veggies & fries</div><div class="item-footer"><span class="item-price">$17.99</span><div class="item-badges"><span class="ibadge ibadge-j">J</span><span class="ibadge ibadge-s">S</span></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ DESSERTS ═══ -->
-<div class="menu-section" id="desserts">
-  <div class="section-header reveal">
-    <img src="images/food/GJ.jpg" alt="Desserts" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Sweet Endings</span>
-      <h2 class="section-name">Indian <em>Desserts</em></h2>
-      <p class="section-tagline">Mithai, halwa & more — end every meal on a sweet note</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card has-img reveal">
-      <img src="images/food/GJ.jpg" alt="Gulab Jamun" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Gulab Jamun</div>
-        <div class="item-desc">Milk dumplings served in rose-flavored sugar syrup</div>
-        <div class="item-footer"><span class="item-price">$4.99</span><div class="item-badges"></div></div>
-      </div>
-    </div>
-    <div class="item-card has-img reveal">
-      <img src="images/food/Gajarkahalwa.jpg" alt="Gajar Halwa" class="item-card-img" loading="lazy">
-      <div class="item-card-body">
-        <div class="item-name">Gajar Halwa</div>
-        <div class="item-desc">Sweet made with grated carrots & koya — a timeless Indian classic</div>
-        <div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div>
-      </div>
-    </div>
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Rasgulla</div><div class="item-desc">Ball-shaped dumplings of Indian cottage cheese cooked in light sugar syrup</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Dudhi Halwa</div><div class="item-desc">Sweet made with grated bottle gourd & koya</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Jalebi with Rabdi</div><div class="item-desc">Jalebi served with homemade evaporated milk</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Gulab Jamun with Rabdi</div><div class="item-desc">Gulab jamun served with homemade evaporated milk</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Gajar Halwa with Rabdi</div><div class="item-desc">Gajar halwa served with homemade evaporated milk</div><div class="item-footer"><span class="item-price">$8.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Sizzling Brownie with Ice Cream</div><div class="item-desc">Warm brownie served sizzling with a scoop of ice cream</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Falooda</div><div class="item-desc">Popular ice cream dessert made with vermicelli & jelly</div><div class="item-footer"><span class="item-price">$6.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-  <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--saffron);margin:2rem 0 1rem;">Bakery Pastries — $4.00 each</h4>
-  <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-    <span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Black Forest</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Chocolate Butter Scotch</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">German Black Forest</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Mango</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Mix Fruit</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Moca</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Pineapple</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Tiramisu</span>
-  </div>
-  <h4 style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--saffron);margin:2rem 0 1rem;">Puffs — $3.00 each</h4>
-  <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-    <span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Aloo Puff</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Jalapeño Cheese Puff</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Paneer Puff</span><span style="background:var(--white);border:1px solid rgba(212,168,83,0.2);border-radius:50px;padding:0.3rem 0.85rem;font-size:0.82rem;color:var(--text-body);">Veg Puff</span>
-  </div>
-</div>
-
-<!-- ═══ BEVERAGES ═══ -->
-<div class="menu-section" id="beverages">
-  <div class="section-header reveal">
-    <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=700&q=80" alt="Beverages" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Cool Down</span>
-      <h2 class="section-name">Drinks & <em>Beverages</em></h2>
-      <p class="section-tagline">Refreshing Indian drinks — from creamy lassis to spiced mojitos</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Mojito</div><div class="item-desc">Classic / Tamarind Orange / Paan / Cumin Spice / Mango Jalapeño</div><div class="item-footer"><span class="item-price">$6.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Lassi</div><div class="item-desc">Sweet / Salt / Mango / Rose / Chocolate / Rajwadi</div><div class="item-footer"><span class="item-price">$5.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Chaas</div><div class="item-desc">Spiced buttermilk — India's original probiotic drink</div><div class="item-footer"><span class="item-price">$3.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Chaas Bottle</div><div class="item-desc">Take-home bottle of our signature spiced buttermilk</div><div class="item-footer"><span class="item-price">$9.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Jal Jeera Soda</div><div class="item-desc">Tangy cumin spiced Indian sparkling drink</div><div class="item-footer"><span class="item-price">$6.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Thums Up</div><div class="item-desc">Spiced cola with Indian masala twist</div><div class="item-footer"><span class="item-price">$6.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Tea</div><div class="item-desc">Aromatic spiced Indian chai</div><div class="item-footer"><span class="item-price">$1.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Madras Coffee</div><div class="item-desc">South Indian style filtered coffee</div><div class="item-footer"><span class="item-price">$1.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Can Soda</div><div class="item-desc">Assorted can sodas</div><div class="item-footer"><span class="item-price">$1.99</span><div class="item-badges"></div></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Bottled Water</div><div class="item-desc">Still water</div><div class="item-footer"><span class="item-price">$1.99</span><div class="item-badges"></div></div></div></div>
-  </div>
-</div>
-
-<!-- ═══ ACCOMPANIMENTS ═══ -->
-<div class="menu-section" id="accompaniments">
-  <div class="section-header reveal">
-    <img src="images/food/GJ.jpg" alt="Extras" class="section-header-img" loading="lazy">
-    <div class="section-header-text">
-      <span class="section-cat-label">Add-Ons</span>
-      <h2 class="section-name">Extras & <em>Accompaniments</em></h2>
-      <p class="section-tagline">Complete your meal with these little essentials</p>
-    </div>
-  </div>
-  <div class="items-grid">
-    <div class="item-card reveal"><div class="item-card-body"><div class="item-name">Roasted Papad</div><div class="item-desc">Light & crispy lentil wafer, roasted fresh</div><div class="item-footer"><span class="item-price">$1.99</span></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Fried Papad</div><div class="item-desc">Deep fried lentil wafer, golden & crunchy</div><div class="item-footer"><span class="item-price">$1.99</span></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Masala Papad</div><div class="item-desc">Papad topped with onion, tomatoes & spicy chutneys</div><div class="item-footer"><span class="item-price">$3.99</span></div></div></div><div class="item-card reveal"><div class="item-card-body"><div class="item-name">Raita</div><div class="item-desc">Creamy yogurt with spices</div><div class="item-footer"><span class="item-price">$2.99</span></div></div></div>
-  </div>
-</div>
-
-</div><!-- end menu-body -->
+<!-- MENU BODY — built by JS -->
+<div class="menu-body" id="menuBody"></div>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-bottom">
-      <p>© 2025 Vatan Indian Vegetarian Cuisine & Bakery. All rights reserved. Prices subject to change.</p>
+      <p>© 2025 Vatan Indian Vegetarian Cuisine &amp; Bakery. All rights reserved. Prices subject to change.</p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="reservations.html">Reservations</a>
@@ -928,7 +497,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   <div class="modal">
     <button class="modal-close" onclick="document.getElementById('orderModal').classList.remove('open')">✕</button>
     <h3>Order Online</h3>
-    <p class="modal-sub">Choose your location & platform</p>
+    <p class="modal-sub">Choose your location &amp; platform</p>
     <a href="order.html" class="modal-order-btn" style="display:flex;width:100%;background:rgba(200,102,10,0.13);border-color:rgba(200,102,10,0.5);color:var(--gold-light);font-weight:700;margin-bottom:1.25rem;font-size:0.88rem;">🛍️&nbsp; Order Direct</a>
     <div class="modal-location">
       <div class="modal-location-title">📍 Jersey City — 808 Newark Ave</div>
@@ -951,15 +520,193 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   </div>
 </div>
 
+<script src="menu-data.js"></script>
 <script>
 const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
 
+// ─── SECTION HEADER IMAGE FALLBACKS ───────────────────────────────────────────
+const HEADER_FALLBACKS = {
+  'thali':          'https://images.pexels.com/photos/32797056/pexels-photo-32797056.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'gujarati-app':   'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=700&q=80',
+  'indochinese':    'https://images.pexels.com/photos/2764905/pexels-photo-2764905.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'halke':          'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=700&q=80',
+  'rolls':          'https://images.pexels.com/photos/29173093/pexels-photo-29173093.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'desi-pizza':     'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=700&q=80',
+  'tandoor':        'https://images.pexels.com/photos/37223237/pexels-photo-37223237.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'rice':           'https://images.pexels.com/photos/7593253/pexels-photo-7593253.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'soups':          'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=700&q=80',
+  'sizzlers':       'https://images.pexels.com/photos/13522187/pexels-photo-13522187.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'beverages':      'https://images.pexels.com/photos/14930476/pexels-photo-14930476.jpeg?auto=compress&cs=tinysrgb&w=700',
+  'pav':            'images/food/Vadapavv.jpg',
+  'accompaniments': 'https://images.pexels.com/photos/34507153/pexels-photo-34507153.jpeg?auto=compress&cs=tinysrgb&w=700',
+};
+const DEFAULT_IMG = 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80';
+
+// ─── RENDER HELPERS ───────────────────────────────────────────────────────────
+
+function fmtPrice(p) {
+  return '$' + Number(p).toFixed(2);
+}
+
+function renderBadges(tags, inline) {
+  return (tags || []).map(t => {
+    const style = inline ? ' style="display:inline-flex;vertical-align:middle;margin-left:4px;"' : '';
+    if (t === 'J') return `<span class="ibadge ibadge-j"${style}>J</span>`;
+    if (t === 'S') return `<span class="ibadge ibadge-s"${style}>S</span>`;
+    return '';
+  }).join('');
+}
+
+function accentName(name) {
+  const w = name.trim().split(/\s+/);
+  if (w.length === 1) return `<em>${name}</em>`;
+  const last = w.pop();
+  return `${w.join(' ')} <em>${last}</em>`;
+}
+
+// ─── ITEM CARD ────────────────────────────────────────────────────────────────
+
+function renderItemCard(item) {
+  const note   = item.note ? ` <span class="item-note">(${item.note})</span>` : '';
+  const badges = renderBadges(item.tags);
+
+  if (item.img) {
+    return `<div class="item-card has-img reveal">
+      <img src="${item.img}" alt="${item.name}" class="item-card-img" loading="lazy">
+      <div class="item-card-body">
+        <div class="item-name">${item.name}${note}</div>
+        <div class="item-desc">${item.desc}</div>
+        <div class="item-footer">
+          <span class="item-price">${fmtPrice(item.price)}</span>
+          <div class="item-badges">${badges}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  return `<div class="item-card reveal">
+    <div class="item-card-body">
+      <div class="item-name">${item.name}${note}</div>
+      <div class="item-desc">${item.desc}</div>
+      <div class="item-footer">
+        <span class="item-price">${fmtPrice(item.price)}</span>
+        <div class="item-badges">${badges}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ─── THALI CARD ───────────────────────────────────────────────────────────────
+
+function renderThaliCard(item) {
+  const badges  = renderBadges(item.tags, true);
+  const note    = item.note ? `<div class="thali-note">(${item.note})</div>` : '';
+  const imgHtml = item.img
+    ? `<img src="${item.img}" alt="${item.name}" class="thali-img" loading="lazy">`
+    : '';
+
+  return `<div class="thali-card reveal">
+    ${imgHtml}
+    <div class="thali-body">
+      <div class="thali-name">${item.name} ${badges}</div>
+      <div class="thali-desc">${item.desc}</div>
+      <span class="thali-price">${fmtPrice(item.price)}</span>
+      ${note}
+    </div>
+  </div>`;
+}
+
+// ─── SECTION BUILDER ──────────────────────────────────────────────────────────
+
+function renderSection(cat) {
+  const activeItems = (cat.items || []).filter(i => i.active !== false);
+  if (!activeItems.length) return '';
+
+  const hImg = cat.headerImg || HEADER_FALLBACKS[cat.id] || DEFAULT_IMG;
+
+  const sectionHeader = `<div class="section-header reveal">
+    <img src="${hImg}" alt="${cat.name}" class="section-header-img" loading="lazy">
+    <div class="section-header-text">
+      <span class="section-cat-label">${cat.label}</span>
+      <h2 class="section-name">${accentName(cat.name)}</h2>
+      <p class="section-tagline">${cat.tagline}</p>
+    </div>
+  </div>`;
+
+  const order  = [];
+  const groups = new Map();
+  for (const item of activeItems) {
+    const key = item.section || '';
+    if (!groups.has(key)) { groups.set(key, []); order.push(key); }
+    groups.get(key).push(item);
+  }
+
+  const body = order.map((key, i) => {
+    const lbl  = key ? `<h4 class="subsec-label" style="margin-top:${i > 0 ? '2rem' : '0'};">${key}</h4>` : '';
+    const grid = `<div class="items-grid">${groups.get(key).map(renderItemCard).join('')}</div>`;
+    return lbl + grid;
+  }).join('');
+
+  return `<div class="menu-section" id="${cat.id}">${sectionHeader}${body}</div>`;
+}
+
+// ─── BOOTSTRAP ────────────────────────────────────────────────────────────────
+
+function buildMenu() {
+  const catNav   = document.getElementById('catNav');
+  const menuBody = document.getElementById('menuBody');
+  catNav.innerHTML  = VATAN_MENU.map((cat, i) =>
+    `<button class="cat-tab${i === 0 ? ' active' : ''}" data-target="${cat.id}">${cat.emoji} ${cat.name}</button>`
+  ).join('');
+  menuBody.innerHTML = VATAN_MENU.map(renderSection).join('');
+}
+
+buildMenu();
+
+// ─── MOBILE CAT-NAV PIN ───────────────────────────────────────────────────────
+// iOS Safari: position:sticky collapses to ~0 height when the element contains
+// an overflow:auto child. Fix: measure the natural scroll trigger point at load,
+// then switch to position:fixed only once the user scrolls past that point.
+(function(){
+  if (window.innerWidth > 768) return;
+  var catWrap  = document.getElementById('catNavWrapper');
+  var mBody    = document.getElementById('menuBody');
+  if (!catWrap || !mBody) return;
+
+  var fixedTop = 70 + (document.querySelector('.legend-bar')?.offsetHeight || 30);
+  var catH     = catWrap.offsetHeight;
+  // Distance from page top at which cat-nav should pin
+  var triggerY = catWrap.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - fixedTop;
+  var pinned   = false;
+
+  function pin() {
+    if (pinned) return;
+    pinned = true;
+    catWrap.style.cssText = 'position:fixed;top:' + fixedTop + 'px;left:0;right:0;';
+    mBody.style.marginTop = catH + 'px';
+  }
+  function unpin() {
+    if (!pinned) return;
+    pinned = false;
+    catWrap.style.cssText = '';
+    mBody.style.marginTop = '';
+  }
+
+  window.addEventListener('scroll', function() {
+    ((window.scrollY || window.pageYOffset) >= triggerY) ? pin() : unpin();
+  }, { passive: true });
+
+  // Handle page loaded already mid-scroll (e.g. back-navigation)
+  if ((window.scrollY || window.pageYOffset) >= triggerY) pin();
+})();
+
+// ─── NAV BEHAVIOURS ───────────────────────────────────────────────────────────
+
 function toggleCallDropdown(e) {
   e.stopPropagation();
-  const dd = document.getElementById('callUsDropdown');
+  const dd  = document.getElementById('callUsDropdown');
   const btn = document.getElementById('callUsBtn');
-  const isOpen = dd.classList.toggle('open');
-  btn.setAttribute('aria-expanded', isOpen);
+  btn.setAttribute('aria-expanded', dd.classList.toggle('open'));
 }
 document.addEventListener('click', function(e) {
   const w = document.getElementById('callUsWrapper');
@@ -969,71 +716,102 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Navbar
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', scrollY > 60);
   document.getElementById('backToTop').classList.toggle('visible', scrollY > 400);
 });
 
-// Hamburger
 const hb = document.getElementById('hamburger');
 const mm = document.getElementById('mobileMenu');
 hb.addEventListener('click', () => { hb.classList.toggle('open'); mm.classList.toggle('open'); });
 document.addEventListener('click', e => {
   if (!hb.contains(e.target) && !mm.contains(e.target)) { hb.classList.remove('open'); mm.classList.remove('open'); }
 });
-
-// Modal
 document.getElementById('orderModal').addEventListener('click', e => {
   if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
 });
 
-// Category tab scroll
-// Cat-tab click via event delegation (no inline onclick)
+// ─── CAT-NAV SCROLL FADE MASKS & ARROWS ──────────────────────────────────────
+
+(function() {
+  const scroller = document.getElementById('catNav');
+  const wrapper  = document.getElementById('catNavWrapper');
+
+  function updateFades() {
+    const { scrollLeft, scrollWidth, clientWidth } = scroller;
+    const atStart = scrollLeft <= 8;
+    const atEnd   = scrollLeft + clientWidth >= scrollWidth - 8;
+    wrapper.classList.toggle('fade-left',    !atStart);
+    wrapper.classList.toggle('no-fade-right', atEnd);
+  }
+
+  scroller.addEventListener('scroll', updateFades, { passive: true });
+  requestAnimationFrame(updateFades);
+})();
+
+// ─── SCROLL ARROW BUTTONS (desktop only) ─────────────────────────────────────
+(function(){
+  const scroller   = document.getElementById('catNav');
+  const arrowLeft  = document.getElementById('catArrowLeft');
+  const arrowRight = document.getElementById('catArrowRight');
+  const STEP = 220;
+
+  function syncArrows(){
+    const {scrollLeft,scrollWidth,clientWidth} = scroller;
+    arrowLeft.classList.toggle('hidden',  scrollLeft <= 4);
+    arrowRight.classList.toggle('hidden', scrollLeft + clientWidth >= scrollWidth - 4);
+  }
+
+  arrowLeft.addEventListener('click',  () => scroller.scrollBy({left:-STEP,behavior:'smooth'}));
+  arrowRight.addEventListener('click', () => scroller.scrollBy({left: STEP,behavior:'smooth'}));
+  scroller.addEventListener('scroll', syncArrows, {passive:true});
+  requestAnimationFrame(syncArrows);
+})();
+
+// ─── CATEGORY TAB SCROLL ─────────────────────────────────────────────────────
+
 document.getElementById('catNav').addEventListener('click', function(e) {
   const btn = e.target.closest('.cat-tab');
   if (!btn) return;
-  const id = btn.dataset.target;
-  if (!id) return;
-  const el = document.getElementById(id);
+  const el = document.getElementById(btn.dataset.target);
   if (!el) return;
   const navH = document.querySelector('nav')?.offsetHeight || 70;
   const legH = document.querySelector('.legend-bar')?.offsetHeight || 46;
-  const catH = document.querySelector('.cat-nav')?.offsetHeight || 44;
-  const offset = navH + legH + catH + 8;
-  const top = el.getBoundingClientRect().top + window.scrollY - offset;
-  window.scrollTo({top, behavior:'smooth'});
+  const catH = document.getElementById('catNavWrapper')?.offsetHeight || 44;
+  window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - navH - legH - catH - 8, behavior: 'smooth' });
   document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
 });
 
-// Active tab on scroll
-const sections = document.querySelectorAll('.menu-section');
-const tabs = document.querySelectorAll('.cat-tab');
-const catIds = ['thali','chaat','pav','gujarati-app','indochinese','punjabi','shaak','halke','sandwich','rolls','desi-pizza','tandoor','rice','soups','fries','sizzlers','desserts','beverages','accompaniments'];
+// ─── ACTIVE TAB ON SCROLL ────────────────────────────────────────────────────
 
-const io = new IntersectionObserver(entries => {
+const catIds      = VATAN_MENU.map(c => c.id);
+const allTabs     = document.querySelectorAll('.cat-tab');
+const allSections = document.querySelectorAll('.menu-section');
+
+const sectionObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       const idx = catIds.indexOf(e.target.id);
       if (idx > -1) {
-        tabs.forEach(t => t.classList.remove('active'));
-        tabs[idx]?.classList.add('active');
-        // Scroll tab into view
-        tabs[idx]?.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+        allTabs.forEach(t => t.classList.remove('active'));
+        allTabs[idx]?.classList.add('active');
+        allTabs[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
     }
   });
-}, {rootMargin:'-20% 0px -70% 0px'});
+}, { rootMargin: '-20% 0px -70% 0px' });
 
-sections.forEach(s => io.observe(s));
+allSections.forEach(s => sectionObserver.observe(s));
 
-// Reveal
-const rev = new IntersectionObserver(entries => {
+// ─── REVEAL ON SCROLL ────────────────────────────────────────────────────────
+
+const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, {threshold:0.08});
-document.querySelectorAll('.reveal').forEach(el => rev.observe(el));
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 </script>
 </body>
 </html>
