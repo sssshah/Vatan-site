@@ -77,6 +77,17 @@
     <lastmod>2026-06-29</lastmod>
   </url>
 
+  <!-- Jersey City landing pages -->
+  <url>
+    <loc>https://vatans.com/catering-jersey-city.html</loc>
+    <lastmod>2026-07-03</lastmod>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/jain-swaminarayan-jersey-city.html</loc>
+    <lastmod>2026-07-03</lastmod>
+  </url>
+
   <!-- Blog index -->
   <url>
     <loc>https://vatans.com/blog.html</loc>
@@ -166,6 +177,25 @@
     <loc>https://vatans.com/blog/blog-why-indian-food-perfect-for-winter.html</loc>
     <lastmod>2026-06-29</lastmod>
     <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Why Indian Food Is Perfect for Winter</image:title></image:image>
+  </url>
+
+  <!-- Jersey City blog articles -->
+  <url>
+    <loc>https://vatans.com/blog/blog-best-vegetarian-indian-restaurant-jersey-city.html</loc>
+    <lastmod>2026-07-03</lastmod>
+    <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Best Vegetarian Indian Restaurant in Jersey City NJ — Vatan on Newark Ave</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-indian-food-journal-square-jersey-city.html</loc>
+    <lastmod>2026-07-03</lastmod>
+    <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Indian Food Near Journal Square Jersey City NJ — Vatan on Newark Ave</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-kathiyawadi-gujarati-food-jersey-city.html</loc>
+    <lastmod>2026-07-03</lastmod>
+    <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Kathiyawadi and Gujarati Food in Jersey City NJ — Vatan</image:title></image:image>
   </url>
 
 </urlset>
