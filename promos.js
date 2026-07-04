@@ -68,6 +68,17 @@ const VATAN_PROMOS = [
     locations: "East Windsor"
   },
   {
+    id:       "4thJuly",
+    file:     "4thJuly2026.jpg",
+    day:      "Today",
+    name:     "Unlimited Buffet",
+    desc:     "Amazing menu for 250th Independence Day",
+    price:    "$27.99",
+    active:    true,
+    lightbox: true,
+    locations: "East Windsor"
+  },
+  {
     id:       "tuesday-kathiyawadi",
     file:     "Tuesday_Night.jpg",
     day:      "Every Tuesday",
