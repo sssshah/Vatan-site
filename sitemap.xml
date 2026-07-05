@@ -190,6 +190,32 @@
     <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Why Indian Food Is Perfect for Winter</image:title></image:image>
   </url>
 
+  <!-- BAPS & Princeton landing pages -->
+  <url>
+    <loc>https://vatans.com/restaurant-near-baps-robbinsville.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Restaurant Near BAPS Swaminarayan Akshardham Robbinsville NJ — Vatan</image:title></image:image>
+  </url>
+
+  <!-- New blog articles — Princeton & BAPS -->
+  <url>
+    <loc>https://vatans.com/blog/blog-where-to-eat-after-visiting-baps-robbinsville.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Where to Eat After Visiting BAPS Robbinsville NJ — Vatan</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-best-vegetarian-restaurant-near-princeton.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Best Vegetarian Indian Restaurant Near Princeton NJ — Vatan</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-what-is-gujarati-thali.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <image:image><image:loc>https://vatans.com/images/blog/thali-east-windsor.jpg</image:loc><image:title>What Is a Gujarati Thali? — Vatan NJ</image:title></image:image>
+  </url>
+
   <!-- Jersey City blog articles -->
   <url>
     <loc>https://vatans.com/blog/blog-best-vegetarian-indian-restaurant-jersey-city.html</loc>
