@@ -74,8 +74,8 @@ const VATAN_PROMOS = [
     name:     "Unlimited Buffet",
     desc:     "Amazing menu for 250th Independence Day",
     price:    "$27.99",
-    active:    true,
-    lightbox: true,
+    active:    false,
+    lightbox:  false,
     locations: "East Windsor"
   },
   {
