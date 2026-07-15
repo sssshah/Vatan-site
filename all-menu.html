@@ -203,6 +203,59 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .cat-tab:hover{color:var(--saffron);}
 .cat-tab.active{color:var(--saffron);box-shadow:inset 0 -2px 0 var(--saffron);}
 
+/* MOBILE TOOLBAR — dropdown + search + filter (mobile only, replaces .cat-nav-wrapper) */
+.mobile-toolbar{
+  display:none;
+  background:var(--white);
+  border-bottom:2px solid var(--ivory-dark);
+  box-shadow:0 2px 12px rgba(28,16,8,0.06);
+  position:relative;
+  z-index:890;
+}
+.mt-row{display:flex;align-items:center;gap:0.55rem;padding:0.6rem 0.85rem;}
+.cat-select{
+  flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
+  background:var(--ivory);border:1.5px solid rgba(212,168,83,0.35);border-radius:50px;
+  padding:0.55rem 1rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.88rem;
+  color:var(--text-body);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cat-select-chevron{width:14px;height:14px;color:var(--saffron);flex-shrink:0;transition:transform 0.2s;}
+.cat-select.open .cat-select-chevron{transform:rotate(180deg);}
+.icon-btn{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid rgba(212,168,83,0.35);background:var(--ivory);color:var(--saffron);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;
+}
+.icon-btn.active{background:var(--saffron);color:var(--white);border-color:var(--saffron);}
+.icon-btn svg{width:16px;height:16px;}
+.cat-panel{display:none;max-height:60vh;overflow-y:auto;border-top:1px solid rgba(212,168,83,0.15);background:var(--white);}
+.cat-panel.open{display:block;}
+.cat-panel-item{
+  display:flex;align-items:center;gap:0.6rem;width:100%;text-align:left;
+  padding:0.7rem 1.1rem;font-size:0.85rem;font-weight:500;color:var(--text-body);
+  background:none;border:none;border-bottom:1px solid rgba(212,168,83,0.08);
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+}
+.cat-panel-item.active{color:var(--saffron);font-weight:700;background:rgba(212,168,83,0.08);}
+.search-row{display:none;padding:0 0.85rem 0.65rem;background:var(--white);}
+.search-row.open{display:block;}
+.search-row input{
+  width:100%;border:1.5px solid rgba(212,168,83,0.35);border-radius:50px;
+  padding:0.55rem 1rem;font-size:16px;font-family:'DM Sans',sans-serif;
+  background:var(--ivory);color:var(--text-body);outline:none;
+}
+.search-row input:focus{border-color:var(--saffron);}
+.filter-row{display:none;gap:0.5rem;padding:0 0.85rem 0.65rem;flex-wrap:wrap;background:var(--white);}
+.filter-row.open{display:flex;}
+.filter-chip{
+  display:flex;align-items:center;gap:0.35rem;padding:0.4rem 0.8rem;border-radius:50px;
+  border:1.5px solid rgba(212,168,83,0.35);background:var(--ivory);
+  font-size:0.76rem;font-weight:600;color:var(--text-body);cursor:pointer;font-family:'DM Sans',sans-serif;
+}
+.filter-chip.active{background:var(--saffron);border-color:var(--saffron);color:var(--white);}
+
+.search-status{display:none;max-width:1200px;margin:0 auto;padding:1rem 1.5rem 0;font-size:0.82rem;font-weight:600;color:var(--text-muted);}
+
 /* MAIN LAYOUT */
 .menu-body{max-width:1200px;margin:0 auto;padding:2.5rem 1.5rem 6rem;}
 
@@ -233,6 +286,17 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .section-name em{font-style:italic;color:var(--maroon);font-weight:300;}
 .section-tagline{font-size:0.85rem;color:var(--text-muted);margin-top:0.3rem;font-style:italic;}
 
+/* MOBILE-ONLY compact header — eyebrow + title/tagline flowing on one line, no image */
+.section-header-mobile{display:none;}
+.section-header-mobile .section-cat-label{margin-bottom:0.2rem;}
+.section-titleline{line-height:1.4;}
+.section-name-inline{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--dark);
+}
+.section-name-inline em{font-style:italic;color:var(--maroon);font-weight:300;}
+.section-tagline-inline{font-size:0.82rem;color:var(--text-muted);font-style:italic;}
+.section-tagline-inline::before{content:' — ';}
+
 /* SUBSECTION LABEL */
 .subsec-label{
   font-size:0.72rem;font-weight:700;letter-spacing:0.15em;
@@ -260,6 +324,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   gap:1rem;
   transition:all 0.25s;
   position:relative;
+  box-shadow:0 4px 14px rgba(28,16,8,0.10);
 }
 .item-card:hover{
   border-color:rgba(212,168,83,0.4);
@@ -366,16 +431,35 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   .call-text,.call-chevron{display:none;}
   .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
   .legend-bar{gap:1rem;padding:0.35rem 1rem;top:70px;}
-  .cat-nav-wrapper{top:calc(70px + 30px);}
+  .cat-nav-wrapper{display:none;}
+  .mobile-toolbar{display:block;}
+  .section-header-desktop{display:none;}
+  .section-header-mobile{display:block;padding:0 0 0.9rem;margin-bottom:1rem;border-bottom:1px solid rgba(212,168,83,0.2);}
   .menu-section{scroll-margin-top:150px;}
   .items-grid{grid-template-columns:1fr;}
-  .thali-grid{grid-template-columns:1fr 1fr;}
+  .thali-grid{grid-template-columns:1fr;}
   .modal-order-grid{grid-template-columns:1fr;}
+
+  /* Compact side-image row cards on mobile — image left, text right, saves vertical space */
+  .item-card.has-img{flex-direction:row;align-items:stretch;}
+  .item-card.has-img .item-card-img{width:100px;height:100%;max-height:130px;flex-shrink:0;align-self:stretch;}
+  .item-card.has-img .item-card-body{padding:0.75rem 0.9rem;}
+  .item-card.has-img .item-desc{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;-webkit-line-clamp:3;margin-bottom:0.4rem;}
+
+  .thali-card{display:flex;flex-direction:row;align-items:stretch;}
+  .thali-card .thali-img{width:110px;height:100%;max-height:160px;flex-shrink:0;align-self:stretch;}
+  .thali-card .thali-body{padding:0.85rem 1rem;}
+  .thali-card .thali-desc{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;-webkit-line-clamp:3;margin-bottom:0.5rem;}
+
+  /* MOBILE FONT BUMP — larger name/description text. Trade-off: taller rows, fewer items per scroll.
+     To revert: delete this block only, nothing else depends on it. */
+  .item-name{font-size:1.18rem;}
+  .item-desc{font-size:0.86rem;}
+  .thali-name{font-size:1.36rem;}
+  .thali-desc{font-size:0.85rem;}
 }
 @media(max-width:480px){
   .thali-grid{grid-template-columns:1fr;}
-  .section-header{flex-direction:column;align-items:flex-start;gap:0.75rem;}
-  .section-header-img{width:100%;height:140px;}
   .hero-badges{flex-wrap:wrap;}
 }
 @media(min-width:769px){
@@ -453,6 +537,10 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   </div>
 </div>
 
+<p style="text-align:center;font-size:0.75rem;color:var(--text-muted);font-style:italic;background:var(--ivory);padding:0.55rem 1.5rem;margin:0;">
+  Photos are for illustration only — actual dishes may vary.
+</p>
+
 <!-- LEGEND -->
 <div class="legend-bar">
   <div class="legend-item"><div class="legend-badge badge-j">J</div><span>Jain Friendly</span></div>
@@ -470,6 +558,32 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
   </button>
 </div>
+
+<!-- MOBILE TOOLBAR — dropdown category selector + search + filter (mobile only) -->
+<div class="mobile-toolbar" id="mobileToolbar">
+  <div class="mt-row">
+    <button class="cat-select" id="catSelectBtn" aria-haspopup="true" aria-expanded="false">
+      <span id="catSelectLabel">Menu</span>
+      <svg class="cat-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <button class="icon-btn" id="searchToggleBtn" aria-label="Search menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="icon-btn" id="filterToggleBtn" aria-label="Filter by diet">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2" fill="currentColor" stroke="none"/></svg>
+    </button>
+  </div>
+  <div class="cat-panel" id="catPanel"></div>
+  <div class="search-row" id="searchRow">
+    <input type="text" id="searchInput" placeholder="Search dishes…" autocomplete="off">
+  </div>
+  <div class="filter-row" id="filterRow">
+    <button class="filter-chip" data-tag="J">🫙 Jain Friendly</button>
+    <button class="filter-chip" data-tag="S">🙏 Swaminarayan Friendly</button>
+  </div>
+</div>
+
+<div class="search-status" id="searchStatus"></div>
 
 <!-- MENU BODY — built by JS -->
 <div class="menu-body" id="menuBody"></div>
@@ -624,13 +738,17 @@ function renderSection(cat) {
 
   const hImg = cat.headerImg || HEADER_FALLBACKS[cat.id] || DEFAULT_IMG;
 
-  const sectionHeader = `<div class="section-header reveal">
+  const sectionHeader = `<div class="section-header section-header-desktop reveal">
     <img src="${hImg}" alt="${cat.name}" class="section-header-img" loading="lazy">
     <div class="section-header-text">
       <span class="section-cat-label">${cat.label}</span>
       <h2 class="section-name">${accentName(cat.name)}</h2>
       <p class="section-tagline">${cat.tagline}</p>
     </div>
+  </div>
+  <div class="section-header-mobile reveal">
+    <span class="section-cat-label">${cat.label}</span>
+    <p class="section-titleline"><span class="section-name-inline">${accentName(cat.name)}</span><span class="section-tagline-inline">${cat.tagline}</span></p>
   </div>`;
 
   const order  = [];
@@ -663,13 +781,25 @@ function buildMenu() {
 
 buildMenu();
 
+// ─── MOBILE DROPDOWN CATEGORY PANEL (mobile only) ────────────────────────────
+function buildMobileCatPanel() {
+  const panel = document.getElementById('catPanel');
+  const label = document.getElementById('catSelectLabel');
+  if (!panel || !label || !VATAN_MENU.length) return;
+  panel.innerHTML = VATAN_MENU.map((cat, i) =>
+    `<button class="cat-panel-item${i === 0 ? ' active' : ''}" data-target="${cat.id}">${cat.emoji} ${cat.name}</button>`
+  ).join('');
+  label.textContent = `${VATAN_MENU[0].emoji} ${VATAN_MENU[0].name}`;
+}
+buildMobileCatPanel();
+
 // ─── MOBILE CAT-NAV PIN ───────────────────────────────────────────────────────
 // iOS Safari: position:sticky collapses to ~0 height when the element contains
 // an overflow:auto child. Fix: measure the natural scroll trigger point at load,
 // then switch to position:fixed only once the user scrolls past that point.
 (function(){
   if (window.innerWidth > 768) return;
-  var catWrap  = document.getElementById('catNavWrapper');
+  var catWrap  = document.getElementById('mobileToolbar');
   var mBody    = document.getElementById('menuBody');
   if (!catWrap || !mBody) return;
 
@@ -784,11 +914,168 @@ document.getElementById('catNav').addEventListener('click', function(e) {
   btn.classList.add('active');
 });
 
+// ─── MOBILE TOOLBAR — dropdown / search / filter (mobile only) ──────────────
+
+(function(){
+  const catSelectBtn  = document.getElementById('catSelectBtn');
+  const catSelectLabel= document.getElementById('catSelectLabel');
+  const catPanel      = document.getElementById('catPanel');
+  const searchToggle  = document.getElementById('searchToggleBtn');
+  const searchRow     = document.getElementById('searchRow');
+  const searchInput   = document.getElementById('searchInput');
+  const filterToggle  = document.getElementById('filterToggleBtn');
+  const filterRow     = document.getElementById('filterRow');
+  const searchStatus  = document.getElementById('searchStatus');
+  const toolbar       = document.getElementById('mobileToolbar');
+  if (!toolbar) return;
+
+  let activeSearch = '';
+  const activeTags = new Set();
+
+  function closeAllPanels() {
+    catPanel.classList.remove('open');
+    catSelectBtn.classList.remove('open');
+    searchRow.classList.remove('open');
+    searchToggle.classList.remove('active');
+    filterRow.classList.remove('open');
+    filterToggle.classList.remove('active');
+  }
+
+  catSelectBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const opening = !catPanel.classList.contains('open');
+    closeAllPanels();
+    catPanel.classList.toggle('open', opening);
+    catSelectBtn.classList.toggle('open', opening);
+    catSelectBtn.setAttribute('aria-expanded', String(opening));
+  });
+
+  catPanel.addEventListener('click', e => {
+    const btn = e.target.closest('.cat-panel-item');
+    if (!btn) return;
+    const el = document.getElementById(btn.dataset.target);
+    if (!el) return;
+    closeAllPanels(); // close first so the toolbar's measured height is its collapsed row, not the open panel
+    const navH = document.querySelector('nav')?.offsetHeight || 70;
+    const legH = document.querySelector('.legend-bar')?.offsetHeight || 46;
+    const toolH = toolbar.offsetHeight || 56;
+    window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - navH - legH - toolH - 8, behavior: 'smooth' });
+    document.querySelectorAll('.cat-panel-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const matchTab = document.querySelector(`.cat-tab[data-target="${btn.dataset.target}"]`);
+    matchTab?.classList.add('active');
+    catSelectLabel.textContent = btn.textContent;
+  });
+
+  searchToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const opening = !searchRow.classList.contains('open');
+    closeAllPanels();
+    searchRow.classList.toggle('open', opening);
+    searchToggle.classList.toggle('active', opening);
+    if (opening) { searchInput.focus(); }
+    else { searchInput.value = ''; activeSearch = ''; applyFilters(); }
+  });
+
+  filterToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const opening = !filterRow.classList.contains('open');
+    closeAllPanels();
+    filterRow.classList.toggle('open', opening);
+    filterToggle.classList.toggle('active', opening);
+  });
+
+  function scrollToMenuTop() {
+    const menuBody = document.getElementById('menuBody');
+    if (!menuBody) return;
+    const navH = document.querySelector('nav')?.offsetHeight || 70;
+    const legH = document.querySelector('.legend-bar')?.offsetHeight || 46;
+    const toolH = document.querySelector('.mt-row')?.offsetHeight || 56;
+    window.scrollTo({ top: menuBody.getBoundingClientRect().top + scrollY - navH - legH - toolH - 8, behavior: 'smooth' });
+  }
+
+  // Scroll-to-top only fires on blur (keyboard closed) — scrolling while the
+  // iOS keyboard is open can detach position:fixed elements from the viewport,
+  // making the search box itself scroll out of view mid-type.
+  searchInput.addEventListener('input', e => {
+    activeSearch = e.target.value.trim().toLowerCase();
+    applyFilters();
+  });
+  searchInput.addEventListener('blur', () => {
+    if (activeSearch) scrollToMenuTop();
+  });
+
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const tag = chip.dataset.tag;
+      const wasActive = !!activeSearch || activeTags.size > 0;
+      if (activeTags.has(tag)) { activeTags.delete(tag); chip.classList.remove('active'); }
+      else { activeTags.add(tag); chip.classList.add('active'); }
+      const isActive = !!activeSearch || activeTags.size > 0;
+      applyFilters();
+      if (isActive && !wasActive) scrollToMenuTop();
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if (!toolbar.contains(e.target)) closeAllPanels();
+  });
+
+  function cardText(card) {
+    const name = card.querySelector('.item-name, .thali-name')?.textContent || '';
+    const desc = card.querySelector('.item-desc, .thali-desc')?.textContent || '';
+    return (name + ' ' + desc).toLowerCase();
+  }
+
+  function cardMatchesTags(card) {
+    if (!activeTags.size) return true;
+    for (const t of activeTags) {
+      if (card.querySelector('.ibadge-' + t.toLowerCase())) return true;
+    }
+    return false;
+  }
+
+  function applyFilters() {
+    const cards = document.querySelectorAll('.item-card, .thali-card');
+    let visibleCount = 0;
+    cards.forEach(card => {
+      const visible = (!activeSearch || cardText(card).includes(activeSearch)) && cardMatchesTags(card);
+      card.style.display = visible ? '' : 'none';
+      if (visible) visibleCount++;
+    });
+
+    document.querySelectorAll('.subsec-label').forEach(lbl => {
+      const grid = lbl.nextElementSibling;
+      const anyVisible = grid && Array.from(grid.children).some(c => c.style.display !== 'none');
+      lbl.style.display = anyVisible ? '' : 'none';
+    });
+
+    document.querySelectorAll('.menu-section').forEach(sec => {
+      const anyVisible = Array.from(sec.querySelectorAll('.item-card, .thali-card')).some(c => c.style.display !== 'none');
+      sec.style.display = anyVisible ? '' : 'none';
+    });
+
+    const filtering = activeSearch || activeTags.size;
+    if (filtering) {
+      searchStatus.style.display = 'block';
+      searchStatus.textContent = visibleCount
+        ? `${visibleCount} dish${visibleCount === 1 ? '' : 'es'} found`
+        : 'No dishes match — try clearing search or filters';
+    } else {
+      searchStatus.style.display = 'none';
+    }
+  }
+})();
+
 // ─── ACTIVE TAB ON SCROLL ────────────────────────────────────────────────────
 
 const catIds      = VATAN_MENU.map(c => c.id);
 const allTabs     = document.querySelectorAll('.cat-tab');
 const allSections = document.querySelectorAll('.menu-section');
+
+const allPanelItems = document.querySelectorAll('.cat-panel-item');
+const catSelectLabelEl = document.getElementById('catSelectLabel');
 
 const sectionObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -798,6 +1085,10 @@ const sectionObserver = new IntersectionObserver(entries => {
         allTabs.forEach(t => t.classList.remove('active'));
         allTabs[idx]?.classList.add('active');
         allTabs[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+        allPanelItems.forEach(p => p.classList.remove('active'));
+        allPanelItems[idx]?.classList.add('active');
+        if (catSelectLabelEl && allPanelItems[idx]) catSelectLabelEl.textContent = allPanelItems[idx].textContent;
       }
     }
   });
