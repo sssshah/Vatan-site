@@ -458,6 +458,15 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   .item-desc{font-size:0.86rem;}
   .thali-name{font-size:1.36rem;}
   .thali-desc{font-size:0.85rem;}
+
+  /* Tuck floating buttons closer to the true screen edge, clearing the iOS
+     home-indicator safe area instead of a flat 1.5rem that overshoots it. */
+  .float-order,.float-top{bottom:calc(0.5rem + env(safe-area-inset-bottom));}
+
+  /* Icon-only Order Online button on mobile — smaller footprint means less
+     item-card content gets covered while scrolling. Link/target unchanged. */
+  .float-order{width:42px;height:42px;padding:0;justify-content:center;font-size:1.15rem;gap:0;}
+  .float-order-text{display:none;}
 }
 @media(max-width:480px){
   .thali-grid{grid-template-columns:1fr;}
@@ -627,7 +636,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 </footer>
 
 <!-- FLOATING -->
-<button class="float-order" onclick="document.getElementById('orderModal').classList.add('open')">🛵 &nbsp; Order Online</button>
+<button class="float-order" onclick="document.getElementById('orderModal').classList.add('open')" aria-label="Order Online">🛵 <span class="float-order-text">&nbsp; Order Online</span></button>
 <a href="#" class="float-top" id="backToTop">↑</a>
 
 <!-- ORDER MODAL -->
