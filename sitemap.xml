@@ -235,4 +235,16 @@
     <image:image><image:loc>https://vatans.com/images/og-image.jpg</image:loc><image:title>Kathiyawadi and Gujarati Food in Jersey City NJ — Vatan</image:title></image:image>
   </url>
 
+  <url>
+    <loc>https://vatans.com/blog/blog-live-pani-puri-7-flavors.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <image:image><image:loc>https://vatans.com/images/food/Panipuri.jpg</image:loc><image:title>Live Pani Puri: 7 Flavors at Vatan Indian Cuisine</image:title></image:image>
+  </url>
+
+  <url>
+    <loc>https://vatans.com/blog/blog-catering-why-vatan-is-your-go-to.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <image:image><image:loc>https://vatans.com/images/blog/catering-event-table-setting.jpg</image:loc><image:title>Catering? Here's Why Vatan Should Be Your Go-To</image:title></image:image>
+  </url>
+
 </urlset>
