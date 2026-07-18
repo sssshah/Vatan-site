@@ -53,7 +53,7 @@ All 19 menu categories and their items are defined in `menu-data.js` as the `VAT
 ```
 
 - `active: false` hides an item from the order form without deleting it
-- `tags`: `["J"]` = Jain, `["S"]` = Spicy, `["J","S"]` = both
+- `tags`: any combo of `"J"` (Jain Friendly), `"S"` (Swaminarayan Friendly), `"V"` (Vegan Friendly) — e.g. `["J","S","V"]`
 - `section`: sub-heading within a category (e.g. `"Tandoor Breads"`, `"Bakery Pastries"`)
 - `img`: path inside `images/food/` or `null` if no image yet
 - Items with `section` group under a sub-header in the order accordion

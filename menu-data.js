@@ -135,7 +135,7 @@ const VATAN_MENU = [
         desc: "Crispy wheat poori topped with potatoes, onion, tomatoes, spicy mint, sweet tamarind, garlic chutney & fine sev",
         price: 8.99,
         img: "images/food/sev-poori.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -155,7 +155,7 @@ const VATAN_MENU = [
         desc: "Crispy triangular pastry filled with spiced potatoes & peas, served with mint chutney",
         price: 7.99,
         img: "images/food/samosa-3pcs.jpg",
-        tags: ["J"],
+        tags: ["S","V"],
         note: null,
         active: true
       },
@@ -165,7 +165,7 @@ const VATAN_MENU = [
         desc: "Samosa with chickpeas curry, onion, tomatoes, spicy mint, sweet tamarind, garlic chutney & fine sev",
         price: 8.99,
         img: "images/food/samosa-chaat.jpg",
-        tags: ["J"],
+        tags: ["S","V"],
         note: null,
         active: true
       },
@@ -195,7 +195,7 @@ const VATAN_MENU = [
         desc: "Slightly sweet, spicy & sour puffed rice tossed with chaat chutneys, veggies & sev",
         price: 8.99,
         img: "images/food/bhel.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -237,7 +237,7 @@ const VATAN_MENU = [
         desc: "Indian style burger stuffed with spiced potato dumplings, deep fried & served with chutneys",
         price: 8.99,
         img: "images/food/Vadapavv.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -297,7 +297,7 @@ const VATAN_MENU = [
         desc: "Indian style burger with spiced potato dumplings & fiery szechwan sauce",
         price: 8.99,
         img: "images/food/szechwan-vada-pav.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -307,7 +307,7 @@ const VATAN_MENU = [
         desc: "Indian style burger stuffed with samosas & onions",
         price: 8.99,
         img: "images/food/samosa-pav.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       }
@@ -329,7 +329,7 @@ const VATAN_MENU = [
         desc: "Fried dumplings made of fenugreek leaves with chickpea flour",
         price: 8.99,
         img: "images/food/methi-gota.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -349,7 +349,7 @@ const VATAN_MENU = [
         desc: "Authentic steamed rice flour served with spicy oil",
         price: 10.99,
         img: "images/food/khichu.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -359,7 +359,7 @@ const VATAN_MENU = [
         desc: "Fried fryums served with garlic & spicy potato",
         price: 10.99,
         img: "images/food/bhungra-batata.jpg",
-        tags: ["J","S"],
+        tags: ["S","V"],
         note: null,
         active: true
       },
@@ -369,7 +369,7 @@ const VATAN_MENU = [
         desc: "Steamed mix of rice, wheat & chickpea flour with Indian herbs",
         price: 8.99,
         img: "images/food/muthiya.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -379,7 +379,7 @@ const VATAN_MENU = [
         desc: "Steamed savory cake with gram flour, topped with mustard, cumin & green chili tempering",
         price: 8.99,
         img: "images/food/khaman-dhokla.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       }
@@ -401,7 +401,7 @@ const VATAN_MENU = [
         desc: "Crispy wheat wrap filled with shredded vegetables",
         price: 7.99,
         img: "images/food/spring-roll.jpg",
-        tags: [],
+        tags: ["V"],
         section: "Starters",
         note: null,
         active: true
@@ -412,7 +412,7 @@ const VATAN_MENU = [
         desc: "Potato wedges cooked with szechwan sauce",
         price: 10.99,
         img: "images/food/chilly-milly-potatoes.jpg",
-        tags: ["S"],
+        tags: ["S","V"],
         section: "Starters",
         note: null,
         active: true
@@ -423,7 +423,7 @@ const VATAN_MENU = [
         desc: "Vegetables tossed with fried noodles — served cold",
         price: 11.99,
         img: "images/food/chinese-bhel.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Starters",
         note: null,
         active: true
@@ -456,7 +456,7 @@ const VATAN_MENU = [
         desc: "Vegetable fried dumplings tossed in spicy tangy sauce & Indo-Chinese spices",
         price: 11.99,
         img: "images/food/veg-manchurian-dry.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Starters",
         note: null,
         active: true
@@ -467,7 +467,7 @@ const VATAN_MENU = [
         desc: "Cauliflower fried dumplings tossed with spicy tangy sauce & Indo-Chinese spices",
         price: 11.99,
         img: "images/food/gobi-manchurian-dry.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Starters",
         note: null,
         active: true
@@ -500,7 +500,7 @@ const VATAN_MENU = [
         desc: "Bhindi stuffed with spices, coated with tempura batter & deep fried",
         price: 12.99,
         img: "images/food/okra-tempura.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Starters",
         note: null,
         active: true
@@ -511,7 +511,7 @@ const VATAN_MENU = [
         desc: "Boiled wheat noodles & stir vegetables in soy-ginger sauce & Chinese seasonings",
         price: 13.99,
         img: "images/food/veg-hakka-noodles.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Mains",
         note: null,
         active: true
@@ -522,7 +522,7 @@ const VATAN_MENU = [
         desc: "Boiled wheat noodles & stir vegetables in spicy szechwan sauce",
         price: 14.99,
         img: "images/food/szechwan-noodles.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Mains",
         note: null,
         active: true
@@ -544,7 +544,7 @@ const VATAN_MENU = [
         desc: "Boiled rice & stir vegetables in soy-ginger sauce & Chinese seasonings",
         price: 13.99,
         img: "images/food/veg-fried-rice.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Mains",
         note: null,
         active: true
@@ -555,7 +555,7 @@ const VATAN_MENU = [
         desc: "Boiled rice & stir vegetables in spicy szechwan sauce",
         price: 14.99,
         img: "images/food/szechwan-fried-rice.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Mains",
         note: null,
         active: true
@@ -566,7 +566,7 @@ const VATAN_MENU = [
         desc: "Layers of szechwan fried rice, noodles & veg manchurian gravy",
         price: 16.99,
         img: "images/food/veg-fried-rice.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Mains",
         note: null,
         active: true
@@ -577,7 +577,7 @@ const VATAN_MENU = [
         desc: "Cauliflower fried dumplings tossed with spicy tangy sauce & Indo-Chinese spices with gravy",
         price: 14.99,
         img: "images/food/gobi-manchurian-dry.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Mains",
         note: null,
         active: true
@@ -588,7 +588,7 @@ const VATAN_MENU = [
         desc: "Vegetable fried dumplings tossed in spicy tangy sauce & Indo-Chinese spices with gravy",
         price: 14.99,
         img: "images/food/gobi-manchurian-dry.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         section: "Mains",
         note: null,
         active: true
@@ -702,7 +702,7 @@ const VATAN_MENU = [
         desc: "Fresh garden vegetables marinated in ginger-garlic, cooked with Indian spices",
         price: 15.99,
         img: "images/food/veg-jalfrezi.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -712,7 +712,7 @@ const VATAN_MENU = [
         desc: "Spicy mixed vegetables marinated in ginger-garlic, cooked with Indian spices",
         price: 15.99,
         img: "images/food/veg-jalfrezi.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -722,7 +722,7 @@ const VATAN_MENU = [
         desc: "Tender chickpeas cooked with Indian spices & simmered in onion gravy",
         price: 15.99,
         img: "images/food/peshawari-chole.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -732,7 +732,7 @@ const VATAN_MENU = [
         desc: "Tender okra stir fried with Indian spices, onions & green peas",
         price: 15.99,
         img: "images/food/bhindi-masala.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -772,7 +772,7 @@ const VATAN_MENU = [
         desc: "Boiled potatoes tossed in simple masalas & coarsely crushed roasted cumin seeds",
         price: 15.99,
         img: "images/food/aloo-jeera.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -782,7 +782,7 @@ const VATAN_MENU = [
         desc: "Finely chopped garden fresh spinach cooked with potatoes",
         price: 15.99,
         img: "images/food/aloo-palak.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -792,7 +792,7 @@ const VATAN_MENU = [
         desc: "Green peas & potatoes cooked with Indian spices in ginger-garlic tomato sauce",
         price: 15.99,
         img: "images/food/aloo-mutter.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -802,7 +802,7 @@ const VATAN_MENU = [
         desc: "Finely cut garden fresh spinach cooked in garlic flavored sauce",
         price: 16.99,
         img: "images/food/aloo-palak.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -864,7 +864,7 @@ const VATAN_MENU = [
         desc: "Roasted eggplant cooked in masala paste made of green onions & sesame seeds",
         price: 14.99,
         img: "images/food/baigan-bharta.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -874,7 +874,7 @@ const VATAN_MENU = [
         desc: "Traditional & authentic mix vegetables cooked with grated coconut, peanuts & spices",
         price: 15.99,
         img: "images/food/undhiyu.jpg",
-        tags: ["J"],
+        tags: ["J","V"],
         note: null,
         active: true
       },
@@ -884,7 +884,7 @@ const VATAN_MENU = [
         desc: "Tomato cooked with chef special spices, garnished with chickpea noodles",
         price: 14.99,
         img: "images/food/sev-tameta.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -894,7 +894,7 @@ const VATAN_MENU = [
         desc: "Potato cooked with garlic & special spices",
         price: 14.99,
         img: "images/food/rasawala-lasaniya-batata.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -904,7 +904,7 @@ const VATAN_MENU = [
         desc: "Ridge gourd mixed with colocasia leaf with authentic spices",
         price: 14.99,
         img: "images/food/turiya-patra.jpg",
-        tags: ["J","S"],
+        tags: ["J","S","V"],
         note: null,
         active: true
       },
@@ -914,7 +914,7 @@ const VATAN_MENU = [
         desc: "Dry boiled potato with special spices",
         price: 14.99,
         img: "images/food/sukhi-bhaji.jpg",
-        tags: ["S"],
+        tags: ["S","V"],
         note: null,
         active: true
       }
@@ -1046,7 +1046,7 @@ const VATAN_MENU = [
         desc: "4 whole wheat deep fried breads with dry potato curry, raita & papad",
         price: 13.99,
         img: "images/food/poori-shak.jpg",
-        tags: ["J","S"],
+        tags: ["S"],
         note: null,
         active: true
       },
@@ -1220,7 +1220,7 @@ const VATAN_MENU = [
         desc: "Roti wrapped with spiced mashed potatoes in szechwan sauce",
         price: 9.99,
         img: "images/food/szechwan-roll.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -1488,7 +1488,7 @@ const VATAN_MENU = [
         desc: "Whole wheat deep fried bread",
         price: 0.99,
         img: "images/food/poori-2pcs.jpg",
-        tags: [],
+        tags: ["V"],
         section: "Gujarati Breads",
         note: null,
         active: true
@@ -1618,7 +1618,7 @@ const VATAN_MENU = [
         desc: "An exotic soup of chopped mixed vegetables with fresh onions, garlic & ginger",
         price: 5.99,
         img: "images/food/hot-sour-soup.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -1628,7 +1628,7 @@ const VATAN_MENU = [
         desc: "Indo-Chinese soup with oriental vegetables & spices",
         price: 5.99,
         img: "images/food/manchow-soup.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -1648,7 +1648,7 @@ const VATAN_MENU = [
         desc: "Delicately seasoned split lentil soup topped with fresh garlic & ginger",
         price: 5.99,
         img: "images/food/mulligatawny-soup.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -1658,7 +1658,7 @@ const VATAN_MENU = [
         desc: "Light vegetable soup made with slightly sweet corn kernels",
         price: 5.99,
         img: "images/food/sweet-corn-soup.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -1668,7 +1668,7 @@ const VATAN_MENU = [
         desc: "Indo-Chinese soup made with fresh coriander, lemon & Indian spices",
         price: 5.99,
         img: "images/food/lemon-coriander-soup.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       }
@@ -1710,7 +1710,7 @@ const VATAN_MENU = [
         desc: "Choose your seasoning — bold, zesty or fiery",
         price: 6.99,
         img: "images/food/seasoned-fries.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       }
@@ -2110,7 +2110,7 @@ const VATAN_MENU = [
         desc: "Light & crispy lentil wafer, roasted fresh",
         price: 1.99,
         img: "images/food/roasted-papad.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -2120,7 +2120,7 @@ const VATAN_MENU = [
         desc: "Deep fried lentil wafer, golden & crunchy",
         price: 1.99,
         img: "images/food/fried-papad.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },
@@ -2130,7 +2130,7 @@ const VATAN_MENU = [
         desc: "Papad topped with onion, tomatoes & spicy chutneys",
         price: 3.99,
         img: "images/food/masala-papad.jpg",
-        tags: [],
+        tags: ["V"],
         note: null,
         active: true
       },

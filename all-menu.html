@@ -114,7 +114,63 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 }
 .badge-j{background:#2E7D32;color:white;}
 .badge-s{background:#1565C0;color:white;}
+.badge-v{background:#00897B;color:white;}
 .legend-sep{width:1px;height:12px;background:rgba(212,168,83,0.3);}
+
+/* DESKTOP NAV ICONS — search + filter toggles appended to the tab strip (desktop only) */
+.dt-iconbtn{
+  display:none;
+  flex-shrink:0;
+  align-items:center;
+  justify-content:center;
+  width:38px;
+  border:none;
+  background:var(--white);
+  color:var(--saffron);
+  cursor:pointer;
+  transition:background 0.2s,color 0.2s;
+  z-index:2;
+}
+.dt-iconbtn svg{width:16px;height:16px;}
+.dt-iconbtn:hover{background:rgba(212,168,83,0.08);}
+.dt-iconbtn.active{background:var(--saffron);color:var(--white);}
+.dt-iconbtn-border{border-left:1px solid rgba(212,168,83,0.15);}
+
+/* DESKTOP SEARCH / FILTER — collapsible rows below the tab strip (desktop only) */
+.desktop-search-row{
+  display:none;
+  padding:0.75rem 1.5rem;
+  background:var(--white);
+  border-bottom:2px solid var(--ivory-dark);
+}
+.desktop-search-row.open{
+  display:block;
+  position:-webkit-sticky;
+  position:sticky;
+  top:var(--dt-row-top, calc(70px + 32px + 54px));
+  z-index:885;
+}
+.desktop-search-row input{
+  width:100%;max-width:360px;border:1.5px solid rgba(212,168,83,0.35);border-radius:50px;
+  padding:0.55rem 1rem;font-size:0.88rem;font-family:'DM Sans',sans-serif;
+  background:var(--ivory);color:var(--text-body);outline:none;
+}
+.desktop-search-row input:focus{border-color:var(--saffron);}
+.desktop-filter-row{
+  display:none;
+  gap:0.5rem;
+  padding:0.75rem 1.5rem;
+  background:var(--white);
+  border-bottom:2px solid var(--ivory-dark);
+  flex-wrap:wrap;
+}
+.desktop-filter-row.open{
+  display:flex;
+  position:-webkit-sticky;
+  position:sticky;
+  top:var(--dt-row-top, calc(70px + 32px + 54px));
+  z-index:885;
+}
 
 /* CATEGORY NAV TABS */
 .cat-nav-wrapper{
@@ -361,6 +417,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 }
 .ibadge-j{background:#2E7D32;color:white;}
 .ibadge-s{background:#1565C0;color:white;}
+.ibadge-v{background:#00897B;color:white;}
 
 /* THALI CARDS */
 .thali-grid{
@@ -431,8 +488,13 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   .hamburger{display:flex;}
   .call-text,.call-chevron{display:none;}
   .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
-  .legend-bar{gap:1rem;padding:0.35rem 1rem;top:70px;}
+  .legend-bar{gap:0.65rem;padding:0.35rem 0.75rem;top:70px;flex-wrap:nowrap;}
+  .legend-item{gap:0.3rem;font-size:0.72rem;white-space:nowrap;}
+  .legend-suffix{display:none;}
+  .chip-suffix{display:none;}
   .cat-nav-wrapper{display:none;}
+  .desktop-search-row{display:none;}
+  .desktop-filter-row{display:none;}
   .mobile-toolbar{display:block;}
   .section-header-desktop{display:none;}
   .section-header-mobile{display:block;padding:0 0 0.9rem;margin-bottom:1rem;border-bottom:1px solid rgba(212,168,83,0.2);}
@@ -474,6 +536,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 }
 @media(min-width:769px){
   .cat-arrow{display:flex;}
+  .dt-iconbtn{display:flex;}
   .cat-nav-wrapper::before,.cat-nav-wrapper::after{display:none;}
 }
 </style>
@@ -553,9 +616,11 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
 <!-- LEGEND -->
 <div class="legend-bar">
-  <div class="legend-item"><div class="legend-badge badge-j">J</div><span>Jain Friendly</span></div>
+  <div class="legend-item"><div class="legend-badge badge-j">J</div><span>Jain<span class="legend-suffix"> Friendly</span></span></div>
   <div class="legend-sep"></div>
-  <div class="legend-item"><div class="legend-badge badge-s">S</div><span>Swaminarayan Friendly</span></div>
+  <div class="legend-item"><div class="legend-badge badge-s">S</div><span>Swaminarayan<span class="legend-suffix"> Friendly</span></span></div>
+  <div class="legend-sep"></div>
+  <div class="legend-item"><div class="legend-badge badge-v">V</div><span>Vegan<span class="legend-suffix"> Friendly</span></span></div>
 </div>
 
 <!-- CATEGORY NAV — built by JS -->
@@ -567,6 +632,22 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   <button class="cat-arrow cat-arrow-right" id="catArrowRight" aria-label="Scroll categories right">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
   </button>
+  <button class="dt-iconbtn dt-iconbtn-border" id="searchToggleBtnDt" aria-label="Search menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  </button>
+  <button class="dt-iconbtn" id="filterToggleBtnDt" aria-label="Filter by diet">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2" fill="currentColor" stroke="none"/></svg>
+  </button>
+</div>
+
+<!-- DESKTOP SEARCH / FILTER — collapsible, toggled by the icons above (desktop only) -->
+<div class="desktop-search-row" id="desktopSearchRow">
+  <input type="text" id="searchInputDesktop" placeholder="Search dishes…" autocomplete="off">
+</div>
+<div class="desktop-filter-row" id="desktopFilterRow">
+  <button class="filter-chip" data-tag="J">🫙 Jain Friendly</button>
+  <button class="filter-chip" data-tag="S">🙏 Swaminarayan Friendly</button>
+  <button class="filter-chip" data-tag="V">🌱 Vegan Friendly</button>
 </div>
 
 <!-- MOBILE TOOLBAR — dropdown category selector + search + filter (mobile only) -->
@@ -588,8 +669,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
     <input type="text" id="searchInput" placeholder="Search dishes…" autocomplete="off">
   </div>
   <div class="filter-row" id="filterRow">
-    <button class="filter-chip" data-tag="J">🫙 Jain Friendly</button>
-    <button class="filter-chip" data-tag="S">🙏 Swaminarayan Friendly</button>
+    <button class="filter-chip" data-tag="J">🫙 Jain<span class="chip-suffix"> Friendly</span></button>
+    <button class="filter-chip" data-tag="S">🙏 Swaminarayan<span class="chip-suffix"> Friendly</span></button>
+    <button class="filter-chip" data-tag="V">🌱 Vegan<span class="chip-suffix"> Friendly</span></button>
   </div>
 </div>
 
@@ -701,6 +783,7 @@ function renderBadges(tags, inline) {
     const style = inline ? ' style="display:inline-flex;vertical-align:middle;margin-left:4px;"' : '';
     if (t === 'J') return `<span class="ibadge ibadge-j"${style}>J</span>`;
     if (t === 'S') return `<span class="ibadge ibadge-s"${style}>S</span>`;
+    if (t === 'V') return `<span class="ibadge ibadge-v"${style}>V</span>`;
     return '';
   }).join('');
 }
@@ -896,6 +979,18 @@ document.getElementById('orderModal').addEventListener('click', e => {
   if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
 });
 
+// ─── DESKTOP SEARCH/FILTER ROW STICKY OFFSET — measured, not guessed ────────
+(function(){
+  const catNavWrapper = document.getElementById('catNavWrapper');
+  if (!catNavWrapper) return;
+  function syncStickyOffset(){
+    const h = catNavWrapper.offsetHeight || 54;
+    document.documentElement.style.setProperty('--dt-row-top', `calc(70px + 32px + ${h}px)`);
+  }
+  syncStickyOffset();
+  window.addEventListener('resize', syncStickyOffset);
+})();
+
 // ─── CAT-NAV SCROLL FADE MASKS & ARROWS ──────────────────────────────────────
 
 (function() {
@@ -957,10 +1052,15 @@ document.getElementById('catNav').addEventListener('click', function(e) {
   const searchToggle  = document.getElementById('searchToggleBtn');
   const searchRow     = document.getElementById('searchRow');
   const searchInput   = document.getElementById('searchInput');
+  const searchInputDt = document.getElementById('searchInputDesktop');
   const filterToggle  = document.getElementById('filterToggleBtn');
   const filterRow     = document.getElementById('filterRow');
   const searchStatus  = document.getElementById('searchStatus');
   const toolbar       = document.getElementById('mobileToolbar');
+  const searchToggleDt = document.getElementById('searchToggleBtnDt');
+  const searchRowDt    = document.getElementById('desktopSearchRow');
+  const filterToggleDt = document.getElementById('filterToggleBtnDt');
+  const filterRowDt    = document.getElementById('desktopFilterRow');
   if (!toolbar) return;
 
   let activeSearch = '';
@@ -1020,6 +1120,35 @@ document.getElementById('catNav').addEventListener('click', function(e) {
     filterToggle.classList.toggle('active', opening);
   });
 
+  function closeAllPanelsDt() {
+    if (searchRowDt) searchRowDt.classList.remove('open');
+    if (searchToggleDt) searchToggleDt.classList.remove('active');
+    if (filterRowDt) filterRowDt.classList.remove('open');
+    if (filterToggleDt) filterToggleDt.classList.remove('active');
+  }
+
+  if (searchToggleDt && searchRowDt) {
+    searchToggleDt.addEventListener('click', e => {
+      e.stopPropagation();
+      const opening = !searchRowDt.classList.contains('open');
+      closeAllPanelsDt();
+      searchRowDt.classList.toggle('open', opening);
+      searchToggleDt.classList.toggle('active', opening);
+      if (opening) { searchInputDt.focus(); }
+      else { searchInputDt.value = ''; searchInput.value = ''; activeSearch = ''; applyFilters(); }
+    });
+  }
+
+  if (filterToggleDt && filterRowDt) {
+    filterToggleDt.addEventListener('click', e => {
+      e.stopPropagation();
+      const opening = !filterRowDt.classList.contains('open');
+      closeAllPanelsDt();
+      filterRowDt.classList.toggle('open', opening);
+      filterToggleDt.classList.toggle('active', opening);
+    });
+  }
+
   function scrollToMenuTop() {
     const menuBody = document.getElementById('menuBody');
     if (!menuBody) return;
@@ -1034,11 +1163,20 @@ document.getElementById('catNav').addEventListener('click', function(e) {
   // making the search box itself scroll out of view mid-type.
   searchInput.addEventListener('input', e => {
     activeSearch = e.target.value.trim().toLowerCase();
+    if (searchInputDt) searchInputDt.value = e.target.value;
     applyFilters();
   });
   searchInput.addEventListener('blur', () => {
     if (activeSearch) scrollToMenuTop();
   });
+
+  if (searchInputDt) {
+    searchInputDt.addEventListener('input', e => {
+      activeSearch = e.target.value.trim().toLowerCase();
+      searchInput.value = e.target.value;
+      applyFilters();
+    });
+  }
 
   document.querySelectorAll('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
@@ -1054,6 +1192,10 @@ document.getElementById('catNav').addEventListener('click', function(e) {
 
   document.addEventListener('click', e => {
     if (!toolbar.contains(e.target)) closeAllPanels();
+    const inDtSearch = searchRowDt && searchRowDt.contains(e.target);
+    const inDtFilter = filterRowDt && filterRowDt.contains(e.target);
+    const onDtToggle  = (searchToggleDt && searchToggleDt.contains(e.target)) || (filterToggleDt && filterToggleDt.contains(e.target));
+    if (!inDtSearch && !inDtFilter && !onDtToggle) closeAllPanelsDt();
   });
 
   function cardText(card) {
