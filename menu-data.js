@@ -382,6 +382,16 @@ const VATAN_MENU = [
         tags: ["V"],
         note: null,
         active: true
+      },
+      {
+        id: "daal-wada",
+        name: "Daal Wada",
+        desc: "Crispy fried dumplings made of chana dal, ginger & spices",
+        price: 8.99,
+        img: "images/food/daal-wada.jpg",
+        tags: ["J","S","V"],
+        note: null,
+        active: true
       }
     ]
   },
