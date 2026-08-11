@@ -112,11 +112,11 @@ const VATAN_PROMOS = [
     locations: "East Windsor"
   },
   {
-    id:       "friday-indo-chinese",
-    file:     "Friday_Night.PNG",
+    id:       "friday-fun-night",
+    file:     "Friday_Fun_Night.jpg",
     day:      "Every Friday",
-    name:     "Indo Chinese Night",
-    desc:     "Soup of the Day, Spring Roll, Momos, Vegetarian Manchurian, Paneer Chilly Gravy, Rice, Schezwan Noodles, Ice Cream",
+    name:     "Friday Fun Night",
+    desc:     "Live Pani Poori, Spring Roll, Veg Hakka Noodles, Veg Manchurian Gravy, Malai Kofta, Plain Rice, Lacha Paratha, Falooda Icecream, Ice Gola",
     price:    "$19.99",
     active:   true,
     lightbox: true,
