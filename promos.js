@@ -121,6 +121,17 @@ const VATAN_PROMOS = [
     active:   true,
     lightbox: true,
     locations: "East Windsor"
+  },
+  {
+    id:       "farali-thali",
+    file:     "Farali_Thali.jpg",
+    day:      "Shravan Mass Special",
+    name:     "Farali Thali",
+    desc:     "Farali Poori, Sabudana Khicdi, Coconut Farali Kachori, Farali Kadhi, Katri Wafer, Chaas, Sukhi Aloo Sabji & Dessert",
+    price:    "$19.99",
+    active:   true,
+    lightbox: true,
+    locations: "East Windsor"
   }
 ];
 
