@@ -106,7 +106,7 @@ nav.scrolled{background:rgba(28,16,8,0.99);box-shadow:0 4px 24px rgba(0,0,0,0.3)
 @keyframes floatDot{0%,100%{transform:translateY(0) rotate(0deg);opacity:0.6;}50%{transform:translateY(-20px) rotate(180deg);opacity:1;}}
 .hero-content{position:relative;z-index:2;width:100%;max-width:1180px;padding:8rem 4rem 4rem;display:grid;grid-template-columns:1fr 420px;grid-template-areas:"left right" "social right";gap:0.5rem 3rem;align-items:center;}
 .hero-left{text-align:left;grid-area:left;}
-.hero-right{display:flex;align-items:stretch;grid-area:right;}
+.hero-right{display:flex;align-items:stretch;grid-area:right;min-width:0;}
 .hero-social-row{grid-area:social;}
 .hero-content.hero-centered{grid-template-columns:1fr;grid-template-areas:"left" "social";max-width:800px;}
 .hero-content.hero-centered .hero-left{text-align:center;}
@@ -212,9 +212,24 @@ section{position:relative;}
   text-decoration:none;transition:color 0.2s;
 }
 .hsc-see-all:hover{color:var(--gold-light);}
-.hsc-track{position:relative;height:480px;overflow:hidden;}
-.hsc-item{position:absolute;inset:0;opacity:0;transition:opacity 0.5s ease;display:flex;flex-direction:column;cursor:pointer;pointer-events:none;}
-.hsc-item.active{opacity:1;pointer-events:auto;}
+.hsc-track{position:relative;overflow:hidden;}
+.hsc-scroller{
+  display:flex;gap:0.7rem;
+  overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  padding:0 6%;
+  scrollbar-width:none;
+}
+.hsc-scroller::-webkit-scrollbar{display:none;}
+.hsc-item{
+  position:relative;flex:0 0 86%;height:480px;
+  scroll-snap-align:center;
+  border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column;cursor:pointer;
+  opacity:0.5;transform:scale(0.93);
+  transition:opacity 0.35s ease,transform 0.35s ease;
+}
+.hsc-item.active{opacity:1;transform:scale(1);}
 .hsc-img-wrap{position:relative;flex:1;min-height:0;overflow:hidden;}
 .hsc-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
 .hsc-hover-cta{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:transparent;transition:background 0.25s;}
@@ -242,9 +257,10 @@ section{position:relative;}
   padding:0.25rem 0.85rem;border-radius:50px;flex-shrink:0;
 }
 .hsc-controls{
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;
   padding:0.55rem 1rem;background:rgba(0,0,0,0.5);
 }
+.hsc-progress{display:flex;gap:0.4rem;width:100%;}
 .hsc-arrow{
   position:absolute;top:50%;transform:translateY(-50%);
   width:32px;height:32px;border-radius:50%;
@@ -257,13 +273,12 @@ section{position:relative;}
 .hsc-arrow:hover{background:rgba(212,168,83,0.25);border-color:var(--gold);}
 .hsc-prev{left:0.65rem;}
 .hsc-next{right:0.65rem;}
-.hsc-dots{display:flex;gap:0.4rem;align-items:center;}
-.hsc-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(212,168,83,0.25);
-  border:none;cursor:pointer;padding:0;transition:all 0.3s;
+.hsc-progress-seg{
+  flex:1;height:3px;border-radius:2px;
+  background:rgba(253,246,233,0.15);overflow:hidden;cursor:pointer;
 }
-.hsc-dot.active{background:var(--gold);transform:scale(1.4);}
+.hsc-progress-fill{display:block;height:100%;width:0%;background:transparent;transition:width 0.3s ease;}
+.hsc-progress-seg.active .hsc-progress-fill{width:100%;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
 @media(max-width:480px){
   .hero-specials-carousel{border-radius:12px;}
 }
@@ -704,14 +719,15 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
   .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
   .hero-content{grid-template-columns:1fr;grid-template-areas:"left" "right" "social";padding:7rem 1.5rem 7rem;gap:1.25rem;text-align:center;}
   .hero-left{text-align:center;}
-  .hero-right{display:block;}
+  .hero-right{display:block;min-width:0;}
   .hero-divider{margin:0 auto 2rem;}
   .hero-btns{justify-content:center;}
   .dietary-badges{justify-content:center;gap:0.35rem;}
   .badge{font-size:0.65rem;padding:0.22rem 0.55rem;gap:0.28rem;}
   .badge-dot{width:5px;height:5px;}
   .hero-social-row{justify-content:center;margin-top:0.4rem;}
-  .hsc-track{height:240px;}
+  .hsc-item{height:240px;flex-basis:88%;}
+  .hsc-scroller{padding:0 6%;gap:0.5rem;}
   .about-inner{grid-template-columns:1fr;gap:3rem;}
   .about-visual{order:-1;max-width:300px;margin:0 auto;}
   .milestones{grid-template-columns:1fr 1fr;}
@@ -934,10 +950,11 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
         </div>
         <div class="hsc-track">
           <button class="hsc-arrow hsc-prev" id="hscPrev">‹</button>
+          <div class="hsc-scroller" id="hscScroller"></div>
           <button class="hsc-arrow hsc-next" id="hscNext">›</button>
         </div>
         <div class="hsc-controls">
-          <div class="hsc-dots"></div>
+          <div class="hsc-progress" id="hscProgress"></div>
         </div>
       </div>
     </div>
@@ -1584,9 +1601,8 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
       const hr = hsc.closest('.hero-right');
       if (hr) hr.style.display = 'none';
     } else {
-      const track = hsc.querySelector('.hsc-track');
-      const dotsContainer = hsc.querySelector('.hsc-dots');
-      const prevBtn = track.querySelector('.hsc-prev');
+      const scroller = hsc.querySelector('.hsc-scroller');
+      const progressContainer = hsc.querySelector('.hsc-progress');
       active.forEach(function(promo, i) {
         const item = document.createElement('div');
         item.className = 'hsc-item' + (i === 0 ? ' active' : '');
@@ -1604,10 +1620,11 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
             '<div class="hsc-price">' + promo.price + '</div>' +
           '</div>';
         (function(idx) { item.onclick = function() { openLightbox(idx); }; })(i);
-        track.insertBefore(item, prevBtn);
-        const dot = document.createElement('button');
-        dot.className = 'hsc-dot' + (i === 0 ? ' active' : '');
-        dotsContainer.appendChild(dot);
+        scroller.appendChild(item);
+        const seg = document.createElement('div');
+        seg.className = 'hsc-progress-seg' + (i === 0 ? ' active' : '');
+        seg.innerHTML = '<span class="hsc-progress-fill"></span>';
+        progressContainer.appendChild(seg);
       });
     }
   }
@@ -1849,33 +1866,81 @@ if(msEl) msObserver.observe(msEl);
 (function() {
   const hsc = document.getElementById('heroSpecialsCarousel');
   if(!hsc) return;
+  const scroller = hsc.querySelector('.hsc-scroller');
   const items = hsc.querySelectorAll('.hsc-item');
-  const dots  = hsc.querySelectorAll('.hsc-dot');
+  const segs  = hsc.querySelectorAll('.hsc-progress-seg');
+  if (!items.length) return;
   let current = 0;
   let timer;
+  let scrollSyncTimeout;
+  let programmatic = false;
+  let programmaticTimeout;
+  let inView = true;
 
-  function goTo(idx) {
-    items[current].classList.remove('active');
-    dots[current].classList.remove('active');
+  function setActive(idx) {
     current = (idx + items.length) % items.length;
-    items[current].classList.add('active');
-    dots[current].classList.add('active');
+    items.forEach((it, i) => it.classList.toggle('active', i === current));
+    segs.forEach((seg, i) => seg.classList.toggle('active', i === current));
+  }
+
+  // Scroll only the carousel strip itself (never the page) and ignore the
+  // resulting 'scroll' events (there are several, throughout the smooth
+  // animation) so they don't re-trigger pauseThenResume below.
+  function goTo(idx, smooth) {
+    setActive(idx);
+    const item = items[current];
+    const target = item.offsetLeft - (scroller.clientWidth - item.offsetWidth) / 2;
+    programmatic = true;
+    clearTimeout(programmaticTimeout);
+    scroller.scrollTo({ left: target, behavior: smooth === false ? 'auto' : 'smooth' });
+    // Fallback for browsers without 'scrollend' (older Safari) — 'scrollend'
+    // listener below clears this and resets the flag as soon as it fires.
+    programmaticTimeout = setTimeout(() => { programmatic = false; }, 1000);
   }
 
   function start() {
-    timer = setInterval(() => goTo(current + 1), 3500);
+    clearInterval(timer);
+    if (!inView) return;
+    timer = setInterval(() => goTo(current + 1), 2800);
   }
 
-  document.getElementById('hscPrev').addEventListener('click', () => {
-    clearInterval(timer); goTo(current - 1); start();
-  });
-  document.getElementById('hscNext').addEventListener('click', () => {
-    clearInterval(timer); goTo(current + 1); start();
-  });
-  dots.forEach((d, i) => d.addEventListener('click', () => {
-    clearInterval(timer); goTo(i); start();
-  }));
+  function pauseThenResume() {
+    if (programmatic) return;
+    clearInterval(timer);
+    clearTimeout(scrollSyncTimeout);
+    scrollSyncTimeout = setTimeout(() => {
+      // Snap `current` to whichever card is nearest center after a free scroll
+      const trackRect = scroller.getBoundingClientRect();
+      const centerX = trackRect.left + trackRect.width / 2;
+      let nearest = 0, nearestDist = Infinity;
+      items.forEach((it, i) => {
+        const r = it.getBoundingClientRect();
+        const dist = Math.abs((r.left + r.width / 2) - centerX);
+        if (dist < nearestDist) { nearestDist = dist; nearest = i; }
+      });
+      setActive(nearest);
+      start();
+    }, 2500);
+  }
 
+  document.getElementById('hscPrev').addEventListener('click', () => { goTo(current - 1); start(); });
+  document.getElementById('hscNext').addEventListener('click', () => { goTo(current + 1); start(); });
+  segs.forEach((seg, i) => seg.addEventListener('click', () => { goTo(i); start(); }));
+
+  scroller.addEventListener('touchstart', pauseThenResume, { passive: true });
+  scroller.addEventListener('scroll', () => { if (!programmatic) pauseThenResume(); }, { passive: true });
+  scroller.addEventListener('scrollend', () => { programmatic = false; clearTimeout(programmaticTimeout); });
+
+  // Don't run autoplay while the carousel is scrolled out of view — avoids
+  // pointless work, and stops a stray tick from ever pulling the page back up.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      inView = entries[0].isIntersecting;
+      if (inView) start(); else clearInterval(timer);
+    }, { threshold: 0.2 }).observe(hsc);
+  }
+
+  goTo(0, false);
   start();
 })();
 

@@ -116,7 +116,7 @@ const VATAN_PROMOS = [
     file:     "Friday_Fun_Night.jpg",
     day:      "Every Friday",
     name:     "Friday Fun Night",
-    desc:     "Live Pani Poori, Spring Roll, Veg Hakka Noodles, Veg Manchurian Gravy, Malai Kofta, Plain Rice, Lacha Paratha, Falooda Icecream, Ice Gola",
+    desc:     "Live Pani Poori, Spring Roll, Veg Hakka Noodles, Veg Manchurian Gravy, Malai Kofta, Hariyali Veg Pulao, Lacha Paratha, Falooda Icecream, Ice Gola",
     price:    "$19.99",
     active:   true,
     lightbox: true,
