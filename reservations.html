@@ -856,6 +856,17 @@ function selectLoc(loc) {
   document.getElementById('selectedLocation').value = loc === 'JC' ? 'Jersey City' : 'East Windsor';
 }
 
+// MailerLite signup — fire-and-forget, never blocks or fails the reservation itself
+function notifyMailerLite(email, source) {
+  try {
+    fetch('/.netlify/functions/vatan-mailerlite-subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source })
+    }).catch(() => {});
+  } catch (e) {}
+}
+
 // Form submit
 document.getElementById('resForm').addEventListener('submit', function(e) {
   e.preventDefault();
@@ -884,6 +895,11 @@ document.getElementById('resForm').addEventListener('submit', function(e) {
     this.style.display = 'none';
     document.querySelector('.ot-section').style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
+    const optin = this.querySelector('[name="marketing_optin"]');
+    const honeypot = this.querySelector('[name="bot-field"]');
+    if (optin && optin.checked && honeypot && !honeypot.value) {
+      notifyMailerLite(document.getElementById('email').value.trim(), 'reservation');
+    }
   })
   .catch(() => {
     btn.disabled = false;
