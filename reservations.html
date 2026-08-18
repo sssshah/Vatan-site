@@ -859,7 +859,7 @@ function selectLoc(loc) {
 // MailerLite signup — fire-and-forget, never blocks or fails the reservation itself
 function notifyMailerLite(email, source) {
   try {
-    fetch('/.netlify/functions/subscribe', {
+    fetch('/.netlify/functions/vatan-mailerlite-subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, source })
