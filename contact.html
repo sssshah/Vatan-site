@@ -640,6 +640,17 @@ document.getElementById('cfSubject').addEventListener('change', function() {
   document.getElementById('emailSubject').value = map[this.value] || 'New Contact — Vatan';
 });
 
+// MailerLite signup — fire-and-forget, never blocks or fails the message itself
+function notifyMailerLite(email, source) {
+  try {
+    fetch('/.netlify/functions/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source })
+    }).catch(() => {});
+  } catch (e) {}
+}
+
 // Contact form
 document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
@@ -666,6 +677,11 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     document.getElementById('replyEmail').textContent = email;
     this.style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
+    const optin = this.querySelector('[name="marketing_optin"]');
+    const honeypot = this.querySelector('[name="bot-field"]');
+    if (optin && optin.checked && honeypot && !honeypot.value) {
+      notifyMailerLite(email, 'contact');
+    }
   })
   .catch(() => {
     btn.disabled = false;
