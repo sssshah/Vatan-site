@@ -90,11 +90,13 @@ GoDaddy owns `vatans.com` and manages all DNS records:
 - **MX records** → point to Microsoft 365 (all `@vatans.com` email routes to M365)
 
 ### Hosting — Netlify
+- Netlify site name: `vatan-nj` · Site ID: `6c80951b-e8d1-4101-a9b3-02544170e304`
 - Serves the static site files from GitHub (auto-deploys on every push to `main`)
 - GitHub repo: `sssshah/Vatan-site`
-- Form handling: `data-netlify="true"` on both forms — Netlify intercepts POST submissions, stores them in the Netlify dashboard, and sends email notifications to `info@vatans.com`
+- Form handling: `data-netlify="true"` on all three forms — Netlify intercepts POST submissions, stores them in the Netlify dashboard, and sends email notifications to `info@vatans.com`
 - Form detection must be **enabled** in Netlify dashboard (Site configuration > Forms) for this to work
 - Form notification emails are configured under: Netlify dashboard > Sites > Forms > Form notifications
+- **Known issue:** notification emails have landed in the `info@vatans.com` spam folder (confirmed for the `reservation` form, 2026-08-18) — Netlify *did* send them, this is an M365-side deliverability gap (sender domain is Netlify's own infra, not `vatans.com`, so it won't match `vatans.com`'s SPF/DKIM). Not yet fixed — likely needs a Safe Sender / mail flow rule in M365. Check spam folder, not just inbox, if a submission seems to have gone missing.
 
 ### Email — Microsoft 365 via GoDaddy
 - `info@vatans.com` is a live M365 mailbox (set up through GoDaddy)
@@ -113,12 +115,34 @@ Notification arrives at info@vatans.com (M365 via GoDaddy MX records)
 ```
 
 ### Forms
-- `contact.html` → Netlify form name: `contact`
-- `reservations.html` → Netlify form name: `reservation`
-- `order.html` → Netlify form name: `takeout-order`
-- All forms capture a `marketing_optin` checkbox field (not yet wired to any marketing service)
+- `contact.html` → Netlify form name: `contact` · email notification confirmed working (2026-08-18, lands in spam — see above)
+- `reservations.html` → Netlify form name: `reservation` · email notification confirmed working (2026-08-18, lands in spam — see above)
+- `order.html` → Netlify form name: `takeout-order` · **notification setup status unverified** — the v1.3 launch note said to add this "immediately after first deploy" but there's no confirmation it was ever done or tested. Verify in Netlify dashboard → Forms → Form notifications before relying on it.
+- All three forms have a honeypot spam field (`netlify-honeypot="bot-field"`, hidden `<input name="bot-field">`) — Netlify silently discards submissions where it's filled
+- `contact.html` and `reservations.html` capture a `marketing_optin` checkbox and, if checked, also subscribe the email to MailerLite (see Serverless Functions below). `order.html` has the same checkbox but is **not** wired to MailerLite (deliberately out of scope, may be added later)
 - All submissions are visible in Netlify dashboard regardless of email delivery — check there if emails are missed
-- **After first deploy of `order.html`:** add email notification for `takeout-order` in Netlify dashboard → Sites → Forms → Form notifications → add `info@vatans.com`
+
+### Environment variables
+Set in Netlify dashboard → Project configuration → Environment variables (never in git):
+- `MAILERLITE_API_KEY` — MailerLite API token, marked "Contains secret values". Scope: All scopes (the "Specific scopes"/Functions-only option is locked behind a paid plan upgrade on the current account)
+- `MAILERLITE_ENABLED` — `"true"` / `"false"` (or unset). Kill switch for the MailerLite integration — flip and no redeploy is needed, since the function reads it at invocation time
+- Both are set to "Same value for all deploy contexts," which covers Production, Deploy Previews, and Branch deploys — but **not** "Local development." `netlify dev` / `netlify env:get` currently cannot read env vars for this site at all (tested 2026-08-18, appears to be an account-level CLI/API permission issue, unrelated to the vars themselves) — local CLI testing is effectively broken; test via a Deploy Preview instead
+
+### Serverless Functions (`netlify/functions/`)
+- `vatan-mailerlite-subscribe.js` — proxies email signups to MailerLite's API (`connect.mailerlite.com/api/subscribers`), added 2026-08-18. Keeps the API key server-side; the static pages never see it.
+  - No-ops (returns success, logs nothing) if `MAILERLITE_ENABLED` isn't `"true"`
+  - Called fire-and-forget from `reservations.html` and `contact.html` — fires only after the existing Netlify Forms submission already succeeded, only if `marketing_optin` is checked and the honeypot field is empty. Wrapped in try/catch on the client side so a MailerLite failure of any kind (bad key, API down, disabled) can never block or fail the underlying form submission or surface an error to the user
+  - Currently sends only `{ email }` — no source tagging (`reservation` vs `contact`) reaches MailerLite yet, since that needs a custom field or group to already exist there. Client still passes a `source` value to the function for logging purposes even though it isn't forwarded to MailerLite today
+  - Failures are logged server-side via `console.error`, prefixed `[MailerLite]`, success is silent by design. View at: Netlify dashboard → Logs & metrics → Functions → `vatan-mailerlite-subscribe` (production deploys show here directly; a function that only exists on a Deploy Preview requires going through Deploys → that specific deploy → Functions instead). Logs are retained 24 hours.
+
+### `netlify.toml`
+- `[functions] directory = "netlify/functions"` — added 2026-08-18 alongside the MailerLite function
+- Four `[[headers]]` blocks set `Cache-Control`: long-cache (`immutable`, 1 year) for `/images/*` and `/*.js`; `must-revalidate, max-age=0` for `/promos.js` and `/menu-data.js` specifically, since those are live-edited content files that must never be served stale
+
+### `_headers` and `_redirects` (repo root)
+Both predate the MailerLite work and were previously undocumented here:
+- `_headers` — sitewide security headers on `/*`: `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`, `Strict-Transport-Security` (HSTS, 1 year, includes subdomains, preload)
+- `_redirects` — one 301 redirect consolidating a duplicate blog article URL (`blog-discovering-heart-indian-vegetarian-cuisine-east-windsor.html` → `blog-discover-best-indian-thali-east-windsor.html`)
 
 ## Locations
 
@@ -130,7 +154,9 @@ Notification arrives at info@vatans.com (M365 via GoDaddy MX records)
 
 _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
-- [ ] **Set up Netlify email notification for `takeout-order` form** — do this immediately after first deploy of order.html: Netlify dashboard → Sites → Forms → Form notifications → `info@vatans.com`
+- [ ] **Verify Netlify email notification for `takeout-order` form actually exists and works** — was supposed to be set up immediately after order.html's first deploy but was never confirmed; check Netlify dashboard → Forms → Form notifications
+- [ ] Add an M365 Safe Sender / mail flow rule so Netlify form notifications stop landing in `info@vatans.com` spam — v1.5
+- [ ] Decide whether to add MailerLite signup to `order.html` and/or create a MailerLite custom field for source tagging (reservation/contact/order) — currently only email is captured, no segmentation
 - [ ] Refactor `all-menu.html` to render dynamically from `menu-data.js` (Step 2 of menu-data plan) — v1.4
 - [ ] Add item images to `menu-data.js` as `images/food/` paths are confirmed — ongoing
 - [ ] Edison location: add full card to locations section and footer when open — v1.2
@@ -160,6 +186,12 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 **Active tab underline on `.cat-tab` uses `box-shadow`, not `border-bottom`.** The `.cat-nav` strip has `overflow-x:auto`, which implicitly sets `overflow-y:auto` and clips any negative-margin bleed. Using `border-bottom:2px solid + margin-bottom:-2px` (the standard tab underline trick) is clipped by the overflow container and only shows intermittently across browsers. The fix: `box-shadow:inset 0 -2px 0 var(--saffron)` renders inside the element's own box and is never clipped. Do not revert to `border-bottom` for this indicator.
 
 ## Changelog
+
+### v1.5 — 2026-08-18
+- **MailerLite integration:** Added `netlify/functions/vatan-mailerlite-subscribe.js`, a serverless proxy that subscribes an email to MailerLite when a customer checks `marketing_optin` on the reservation or contact form. Fully modular — toggled by the `MAILERLITE_ENABLED` env var, fails silently on any error, and never blocks or affects the existing Netlify Forms submission. `order.html` intentionally not wired up. See Infrastructure → Environment variables / Serverless Functions above for full details.
+- **Discovered and documented (previously untracked):** root-level `_headers` and `_redirects` files, and the `netlify.toml` `[[headers]]` caching rules — all pre-existing but never written down in this file until now.
+- **Discovered:** `reservation` form notification emails to `info@vatans.com` land in spam (M365 deliverability, not a Netlify failure) — not fixed yet, tracked in Roadmap.
+- **Discovered:** `takeout-order` form's email notification setup (called out as a TODO since v1.3) was never actually confirmed — status unknown, needs verification.
 
 ### v1.4 — 2026-06-16
 - **Blog section:** Reconstructed 10 blog articles from Wayback Machine cache and added a `blog.html` index page. Articles span Nov 28, 2025 – Feb 12, 2026 covering Indian cuisine, seasonal dishes, catering, and street food.
