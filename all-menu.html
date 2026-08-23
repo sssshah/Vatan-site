@@ -84,10 +84,9 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 }
 .menu-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(212,168,83,0.12) 0%,transparent 65%);}
 .menu-hero-inner{position:relative;z-index:1;max-width:700px;margin:0 auto;}
-.hero-badges{display:flex;gap:0.5rem;justify-content:center;flex-wrap:nowrap;}
 .menu-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,6vw,4rem);font-weight:600;color:var(--ivory);line-height:1.1;margin-bottom:0.5rem;}
 .menu-hero h1 em{font-style:italic;color:var(--gold-light);font-weight:300;}
-.menu-hero p{color:rgba(253,246,233,0.6);font-size:1rem;margin-bottom:2rem;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15rem;}
+.menu-hero p{color:rgba(253,246,233,0.82);font-size:1rem;margin-bottom:0;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15rem;}
 .menu-hero-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 1.5rem;}
 
 /* LEGEND */
@@ -116,6 +115,44 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .badge-s{background:#1565C0;color:white;}
 .badge-v{background:#00897B;color:white;}
 .legend-sep{width:1px;height:12px;background:rgba(212,168,83,0.3);}
+
+/* SPECIALS BAND — weekly specials, built from promos.js, sits between hero and legend bar */
+.specials-band{background:var(--ivory-dark);border-top:1px solid rgba(212,168,83,0.25);border-bottom:1px solid rgba(212,168,83,0.25);padding:0.85rem 0 0.95rem;position:relative;}
+.specials-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:0 2rem;margin-bottom:0.6rem;}
+.specials-head h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--maroon);margin:0;white-space:nowrap;}
+.specials-head span{font-size:0.72rem;color:var(--text-muted);white-space:nowrap;}
+.specials-row-wrap{position:relative;}
+.specials-row{display:flex;gap:0.7rem;overflow-x:auto;padding:0 2rem;scroll-snap-type:x proximity;scrollbar-width:none;}
+.specials-row::-webkit-scrollbar{display:none;}
+.spec-card{scroll-snap-align:start;flex:0 0 auto;width:192px;background:var(--white);border:1px solid rgba(122,28,46,0.12);border-radius:10px;overflow:hidden;display:flex;align-items:center;gap:0.6rem;padding:0.5rem;box-shadow:0 3px 10px rgba(28,16,8,0.06);cursor:pointer;transition:box-shadow 0.2s,transform 0.2s;}
+.spec-card:hover{box-shadow:0 8px 22px rgba(28,16,8,0.14);transform:translateY(-2px);}
+.spec-thumb{width:48px;height:48px;border-radius:8px;flex-shrink:0;object-fit:cover;display:block;}
+.spec-text{min-width:0;}
+.spec-day{font-size:0.62rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--saffron);white-space:nowrap;}
+.spec-name{font-size:0.82rem;font-weight:600;color:var(--text-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.spec-loc{font-size:0.66rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.spec-price{font-size:0.74rem;color:var(--text-muted);}
+.spec-arrow-right{position:absolute;top:50%;transform:translateY(-50%);right:0.6rem;width:30px;height:30px;border-radius:50%;background:var(--white);border:1px solid rgba(122,28,46,0.15);box-shadow:0 4px 12px rgba(28,16,8,0.12);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--maroon);cursor:pointer;}
+@media(max-width:768px){
+  .specials-head{padding:0 1.2rem;}
+  .specials-row{padding:0 1.2rem;}
+  .spec-card{width:170px;}
+  .spec-arrow-right{display:none;}
+}
+
+/* SPECIALS LIGHTBOX */
+.spec-lightbox-overlay{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.92);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem;}
+.spec-lightbox-overlay.open{display:flex;}
+.spec-lightbox-inner{position:relative;max-height:92vh;animation:specLbIn 0.3s cubic-bezier(0.34,1.4,0.64,1) both;}
+@keyframes specLbIn{from{opacity:0;transform:scale(0.88);}to{opacity:1;transform:scale(1);}}
+.spec-lightbox-img{max-height:85vh;max-width:min(500px,92vw);width:auto;height:auto;border-radius:12px;box-shadow:0 32px 80px rgba(0,0,0,0.8);display:block;transition:opacity 0.18s ease,transform 0.18s ease;}
+.spec-lightbox-close{position:absolute;top:-14px;right:-14px;width:34px;height:34px;border-radius:50%;background:var(--saffron);color:#fff;border:none;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.4);transition:all 0.2s;z-index:1;}
+.spec-lightbox-close:hover{background:var(--maroon);transform:scale(1.1);}
+.spec-lightbox-footer{margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.spec-lb-reserve-btn{background:linear-gradient(135deg,var(--saffron),var(--maroon));color:#fff;text-decoration:none;padding:0.7rem 1.8rem;border-radius:50px;font-weight:700;font-size:0.88rem;letter-spacing:0.05em;box-shadow:0 4px 16px rgba(200,102,10,0.4);transition:all 0.2s;}
+.spec-lb-reserve-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,102,10,0.5);}
+.spec-lb-nav{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;}
+.spec-lb-nav:hover{background:rgba(212,168,83,0.2);border-color:var(--gold);color:var(--gold);}
 
 /* DESKTOP NAV ICONS — search + filter toggles appended to the tab strip (desktop only) */
 .dt-iconbtn{
@@ -488,6 +525,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   .hamburger{display:flex;}
   .call-text,.call-chevron{display:none;}
   .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
+  .menu-hero{padding:4rem 1.5rem 1.4rem;}
   .legend-bar{gap:0.65rem;padding:0.35rem 0.75rem;top:70px;flex-wrap:nowrap;}
   .legend-item{gap:0.3rem;font-size:0.72rem;white-space:nowrap;}
   .legend-suffix{display:none;}
@@ -497,7 +535,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   .desktop-filter-row{display:none;}
   .mobile-toolbar{display:block;}
   .section-header-desktop{display:none;}
-  .section-header-mobile{display:block;padding:0 0 0.9rem;margin-bottom:1rem;border-bottom:1px solid rgba(212,168,83,0.2);}
+  .section-header-mobile{display:block;padding:0 0 0.7rem;margin-bottom:0.85rem;border-bottom:1px solid rgba(212,168,83,0.2);}
+  .menu-section{margin-bottom:2.5rem;}
+  .menu-body{padding-top:1.2rem;}
   .menu-section{scroll-margin-top:150px;}
   .items-grid{grid-template-columns:1fr;}
   .thali-grid{grid-template-columns:1fr;}
@@ -532,7 +572,6 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 }
 @media(max-width:480px){
   .thali-grid{grid-template-columns:1fr;}
-  .hero-badges{flex-wrap:wrap;}
 }
 @media(min-width:769px){
   .cat-arrow{display:flex;}
@@ -611,19 +650,21 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   <div class="menu-hero-inner">
     <div class="menu-hero-divider"></div>
     <h1>Our <em>Menu</em></h1>
-    <p>Authentic flavors of India — crafted fresh, served with love.</p>
-    <div class="hero-badges">
-      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:50px;white-space:nowrap;">🌿 100% Vegetarian</span>
-      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:50px;white-space:nowrap;">🫙 Jain Options</span>
-      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:50px;white-space:nowrap;">🙏 Swaminarayan Friendly</span>
-      <span style="background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);color:var(--gold-light);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:50px;white-space:nowrap;">🌱 Vegan Available</span>
-    </div>
+    <p>Authentic, 100% vegetarian flavors of India — crafted fresh, served with love.</p>
   </div>
 </div>
 
-<p style="text-align:center;font-size:0.75rem;color:var(--text-muted);font-style:italic;background:var(--ivory);padding:0.55rem 1.5rem;margin:0;">
-  Photos are for illustration only — actual dishes may vary.
-</p>
+<!-- SPECIALS BAND — built by JS from promos.js, hidden entirely if no promo is active -->
+<div class="specials-band" id="specialsBand" style="display:none;">
+  <div class="specials-head">
+    <h4>🔥 This Week's Specials</h4>
+    <span>Scroll →</span>
+  </div>
+  <div class="specials-row-wrap">
+    <div class="specials-row" id="specialsRow"></div>
+    <button class="spec-arrow-right" id="specArrowRight" aria-label="Scroll specials right">›</button>
+  </div>
+</div>
 
 <!-- LEGEND -->
 <div class="legend-bar">
@@ -724,6 +765,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         <a href="contact.html">Contact</a>
       </div>
       <p>© 2026 Vatan Indian Vegetarian Cuisine &amp; Bakery.</p>
+      <p style="font-size:0.78rem;color:rgba(253,246,233,0.3);font-style:italic;">Photos are for illustration only — actual dishes may vary.</p>
     </div>
   </div>
 </footer>
@@ -761,6 +803,20 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   </div>
 </div>
 
+<!-- SPECIALS LIGHTBOX -->
+<div class="spec-lightbox-overlay" id="specLightbox" onclick="closeSpecLightboxOutside(event)">
+  <div class="spec-lightbox-inner">
+    <button class="spec-lightbox-close" onclick="closeSpecLightbox()">✕</button>
+    <img class="spec-lightbox-img" id="specLightboxImg" src="" alt="">
+    <div class="spec-lightbox-footer">
+      <button class="spec-lb-nav" onclick="specLbNav(-1)">‹</button>
+      <a href="reservations.html" class="spec-lb-reserve-btn">📅 &nbsp; Reserve a Table</a>
+      <button class="spec-lb-nav" onclick="specLbNav(1)">›</button>
+    </div>
+  </div>
+</div>
+
+<script src="promos.js"></script>
 <script src="menu-data.js"></script>
 <script>
 const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com';
@@ -908,6 +964,83 @@ function buildMenu() {
 }
 
 buildMenu();
+
+// ─── SPECIALS BAND — built from promos.js ────────────────────────────────────
+function normalizeSpecLocations(loc) {
+  if (!loc) return null;
+  if (loc.trim().toLowerCase() === 'all locations') return null;
+  return loc.trim();
+}
+
+let specPromos = [];
+let specLbCurrent = 0;
+
+(function() {
+  specPromos = (typeof VATAN_PROMOS !== 'undefined') ? VATAN_PROMOS.filter(p => p.active) : [];
+  const band = document.getElementById('specialsBand');
+  const row  = document.getElementById('specialsRow');
+  if (!band || !row || !specPromos.length) return;
+
+  row.innerHTML = specPromos.map(function(promo, i) {
+    const loc = normalizeSpecLocations(promo.locations);
+    return (
+      '<div class="spec-card" onclick="openSpecLightbox(' + i + ')">' +
+        '<img class="spec-thumb" src="images/promos/' + promo.file + '" alt="' + promo.name + '" loading="lazy">' +
+        '<div class="spec-text">' +
+          '<div class="spec-day">' + promo.day + '</div>' +
+          '<div class="spec-name">' + promo.name + '</div>' +
+          (loc ? '<div class="spec-loc">📍 ' + loc + '</div>' : '<div class="spec-price">' + promo.price + '</div>') +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+
+  band.style.display = 'block';
+
+  const arrowRight = document.getElementById('specArrowRight');
+  if (arrowRight) {
+    arrowRight.addEventListener('click', function() {
+      row.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+  }
+})();
+
+function openSpecLightbox(idx) {
+  specLbCurrent = idx;
+  const lb  = document.getElementById('specLightbox');
+  const img = document.getElementById('specLightboxImg');
+  const promo = specPromos[idx];
+  img.src = 'images/promos/' + promo.file;
+  img.alt = promo.name;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSpecLightbox() {
+  document.getElementById('specLightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeSpecLightboxOutside(e) {
+  if (e.target === e.currentTarget) closeSpecLightbox();
+}
+function specLbNav(dir) {
+  specLbCurrent = (specLbCurrent + dir + specPromos.length) % specPromos.length;
+  const img = document.getElementById('specLightboxImg');
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.95)';
+  setTimeout(function() {
+    img.src = 'images/promos/' + specPromos[specLbCurrent].file;
+    img.alt = specPromos[specLbCurrent].name;
+    img.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  }, 180);
+}
+document.addEventListener('keydown', function(e) {
+  const lb = document.getElementById('specLightbox');
+  if (!lb || !lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeSpecLightbox();
+  if (e.key === 'ArrowRight') specLbNav(1);
+  if (e.key === 'ArrowLeft') specLbNav(-1);
+});
 
 // ─── MOBILE DROPDOWN CATEGORY PANEL (mobile only) ────────────────────────────
 function buildMobileCatPanel() {
