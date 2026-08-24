@@ -13,14 +13,34 @@ python3 -m http.server 8080
 
 ## Architecture
 
-This is a **pure static site** — no frameworks, no bundler, no package.json. Six self-contained HTML pages with all CSS inlined in `<style>` blocks:
+This is a **pure static site** — no frameworks, no bundler, no package.json. All CSS is inlined per-page in `<style>` blocks. The site has grown well past the original six pages documented here through v1.4 — current inventory:
 
+**Core pages:**
 - `index.html` — homepage (hero, about, promotions, dishes, gallery, reviews, locations)
-- `all-menu.html` — full menu with filterable categories
+- `all-menu.html` — full menu with filterable categories; renders dynamically from `menu-data.js` (`VATAN_MENU`)
 - `reservations.html` — reservation form (embeds third-party booking widget)
 - `catering.html` — catering inquiry page
 - `contact.html` — location cards with hours, maps, social links
 - `order.html` — direct pickup order form (v1.3+); builds menu from `menu-data.js`
+- `faq.html` — sitewide FAQ page
+- `privacy-policy.html` — privacy policy
+
+**Local-SEO location/topic landing pages** (added post-v1.4, previously undocumented):
+- `thali.html`, `indo-chinese.html` — dish-focused landing pages
+- `catering-jersey-city.html`, `catering-east-windsor.html` — per-location catering landing pages
+- `jain-food-east-windsor.html`, `jain-swaminarayan-jersey-city.html` — Jain/Swaminarayan-friendly dining landing pages
+- `eggless-bakery-east-windsor.html` — bakery landing page
+- `indian-catering-mercer-county.html`, `indian-restaurant-near-princeton-nj.html`, `restaurant-near-baps-robbinsville.html` — geo-targeted landing pages (Mercer County, Princeton, BAPS Akshardham Robbinsville)
+
+**Blog:**
+- `blog.html` — blog index
+- `blog/*.html` — 23 article pages (grew from the original 10 written up in the v1.4 changelog entry; that entry's file list is now incomplete — treat the `blog/` directory listing as current truth)
+
+**Not real pages — exclude from page-list/nav-audit work:**
+- `index_backup.html`, `all-menu.backup-2026-07-15.html`, `all-menu.backup-2026-07-15-before-font-bump.html` — manual backups, not linked from nav, not deployed-as-current
+- `google466a17476ad238df.html`, `googleafd2aa76994074ad.html` — Search Console verification files; must stay at site root, never delete or move
+- `print-review-card-jc.html`, `print-review-card-ew.html`, `print-review-card-ew-single.html` — print-only QR review-card templates (see memory: Review QR cards)
+- `_og-image-preview.html` — local preview tool for OG image, not deployed content
 
 ### Key patterns
 
@@ -157,13 +177,17 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 - [ ] **Verify Netlify email notification for `takeout-order` form actually exists and works** — was supposed to be set up immediately after order.html's first deploy but was never confirmed; check Netlify dashboard → Forms → Form notifications
 - [ ] Add an M365 Safe Sender / mail flow rule so Netlify form notifications stop landing in `info@vatans.com` spam — v1.5
 - [ ] Decide whether to add MailerLite signup to `order.html` and/or create a MailerLite custom field for source tagging (reservation/contact/order) — currently only email is captured, no segmentation
-- [ ] Refactor `all-menu.html` to render dynamically from `menu-data.js` (Step 2 of menu-data plan) — v1.4
 - [ ] Add item images to `menu-data.js` as `images/food/` paths are confirmed — ongoing
 - [ ] Edison location: add full card to locations section and footer when open — v1.2
 - [ ] Update promo `locations` field when Edison launches to reflect which specials it offers — ongoing
-- [ ] Consider a shared nav include (SSI or templating) to avoid per-page duplication — v2.0
-- [ ] Google Search Console verification meta tag — when site goes live
-- [ ] Sitemap.xml — when site goes live
+- [ ] Consider a shared nav include (SSI or templating) to avoid per-page duplication — even more valuable now given the page count has grown to 20+ — v2.0
+- [ ] Add JSON-LD structured data to `all-menu.html`, `order.html`, `reservations.html`, and `blog.html` — currently the only pages with zero schema; most other pages already have Restaurant/Service/FAQPage/BreadcrumbList markup
+- [ ] Reconcile the v1.4 changelog's 10-article blog list against the current 23 files in `blog/` — changelog entry is stale, `blog/` directory listing is current truth
+
+**Done, previously listed here as pending — confirmed 2026-08-23:**
+- [x] Google Search Console verification meta tag — live sitewide (`google-site-verification` meta on every page, plus two verification files at site root)
+- [x] Sitemap.xml — exists at root with per-image entries and `lastmod`; `robots.txt` exists and references it
+- [x] Refactor `all-menu.html` to render dynamically from `menu-data.js` — done, confirmed using `VATAN_MENU` for category nav and menu body
 
 ## Design principles & gotchas
 
@@ -186,6 +210,13 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 **Active tab underline on `.cat-tab` uses `box-shadow`, not `border-bottom`.** The `.cat-nav` strip has `overflow-x:auto`, which implicitly sets `overflow-y:auto` and clips any negative-margin bleed. Using `border-bottom:2px solid + margin-bottom:-2px` (the standard tab underline trick) is clipped by the overflow container and only shows intermittently across browsers. The fix: `box-shadow:inset 0 -2px 0 var(--saffron)` renders inside the element's own box and is never clipped. Do not revert to `border-bottom` for this indicator.
 
 ## Changelog
+
+### v1.6 — 2026-08-23
+- **Weekly specials band on `all-menu.html`:** Added a `.specials-band` section between the hero and the legend/category tab bar, built at load time from `VATAN_PROMOS` (`active:true` only, same data source as the homepage carousel/grid — nothing new to maintain). Shows each active promo's real photo (`images/promos/`), day, name, price, and a 📍 location line when a promo isn't sitewide. Band is skipped entirely if no promo is active.
+- **New self-contained lightbox on `all-menu.html`:** `all-menu.html` had no lightbox before this; `#specLightbox` + `openSpecLightbox()`/`closeSpecLightbox()`/`specLbNav()` were added so tapping a specials card opens the full flyer image with prev/next nav and a "Reserve a Table" CTA, mirroring the homepage's `#lightbox` pattern but fully independent (own IDs/functions, no shared state).
+- **Hero simplified:** Removed the four decorative badge pills (`🌿 100% Vegetarian` / `🫙 Jain Options` / `🙏 Swaminarayan Friendly` / `🌱 Vegan Available`) from the `all-menu.html` hero — Jain/Swaminarayan/Vegan were already restated seconds later by the legend bar, so keeping the full pill row was the same claim twice. The vegetarian claim was folded into the tagline instead: *"Authentic, 100% vegetarian flavors of India — crafted fresh, served with love."* Tagline text opacity bumped `0.6` → `0.82` to match the site's established readable-label-on-dark convention (same value used for nav links).
+- **Disclaimer relocated:** "Photos are for illustration only — actual dishes may vary." moved from its own bar under the hero into the footer, next to the copyright line.
+- **Mobile spacing tightened on `all-menu.html`:** hero side/bottom padding reduced (top padding kept at `4rem` — must stay clear of the 70px fixed nav, learned the hard way when a first pass over-trimmed it and the nav's saffron border sliced through the "Our Menu" headline), specials-band subtext removed in favor of a short "Scroll →" hint, and category-section spacing trimmed (`.menu-section` margin `4rem`→`2.5rem`, `.menu-body` top padding `2.5rem`→`1.2rem` above the first section) — all while keeping each section's border-bottom divider so categories stay visually distinct.
 
 ### v1.5 — 2026-08-18
 - **MailerLite integration:** Added `netlify/functions/vatan-mailerlite-subscribe.js`, a serverless proxy that subscribes an email to MailerLite when a customer checks `marketing_optin` on the reservation or contact form. Fully modular — toggled by the `MAILERLITE_ENABLED` env var, fails silently on any error, and never blocks or affects the existing Netlify Forms submission. `order.html` intentionally not wired up. See Infrastructure → Environment variables / Serverless Functions above for full details.
