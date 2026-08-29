@@ -37,7 +37,7 @@ This is a **pure static site** — no frameworks, no bundler, no package.json. A
 - `blog/*.html` — 23 article pages (grew from the original 10 written up in the v1.4 changelog entry; that entry's file list is now incomplete — treat the `blog/` directory listing as current truth)
 
 **Kiosk / display pages (not linked from nav, no login):**
-- `reservations-board.html` — added v1.7. Airport-departures-style live display of today's reservations for a host stand TV/tablet. `?loc=ew` / `?loc=jc` scopes to one location; no param shows all locations. Polls `netlify/functions/reservations-board.js` every 30 minutes. Shows only time, party size, and privacy-safe initials (first initial + first 3 letters of last name) — never email, phone, or notes. Deliberately has no login: the URL is unlisted (like the print-review-card templates below) and the data it shows is low-sensitivity. See Serverless Functions below for how it reads Netlify Forms data.
+- `reservations-board.html` — added v1.7. Airport-departures-style live display of today's reservations for a host stand TV/tablet. `?loc=ew` / `?loc=jc` scopes to one location; no param shows all locations. Polls `netlify/functions/reservations-board.js` every 5 minutes. Shows only time, party size, and privacy-safe initials (first initial + first 3 letters of last name) — never email, phone, or notes. Deliberately has no login: the URL is unlisted (like the print-review-card templates below) and the data it shows is low-sensitivity. See Serverless Functions below for how it reads Netlify Forms data.
 
 **Not real pages — exclude from page-list/nav-audit work:**
 - `index_backup.html`, `all-menu.backup-2026-07-15.html`, `all-menu.backup-2026-07-15-before-font-bump.html` — manual backups, not linked from nav, not deployed-as-current
@@ -161,7 +161,7 @@ Set in Netlify dashboard → Project configuration → Environment variables (ne
 - `reservations-board.js` — added v1.7. Read-only GET endpoint backing `reservations-board.html`. Looks up the `reservation` Netlify Form by name, scans its ~300 most recently created submissions, filters to rows whose `date` field matches today (America/New_York) and, if `?loc=` was passed, whose `location` field matches, then returns only `{ time, name, party }` per row — `name` is reduced to initials server-side before it ever reaches the browser.
   - Introduces no new data store — reads the same Netlify Forms submissions the `reservation` form already writes to. Requires `NETLIFY_ACCESS_TOKEN` (see above); returns HTTP 500 with a `console.error` if it's missing.
   - **Known limitation:** scans only the latest ~300 submissions (by submission creation time, not reservation date) per request, since Netlify's Forms API has no server-side filter by field value. A reservation booked far enough in advance that 300 newer submissions have since come in would be missed. Fine at current volume; revisit (raise `SUBMISSION_PAGES` or add Netlify Blobs caching) if the form's submission rate grows a lot.
-  - No caching between polls (`Cache-Control: no-store`) — each of the board's 30-minute polls re-fetches from Netlify's API fresh.
+  - No caching between polls (`Cache-Control: no-store`) — each of the board's 5-minute polls re-fetches from Netlify's API fresh.
 
 ### `netlify.toml`
 - `[functions] directory = "netlify/functions"` — added 2026-08-18 alongside the MailerLite function
@@ -223,7 +223,7 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 ## Changelog
 
 ### v1.7 — 2026-08-28
-- **Reservations board:** Added `reservations-board.html` + `netlify/functions/reservations-board.js` to solve "no way to show today's reservations to someone in the restaurant" without adding a database. The function reads today's rows straight out of the existing `reservation` Netlify Form via Netlify's own Forms API, reduces each row to privacy-safe fields (time, party size, initials — first initial + first 3 letters of last name), and the page polls it every 30 minutes in a full-screen airport-departures-board layout. Scoped per location via `?loc=ew` / `?loc=jc`; no login, unlisted URL, no email/phone/notes ever leave the function. Requires a new `NETLIFY_ACCESS_TOKEN` env var, created and added 2026-08-28 — not yet verified end-to-end on a live deploy (see Roadmap).
+- **Reservations board:** Added `reservations-board.html` + `netlify/functions/reservations-board.js` to solve "no way to show today's reservations to someone in the restaurant" without adding a database. The function reads today's rows straight out of the existing `reservation` Netlify Form via Netlify's own Forms API, reduces each row to privacy-safe fields (time, party size, initials — first initial + first 3 letters of last name), and the page polls it every 5 minutes in a full-screen airport-departures-board layout. Scoped per location via `?loc=ew` / `?loc=jc`; no login, unlisted URL, no email/phone/notes ever leave the function. Requires a new `NETLIFY_ACCESS_TOKEN` env var, created and added 2026-08-28 — not yet verified end-to-end on a live deploy (see Roadmap).
 - **Docs fix:** `reservations.html`'s Core pages description corrected from "embeds third-party booking widget" (stale) to "native Netlify Forms submission" — it was never a widget.
 
 ### v1.6 — 2026-08-23

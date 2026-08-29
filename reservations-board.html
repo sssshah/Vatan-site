@@ -171,7 +171,7 @@ footer{
   </div>
 </main>
 
-<footer>Vatan &mdash; auto-refreshes every 30 min</footer>
+<footer>Vatan &mdash; auto-refreshes every 5 min</footer>
 
 <script>
 const params = new URLSearchParams(location.search);
@@ -244,7 +244,7 @@ function escapeHtml(str) {
 }
 
 loadBoard();
-setInterval(loadBoard, 1800000); // 30 minutes
+setInterval(loadBoard, 300000); // 5 minutes
 </script>
 
 </body>
