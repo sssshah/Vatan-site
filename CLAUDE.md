@@ -18,7 +18,7 @@ This is a **pure static site** — no frameworks, no bundler, no package.json. A
 **Core pages:**
 - `index.html` — homepage (hero, about, promotions, dishes, gallery, reviews, locations)
 - `all-menu.html` — full menu with filterable categories; renders dynamically from `menu-data.js` (`VATAN_MENU`)
-- `reservations.html` — reservation form (embeds third-party booking widget)
+- `reservations.html` — reservation form (native Netlify Forms submission, form name `reservation`)
 - `catering.html` — catering inquiry page
 - `contact.html` — location cards with hours, maps, social links
 - `order.html` — direct pickup order form (v1.3+); builds menu from `menu-data.js`
@@ -35,6 +35,9 @@ This is a **pure static site** — no frameworks, no bundler, no package.json. A
 **Blog:**
 - `blog.html` — blog index
 - `blog/*.html` — 23 article pages (grew from the original 10 written up in the v1.4 changelog entry; that entry's file list is now incomplete — treat the `blog/` directory listing as current truth)
+
+**Kiosk / display pages (not linked from nav, no login):**
+- `reservations-board.html` — added v1.7. Airport-departures-style live display of today's reservations for a host stand TV/tablet. `?loc=ew` / `?loc=jc` scopes to one location; no param shows all locations. Polls `netlify/functions/reservations-board.js` every 30 minutes. Shows only time, party size, and privacy-safe initials (first initial + first 3 letters of last name) — never email, phone, or notes. Deliberately has no login: the URL is unlisted (like the print-review-card templates below) and the data it shows is low-sensitivity. See Serverless Functions below for how it reads Netlify Forms data.
 
 **Not real pages — exclude from page-list/nav-audit work:**
 - `index_backup.html`, `all-menu.backup-2026-07-15.html`, `all-menu.backup-2026-07-15-before-font-bump.html` — manual backups, not linked from nav, not deployed-as-current
@@ -147,6 +150,7 @@ Set in Netlify dashboard → Project configuration → Environment variables (ne
 - `MAILERLITE_API_KEY` — MailerLite API token, marked "Contains secret values". Scope: All scopes (the "Specific scopes"/Functions-only option is locked behind a paid plan upgrade on the current account)
 - `MAILERLITE_ENABLED` — `"true"` / `"false"` (or unset). Kill switch for the MailerLite integration — flip and no redeploy is needed, since the function reads it at invocation time
 - Both are set to "Same value for all deploy contexts," which covers Production, Deploy Previews, and Branch deploys — but **not** "Local development." `netlify dev` / `netlify env:get` currently cannot read env vars for this site at all (tested 2026-08-18, appears to be an account-level CLI/API permission issue, unrelated to the vars themselves) — local CLI testing is effectively broken; test via a Deploy Preview instead
+- `NETLIFY_ACCESS_TOKEN` — added v1.7 for the reservations board. A Netlify **Personal Access Token** (User settings → Applications → New access token, not a site-scoped API key), marked "Contains secret values," set to "Same value for all deploy contexts." Lets `reservations-board.js` read Forms submissions via Netlify's own API. Created and added 2026-08-28 — not yet verified end-to-end on a live deploy (see Roadmap).
 
 ### Serverless Functions (`netlify/functions/`)
 - `vatan-mailerlite-subscribe.js` — proxies email signups to MailerLite's API (`connect.mailerlite.com/api/subscribers`), added 2026-08-18. Keeps the API key server-side; the static pages never see it.
@@ -154,6 +158,10 @@ Set in Netlify dashboard → Project configuration → Environment variables (ne
   - Called fire-and-forget from `reservations.html` and `contact.html` — fires only after the existing Netlify Forms submission already succeeded, only if `marketing_optin` is checked and the honeypot field is empty. Wrapped in try/catch on the client side so a MailerLite failure of any kind (bad key, API down, disabled) can never block or fail the underlying form submission or surface an error to the user
   - Currently sends only `{ email }` — no source tagging (`reservation` vs `contact`) reaches MailerLite yet, since that needs a custom field or group to already exist there. Client still passes a `source` value to the function for logging purposes even though it isn't forwarded to MailerLite today
   - Failures are logged server-side via `console.error`, prefixed `[MailerLite]`, success is silent by design. View at: Netlify dashboard → Logs & metrics → Functions → `vatan-mailerlite-subscribe` (production deploys show here directly; a function that only exists on a Deploy Preview requires going through Deploys → that specific deploy → Functions instead). Logs are retained 24 hours.
+- `reservations-board.js` — added v1.7. Read-only GET endpoint backing `reservations-board.html`. Looks up the `reservation` Netlify Form by name, scans its ~300 most recently created submissions, filters to rows whose `date` field matches today (America/New_York) and, if `?loc=` was passed, whose `location` field matches, then returns only `{ time, name, party }` per row — `name` is reduced to initials server-side before it ever reaches the browser.
+  - Introduces no new data store — reads the same Netlify Forms submissions the `reservation` form already writes to. Requires `NETLIFY_ACCESS_TOKEN` (see above); returns HTTP 500 with a `console.error` if it's missing.
+  - **Known limitation:** scans only the latest ~300 submissions (by submission creation time, not reservation date) per request, since Netlify's Forms API has no server-side filter by field value. A reservation booked far enough in advance that 300 newer submissions have since come in would be missed. Fine at current volume; revisit (raise `SUBMISSION_PAGES` or add Netlify Blobs caching) if the form's submission rate grows a lot.
+  - No caching between polls (`Cache-Control: no-store`) — each of the board's 30-minute polls re-fetches from Netlify's API fresh.
 
 ### `netlify.toml`
 - `[functions] directory = "netlify/functions"` — added 2026-08-18 alongside the MailerLite function
@@ -175,8 +183,8 @@ Both predate the MailerLite work and were previously undocumented here:
 _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
 - [ ] **Verify Netlify email notification for `takeout-order` form actually exists and works** — was supposed to be set up immediately after order.html's first deploy but was never confirmed; check Netlify dashboard → Forms → Form notifications
-- [ ] Add an M365 Safe Sender / mail flow rule so Netlify form notifications stop landing in `info@vatans.com` spam — v1.5
 - [ ] Decide whether to add MailerLite signup to `order.html` and/or create a MailerLite custom field for source tagging (reservation/contact/order) — currently only email is captured, no segmentation
+- [ ] **Verify `reservations-board.html` actually works end-to-end** — `NETLIFY_ACCESS_TOKEN` was created and added 2026-08-28, but the board hasn't been tested against a live deploy yet (needs a Deploy Preview or production deploy, since Netlify Functions don't run under local `python3 -m http.server`)
 - [ ] Add item images to `menu-data.js` as `images/food/` paths are confirmed — ongoing
 - [ ] Edison location: add full card to locations section and footer when open — v1.2
 - [ ] Update promo `locations` field when Edison launches to reflect which specials it offers — ongoing
@@ -188,6 +196,9 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 - [x] Google Search Console verification meta tag — live sitewide (`google-site-verification` meta on every page, plus two verification files at site root)
 - [x] Sitemap.xml — exists at root with per-image entries and `lastmod`; `robots.txt` exists and references it
 - [x] Refactor `all-menu.html` to render dynamically from `menu-data.js` — done, confirmed using `VATAN_MENU` for category nav and menu body
+
+**Done, previously listed here as pending — confirmed 2026-08-28:**
+- [x] M365 Safe Sender / mail flow rule for Netlify form notifications — `info@vatans.com` no longer seeing them land in spam
 
 ## Design principles & gotchas
 
@@ -210,6 +221,10 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 **Active tab underline on `.cat-tab` uses `box-shadow`, not `border-bottom`.** The `.cat-nav` strip has `overflow-x:auto`, which implicitly sets `overflow-y:auto` and clips any negative-margin bleed. Using `border-bottom:2px solid + margin-bottom:-2px` (the standard tab underline trick) is clipped by the overflow container and only shows intermittently across browsers. The fix: `box-shadow:inset 0 -2px 0 var(--saffron)` renders inside the element's own box and is never clipped. Do not revert to `border-bottom` for this indicator.
 
 ## Changelog
+
+### v1.7 — 2026-08-28
+- **Reservations board:** Added `reservations-board.html` + `netlify/functions/reservations-board.js` to solve "no way to show today's reservations to someone in the restaurant" without adding a database. The function reads today's rows straight out of the existing `reservation` Netlify Form via Netlify's own Forms API, reduces each row to privacy-safe fields (time, party size, initials — first initial + first 3 letters of last name), and the page polls it every 30 minutes in a full-screen airport-departures-board layout. Scoped per location via `?loc=ew` / `?loc=jc`; no login, unlisted URL, no email/phone/notes ever leave the function. Requires a new `NETLIFY_ACCESS_TOKEN` env var, created and added 2026-08-28 — not yet verified end-to-end on a live deploy (see Roadmap).
+- **Docs fix:** `reservations.html`'s Core pages description corrected from "embeds third-party booking widget" (stale) to "native Netlify Forms submission" — it was never a widget.
 
 ### v1.6 — 2026-08-23
 - **Weekly specials band on `all-menu.html`:** Added a `.specials-band` section between the hero and the legend/category tab bar, built at load time from `VATAN_PROMOS` (`active:true` only, same data source as the homepage carousel/grid — nothing new to maintain). Shows each active promo's real photo (`images/promos/`), day, name, price, and a 📍 location line when a promo isn't sitewide. Band is skipped entirely if no promo is active.
