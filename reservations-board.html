@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Today's Reservations — Vatan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --saffron:#C8660A; --saffron-light:#E8820F; --maroon:#7A1C2E; --maroon-deep:#5A1020;
+  --gold:#D4A853; --gold-light:#F0C878; --ivory:#FDF6E9; --ivory-dark:#F5EDD8;
+  --dark:#1C1008; --dark-mid:#2E1A0E;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:radial-gradient(ellipse at top, var(--dark-mid) 0%, var(--dark) 60%);
+  color:var(--ivory);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:1.4rem 2.5rem;
+  border-bottom:1px solid rgba(212,168,83,0.28);
+  flex-shrink:0;
+}
+.brand{display:flex;align-items:center;gap:0.9rem;}
+.brand img{height:48px;}
+.brand-text h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;
+  font-weight:700;
+  letter-spacing:0.02em;
+}
+.brand-text p{
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-top:0.15rem;
+}
+.header-right{text-align:right;}
+#clock{
+  font-size:1.6rem;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+#dateLine{
+  font-size:0.78rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(253,246,233,0.6);
+  margin-top:0.2rem;
+}
+
+main{flex:1;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex;flex-direction:column;}
+
+.board-cols{
+  display:grid;
+  grid-template-columns:1.1fr 2fr 1fr;
+  padding:0.9rem 1.5rem;
+  font-size:0.78rem;
+  font-weight:700;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border-bottom:2px solid rgba(212,168,83,0.35);
+  flex-shrink:0;
+}
+
+.board-body{flex:1;overflow-y:auto;}
+
+.board-row{
+  display:grid;
+  grid-template-columns:1.1fr 2fr 1fr;
+  align-items:center;
+  padding:1.1rem 1.5rem;
+  border-bottom:1px solid rgba(212,168,83,0.12);
+  font-family:'Cormorant Garamond',serif;
+}
+.board-row:nth-child(odd){background:rgba(212,168,83,0.04);}
+.board-row.past{opacity:0.35;}
+.row-time{font-size:1.6rem;font-weight:600;color:var(--saffron-light);font-variant-numeric:tabular-nums;}
+.row-name{font-size:1.7rem;font-weight:600;letter-spacing:0.02em;}
+.row-party{font-size:1.15rem;color:rgba(253,246,233,0.75);}
+
+.empty-state{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0.8rem;
+  color:rgba(253,246,233,0.5);
+  text-align:center;
+}
+.empty-state span{font-size:2.2rem;}
+.empty-state p{font-family:'Cormorant Garamond',serif;font-size:1.6rem;}
+
+.error-banner{
+  background:rgba(200,34,10,0.15);
+  border:1px solid rgba(200,34,10,0.4);
+  color:#F5B0A0;
+  padding:0.7rem 1.2rem;
+  border-radius:8px;
+  font-size:0.85rem;
+  margin-bottom:1rem;
+  display:none;
+}
+.error-banner.show{display:block;}
+
+footer{
+  flex-shrink:0;
+  text-align:center;
+  padding:0.8rem;
+  font-size:0.7rem;
+  letter-spacing:0.08em;
+  color:rgba(253,246,233,0.35);
+  border-top:1px solid rgba(212,168,83,0.15);
+}
+
+@media (max-width:900px){
+  .row-time{font-size:1.2rem;}
+  .row-name{font-size:1.3rem;}
+  .row-party{font-size:1rem;}
+  .brand-text h1{font-size:1.2rem;}
+  #clock{font-size:1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img src="images/logo.png" alt="Vatan">
+    <div class="brand-text">
+      <h1>Today's Reservations</h1>
+      <p id="locLabel">Loading…</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <div id="clock">--:--</div>
+    <div id="dateLine">—</div>
+  </div>
+</header>
+
+<main>
+  <div class="error-banner" id="errorBanner">Couldn't load reservations — retrying…</div>
+
+  <div id="boardWrap">
+    <div class="board-cols">
+      <span>Time</span>
+      <span>Name</span>
+      <span>Party</span>
+    </div>
+    <div class="board-body" id="boardBody"></div>
+  </div>
+
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <span>🍽️</span>
+    <p>No reservations left for today</p>
+  </div>
+</main>
+
+<footer>Vatan &mdash; auto-refreshes every 5 min</footer>
+
+<script>
+const params = new URLSearchParams(location.search);
+const loc = (params.get('loc') || '').toLowerCase();
+const locLabel = loc === 'jc' ? 'Jersey City' : loc === 'ew' ? 'East Windsor' : 'All Locations';
+document.getElementById('locLabel').textContent = locLabel;
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  document.getElementById('dateLine').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+}
+updateClock();
+setInterval(updateClock, 15000);
+
+function currentMinutes() {
+  const now = new Date();
+  return now.getHours() * 60 + now.getMinutes();
+}
+
+function timeToMinutes(t) {
+  const m = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i.exec((t || '').trim());
+  if (!m) return 9999;
+  let h = parseInt(m[1], 10) % 12;
+  if (/pm/i.test(m[3])) h += 12;
+  return h * 60 + parseInt(m[2], 10);
+}
+
+async function loadBoard() {
+  const errorBanner = document.getElementById('errorBanner');
+  try {
+    const res = await fetch(`/.netlify/functions/reservations-board?loc=${encodeURIComponent(loc)}`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('bad response');
+    const data = await res.json();
+    errorBanner.classList.remove('show');
+    renderBoard(data.reservations || []);
+  } catch (err) {
+    errorBanner.classList.add('show');
+  }
+}
+
+function renderBoard(rows) {
+  const body = document.getElementById('boardBody');
+  const boardWrap = document.getElementById('boardWrap');
+  const emptyState = document.getElementById('emptyState');
+  const nowMin = currentMinutes();
+
+  if (!rows.length) {
+    boardWrap.style.display = 'none';
+    emptyState.style.display = 'flex';
+    return;
+  }
+
+  boardWrap.style.display = 'block';
+  emptyState.style.display = 'none';
+
+  body.innerHTML = rows.map((r) => `
+    <div class="board-row ${timeToMinutes(r.time) < nowMin - 90 ? 'past' : ''}">
+      <span class="row-time">${escapeHtml(r.time)}</span>
+      <span class="row-name">${escapeHtml(r.name)}</span>
+      <span class="row-party">${escapeHtml(r.party)}</span>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+loadBoard();
+setInterval(loadBoard, 300000); // 5 minutes
+</script>
+
+</body>
+</html>
