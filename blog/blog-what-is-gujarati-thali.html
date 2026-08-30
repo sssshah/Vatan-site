@@ -123,6 +123,14 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
   gtag('js', new Date());
 
   gtag('config', 'G-KM70TM1YNS');
+  document.addEventListener('click', function(e) {
+    var telLink = e.target.closest('a[href^="tel:"]');
+    if (telLink) {
+      gtag('event', 'call_click', {
+        'phone_number': telLink.getAttribute('href').replace('tel:', '')
+      });
+    }
+  });
 </script>
 </head>
 <body>

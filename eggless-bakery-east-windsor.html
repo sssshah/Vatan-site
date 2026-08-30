@@ -143,6 +143,14 @@ footer p{font-size:0.78rem;color:rgba(253,246,233,0.3);margin-bottom:0.6rem;}
 
   gtag('config', 'G-KM70TM1YNS');
   gtag('config', 'AW-866626885');
+  document.addEventListener('click', function(e) {
+    var telLink = e.target.closest('a[href^="tel:"]');
+    if (telLink) {
+      gtag('event', 'call_click', {
+        'phone_number': telLink.getAttribute('href').replace('tel:', '')
+      });
+    }
+  });
 </script>
 </head>
 <body>

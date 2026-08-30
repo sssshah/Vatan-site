@@ -433,6 +433,39 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
   gtag('config', 'G-KM70TM1YNS');
   gtag('config', 'AW-866626885');
+  document.addEventListener('click', function(e) {
+    var telLink = e.target.closest('a[href^="tel:"]');
+    if (telLink) {
+      gtag('event', 'call_click', {
+        'phone_number': telLink.getAttribute('href').replace('tel:', '')
+      });
+    }
+  });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://vatans.com/reservations.html",
+      "url": "https://vatans.com/reservations.html",
+      "name": "Reserve a Table | Vatan Indian Vegetarian Restaurant | Jersey City & East Windsor, NJ",
+      "description": "Reserve your table at Vatan Indian Vegetarian Cuisine & Bakery. Jersey City or East Windsor, NJ (near BAPS Swaminarayan Akshardham, Robbinsville). Book a dine-in reservation online.",
+      "about": [
+        {"@id": "https://vatans.com/#restaurant-jersey-city"},
+        {"@id": "https://vatans.com/#restaurant-east-windsor"}
+      ],
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://vatans.com/"},
+          {"@type": "ListItem", "position": 2, "name": "Reserve a Table"}
+        ]
+      }
+    }
+  ]
+}
 </script>
 </head>
 <body>
@@ -900,6 +933,11 @@ document.getElementById('resForm').addEventListener('submit', function(e) {
     if (optin && optin.checked && honeypot && !honeypot.value) {
       notifyMailerLite(document.getElementById('email').value.trim(), 'reservation');
     }
+    try {
+      gtag('event', 'reservation_submit', {
+        'location': document.getElementById('selectedLocation').value
+      });
+    } catch (e) {}
   })
   .catch(() => {
     btn.disabled = false;
