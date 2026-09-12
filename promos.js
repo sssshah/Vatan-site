@@ -129,7 +129,7 @@ const VATAN_PROMOS = [
     name:     "Farali Thali",
     desc:     "Farali Poori, Sabudana Khicdi, Coconut Farali Kachori, Farali Kadhi, Katri Wafer, Chaas, Sukhi Aloo Sabji & Dessert",
     price:    "$19.99",
-    active:   true,
+    active:   false,
     lightbox: true,
     locations: "East Windsor"
   }
