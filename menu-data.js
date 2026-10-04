@@ -44,7 +44,7 @@ const VATAN_MENU = [
     name: "Thali",
     emoji: "🍛",
     label: "Signature",
-    tagline: "A complete royal feast — everything served fresh, unlimited refills on select items",
+    tagline: "A complete royal feast — everything served fresh",
     headerImg: null,
     items: [
       {
