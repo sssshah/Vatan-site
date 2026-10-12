@@ -382,7 +382,8 @@ section{position:relative;}
   gap:0.75rem;
   border-top:1px solid rgba(212,168,83,0.15);
 }
-.flyer-strip-text{}
+.flyer-strip-text{flex:1 1 120px;min-width:0;}
+.flyer-strip{flex-wrap:wrap;}
 .flyer-strip-day{font-size:0.65rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--saffron);margin-bottom:0.2rem;}
 .flyer-strip-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--ivory);line-height:1.2;}
 .flyer-strip-price{
@@ -1667,7 +1668,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
       if (dotsRow) {
         const dot = document.createElement('button');
         dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-        (function(idx) { dot.onclick = function() { carouselGoTo(idx); }; })(i);
+        (function(idx) { dot.onclick = function() { carouselGoTo(idx); }; })(gridCount - 1);
         dotsRow.appendChild(dot);
       }
     });
@@ -1682,79 +1683,86 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ── PROMO GRID + MOBILE CAROUSEL ──────────────────────
 (function() {
-  const grid      = document.getElementById('promoGrid');
-  const controls  = document.getElementById('promoCarouselControls');
-  const promoDots = document.querySelectorAll('.carousel-dot');
+  const grid = document.getElementById('promoGrid');
+  const controls = document.getElementById('promoCarouselControls');
+  const cards = [...grid.querySelectorAll('.promo-flyer-card')];
+  const dots = [...document.querySelectorAll('.carousel-dot')];
+  const mobile = () => window.innerWidth < 700;
   let currentSlide = 0;
   let autoTimer;
+  let scrollFrame;
 
-  // On mobile (<640px), switch to horizontal scroll carousel
+  function markSlide(index) {
+    currentSlide = index;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+      dot.setAttribute('aria-label', 'Show ' + cards[i].querySelector('.flyer-strip-name').textContent);
+      dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+    });
+  }
+  function scrollToSlide(index, behavior = 'smooth') {
+    if (!cards.length || !mobile()) return;
+    const card = cards[Math.max(0, Math.min(index, cards.length - 1))];
+    const cardRect = card.getBoundingClientRect();
+    const gridRect = grid.getBoundingClientRect();
+    const left = grid.scrollLeft + cardRect.left - gridRect.left - (grid.clientWidth - cardRect.width) / 2;
+    grid.scrollTo({left: Math.max(0, left), behavior});
+  }
+  function pause() { clearInterval(autoTimer); }
+  function startAutoplay() {
+    pause();
+    if (!mobile() || cards.length < 2 || document.hidden || controls.contains(document.activeElement) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    autoTimer = setInterval(() => scrollToSlide((currentSlide + 1) % cards.length), 4500);
+  }
+  window.carouselGoTo = index => { scrollToSlide(index); startAutoplay(); };
+  window.carouselMove = direction => window.carouselGoTo(currentSlide + direction);
+
   function checkMode() {
-    const isMobile = window.innerWidth < 700;
-    if (isMobile) {
-      grid.style.display = 'flex';
-      grid.style.overflowX = 'auto';
-      grid.style.flexWrap = 'nowrap';
-      grid.style.scrollSnapType = 'x mandatory';
-      grid.style.gap = '1rem';
-      grid.style.padding = '0.5rem 1rem 1rem';
-      grid.querySelectorAll('.promo-flyer-card').forEach(c => {
-        c.style.flex = '0 0 85vw';
-        c.style.scrollSnapAlign = 'center';
-      });
-      controls.style.display = 'flex';
-    } else {
-      // Desktop: 4-up grid, no scroll needed
-      grid.style.display = '';
-      grid.style.overflowX = '';
-      grid.style.flexWrap = '';
-      grid.style.scrollSnapType = '';
-      grid.style.padding = '';
-      grid.querySelectorAll('.promo-flyer-card').forEach(c => {
-        c.style.flex = '';
-        c.style.scrollSnapAlign = '';
-      });
-      controls.style.display = 'none';
-    }
-  }
-
-  function carouselGoTo(idx) {
-    const cards = grid.querySelectorAll('.promo-flyer-card');
-    currentSlide = Math.max(0, Math.min(idx, cards.length - 1));
-    const card = cards[currentSlide];
-    if (card) grid.scrollTo({left: card.offsetLeft - 16, behavior:'smooth'});
-    promoDots.forEach((d,i) => d.classList.toggle('active', i === currentSlide));
-  }
-  window.carouselGoTo = carouselGoTo;
-
-  function carouselMove(dir) {
-    carouselGoTo(currentSlide + dir);
-    clearInterval(autoTimer);
+    pause();
+    const small = mobile();
+    grid.style.display = small ? 'flex' : '';
+    grid.style.justifyContent = small ? 'flex-start' : '';
+    grid.style.overflowX = small ? 'auto' : '';
+    grid.style.flexWrap = small ? 'nowrap' : '';
+    grid.style.scrollSnapType = small ? 'x mandatory' : '';
+    grid.style.gap = small ? '1rem' : '';
+    grid.style.padding = small ? '0.5rem 1rem 1rem' : '';
+    grid.style.maxWidth = !small && cards.length < 4 ? (cards.length * 25) + '%' : '';
+    cards.forEach(card => {
+      card.style.flex = small ? '0 0 100%' : '';
+      card.style.minWidth = small ? '0' : '';
+      card.style.scrollSnapAlign = small ? 'center' : '';
+    });
+    controls.style.display = small ? 'flex' : 'none';
+    if (small) scrollToSlide(currentSlide, 'instant');
+    else grid.scrollLeft = 0;
     startAutoplay();
   }
-  window.carouselMove = carouselMove;
-
-  function startAutoplay() {
-    if (window.innerWidth >= 640) return;
-    clearInterval(autoTimer);
-    autoTimer = setInterval(() => {
-      const cards = grid.querySelectorAll('.promo-flyer-card');
-      carouselGoTo((currentSlide + 1) % cards.length);
-    }, 4500);
-  }
-
-  // Touch swipe on grid
-  let touchStartX = 0;
-  grid.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
-  grid.addEventListener('touchend', e => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) carouselMove(diff > 0 ? 1 : -1);
-  });
-
-  // Pause autoplay on hover
-  grid.addEventListener('mouseenter', () => clearInterval(autoTimer));
+  grid.addEventListener('scroll', () => {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = requestAnimationFrame(() => {
+      if (!mobile()) return;
+      const center = grid.getBoundingClientRect().left + grid.clientWidth / 2;
+      let nearest = 0, distance = Infinity;
+      cards.forEach((card, i) => {
+        const rect = card.getBoundingClientRect();
+        const delta = Math.abs(rect.left + rect.width / 2 - center);
+        if (delta < distance) { nearest = i; distance = delta; }
+      });
+      markSlide(nearest);
+    });
+  }, {passive:true});
+  // Native scrolling handles swipes; the dots follow the actual visible card.
+  grid.addEventListener('touchstart', pause, {passive:true});
+  grid.addEventListener('touchend', startAutoplay, {passive:true});
+  grid.addEventListener('mouseenter', pause);
   grid.addEventListener('mouseleave', startAutoplay);
-
+  grid.addEventListener('focusin', pause);
+  grid.addEventListener('focusout', startAutoplay);
+  controls.addEventListener('focusin', pause);
+  controls.addEventListener('focusout', () => setTimeout(startAutoplay, 0));
+  document.addEventListener('visibilitychange', startAutoplay);
+  markSlide(0);
   checkMode();
   window.addEventListener('resize', checkMode);
 })();

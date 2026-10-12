@@ -34,6 +34,17 @@
 
 const VATAN_PROMOS = [
   {
+    id:       "dussehra-jalebi-fafda",
+    file:     "Jalebi_Fafda.jpg",
+    day:      "Dussehra Special · Through October 20",
+    name:     "Gujarati Jalebi & Fafda",
+    desc:     "Jalebi $14 per pound · Fafda $18 per pound",
+    price:    "Jalebi $14/lb<br>Fafda $18/lb",
+    active:   true,
+    lightbox: true,
+    locations: "Jersey City, East Windsor"
+  },
+  {
     id:       "fathers-day-hero",
     file:     "Fathers Day.jpg",
     day:      "This Sunday",
