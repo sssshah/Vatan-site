@@ -40,7 +40,7 @@ const VATAN_PROMOS = [
     name:     "Gujarati Jalebi & Fafda",
     desc:     "Jalebi $14 per pound · Fafda $18 per pound",
     price:    "Jalebi $14/lb<br>Fafda $18/lb",
-    active:   true,
+    active:   false,
     lightbox: true,
     locations: "Jersey City, East Windsor"
   },
