@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vatan — 4×4 Menu QR Cards</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem;
+    background: #e8e8e8;
+    color: #1c1008;
+    font-family: Arial, sans-serif;
+  }
+  .instructions {
+    max-width: 8in;
+    margin: 0 auto 1.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+  .sheet {
+    width: 8in;
+    min-height: 8in;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 4in 4in;
+    grid-auto-rows: 4in;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.16);
+  }
+  .card {
+    width: 4in;
+    height: 4in;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.27in;
+    border: 0.5pt dashed #aaa;
+    text-align: center;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(212,168,83,0.14), transparent 28%),
+      linear-gradient(150deg, #fffdf8 0%, #fff8e8 100%);
+  }
+  .card::before,
+  .card::after {
+    content: "✦";
+    position: absolute;
+    color: #d4a853;
+    font-size: 15pt;
+  }
+  .card::before { top: 0.2in; left: 0.24in; }
+  .card::after { right: 0.24in; bottom: 0.2in; }
+  .brand-logo {
+    width: auto;
+    height: 0.58in;
+    object-fit: contain;
+    margin-bottom: 0.08in;
+  }
+  .title {
+    font-family: Georgia, serif;
+    font-size: 17pt;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #7a1c2e;
+  }
+  .subtitle {
+    margin: 0.05in 0 0.12in;
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8c5c28;
+  }
+  .qr {
+    width: 2.1in;
+    height: 2.1in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.08in;
+    background: #fff;
+    border: 1px solid rgba(122,28,46,0.18);
+  }
+  .qr canvas,
+  .qr img {
+    width: 1.94in !important;
+    height: 1.94in !important;
+  }
+  .destination {
+    margin-top: 0.1in;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #5f4b3a;
+  }
+  .locations {
+    margin-top: 0.04in;
+    font-size: 6.5pt;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #8b7867;
+  }
+  @page { size: letter portrait; margin: 0.25in; }
+  @media print {
+    body { padding: 0; background: #fff; }
+    .instructions { display: none; }
+    .sheet { margin: 0 auto; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="instructions">
+  <strong>Print-ready 4×4 menu QR cards:</strong><br>
+  Print on US Letter paper at 100% / Actual Size with margins set to None or Minimum. Four exact 4×4-inch cards fit on each sheet. Cut along the dashed lines.<br>
+  <strong>QR destination:</strong> https://vatans.com/all-menu.html
+</div>
+
+<div class="sheet" id="sheet"></div>
+
+<script>
+  const MENU_URL = 'https://vatans.com/all-menu.html';
+  const sheet = document.getElementById('sheet');
+
+  for (let i = 0; i < 4; i++) {
+    const card = document.createElement('div');
+    const qrId = 'menu-qr-' + i;
+    card.className = 'card';
+    card.innerHTML = `
+      <img class="brand-logo" src="images/logo.png" alt="Vatan Indian Vegetarian Cuisine &amp; Bakery">
+      <div class="title">Scan to View Our Menu</div>
+      <div class="subtitle">Authentic Indian Vegetarian Cuisine</div>
+      <div class="qr" id="${qrId}"></div>
+      <div class="destination">vatans.com/all-menu.html</div>
+      <div class="locations">Jersey City · East Windsor · Edison</div>
+    `;
+    sheet.appendChild(card);
+
+    new QRCode(document.getElementById(qrId), {
+      text: MENU_URL,
+      width: 186,
+      height: 186,
+      colorDark: '#1c1008',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+</script>
+
+</body>
+</html>
