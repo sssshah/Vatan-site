@@ -984,7 +984,7 @@ let specPromos = [];
 let specLbCurrent = 0;
 
 (function() {
-  specPromos = (typeof VATAN_PROMOS !== 'undefined') ? VATAN_PROMOS.filter(p => p.active) : [];
+  specPromos = (typeof VATAN_PROMOS !== 'undefined') ? VATAN_PROMOS.filter(p => p.active && !p.heroOnly) : [];
   const band = document.getElementById('specialsBand');
   const row  = document.getElementById('specialsRow');
   if (!band || !row || !specPromos.length) return;

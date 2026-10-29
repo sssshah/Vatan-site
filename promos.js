@@ -26,13 +26,28 @@
  *  - price     : price string shown on badge
  *  - active    : true = show on page, false = hide
  *  - lightbox  : true = clicking card opens full image (recommended)
+ *  - lightboxFile: optional full-size image filename; defaults to file with _lb added
  *  - locations : which locations offer this promo, e.g. "Jersey City"
  *                or "Jersey City, East Windsor" or "All Locations"
  *                (case-insensitive; "all locations" → "All Locations")
+ *  - heroOnly  : true = show in the homepage hero, but not the weekly-specials grids
  * ============================================================
  */
 
 const VATAN_PROMOS = [
+  {
+    id:       "edison-grand-inauguration-2026",
+    file:     "Edison_Grand_Inauguration_2026.jpeg",
+    day:      "Wednesday, November 4 · 12:00 PM",
+    name:     "Grand Inauguration — Edison",
+    desc:     "Join us for the grand inauguration of Vatan's third New Jersey location.",
+    price:    "All Are Welcome",
+    active:   true,
+    lightbox: true,
+    lightboxFile: "Edison_Grand_Inauguration_2026.jpeg",
+    locations: "1667 Oak Tree Road, Edison",
+    heroOnly: true
+  },
   {
     id:       "dussehra-jalebi-fafda",
     file:     "Jalebi_Fafda.jpg",

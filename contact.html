@@ -5,15 +5,15 @@
 <meta name="google-site-verification" content="afd2aa76994074ad">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title>Contact | Vatan Indian Vegetarian Restaurant | Jersey City & East Windsor, NJ</title>
-<meta name="description" content="Contact Vatan Indian Vegetarian Cuisine & Bakery in New Jersey. Jersey City and East Windsor locations (East Windsor is near BAPS Swaminarayan Akshardham, Robbinsville). Hours, directions & contact.">
+<title>Locations | Vatan Indian Vegetarian Restaurant | New Jersey</title>
+<meta name="description" content="Find Vatan Indian Vegetarian Cuisine & Bakery in Jersey City, East Windsor, and Edison, NJ. Get directions, hours, and contact details.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://vatans.com/contact.html">
 <meta name="geo.region" content="US-NJ">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vatans.com/contact.html">
 <meta property="og:title" content="Contact Us | Vatan Indian Vegetarian Cuisine & Bakery">
-<meta property="og:description" content="Find our Jersey City and East Windsor, NJ locations. East Windsor is near BAPS Swaminarayan Akshardham, Robbinsville. Directions, hours & contact.">
+<meta property="og:description" content="Find our Jersey City, East Windsor, and Edison, NJ locations. Directions, hours, and contact information.">
 <meta property="og:image" content="https://vatans.com/images/og-image.jpg">
 <meta property="og:site_name" content="Vatan Indian Vegetarian Cuisine & Bakery">
 <meta name="twitter:card" content="summary">
@@ -112,6 +112,15 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .social-chip{display:inline-flex;align-items:center;gap:0.35rem;background:var(--ivory-dark);border:1px solid rgba(212,168,83,0.2);color:var(--text-muted);text-decoration:none;font-size:0.75rem;font-weight:500;padding:0.3rem 0.75rem;border-radius:50px;transition:all 0.2s;}
 .social-chip:hover{background:rgba(200,102,10,0.08);border-color:var(--saffron);color:var(--saffron);}
 .social-chip svg{flex-shrink:0;}
+.invite-trigger{font-family:'DM Sans',sans-serif;cursor:pointer;}
+
+/* Grand opening invitation viewer */
+.invite-overlay{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.9);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem;}
+.invite-overlay.open{display:flex;}
+.invite-dialog{position:relative;max-width:min(720px,94vw);max-height:94vh;display:flex;align-items:center;justify-content:center;}
+.invite-dialog img{display:block;max-width:100%;max-height:92vh;width:auto;height:auto;border-radius:12px;box-shadow:0 20px 70px rgba(0,0,0,0.65);}
+.invite-close{position:absolute;top:10px;right:10px;z-index:1;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.35);background:rgba(28,16,8,0.88);color:var(--white);font-size:1.6rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,0.45);transition:background 0.2s,transform 0.2s;}
+.invite-close:hover{background:var(--maroon);transform:scale(1.05);}
 
 .coming-soon-card{background:var(--white);border:1.5px dashed rgba(212,168,83,0.3);border-radius:var(--radius-lg);padding:1.5rem 1.4rem;text-align:center;margin-bottom:1.25rem;}
 .cs-icon{font-size:2rem;margin-bottom:0.5rem;}
@@ -253,6 +262,17 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       "servesCuisine": ["Indian", "Gujarati", "Kathiyawadi", "South Indian", "Vegetarian"],
       "priceRange": "$$",
       "aggregateRating": {"@type": "AggregateRating", "ratingValue": 3.7, "reviewCount": 511, "bestRating": 5, "worstRating": 1}
+    },
+    {
+      "@type": "Restaurant",
+      "@id": "https://vatans.com/#restaurant-edison",
+      "name": "Vatan Indian Vegetarian Cuisine & Bakery — Edison",
+      "url": "https://vatans.com/contact.html#edison",
+      "address": {"@type": "PostalAddress", "streetAddress": "1667 Oak Tree Road", "addressLocality": "Edison", "addressRegion": "NJ", "postalCode": "08820", "addressCountry": "US"},
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=1667+Oak+Tree+Road+Edison+NJ+08820",
+      "servesCuisine": ["Indian", "Gujarati", "Kathiyawadi", "South Indian", "Vegetarian"],
+      "priceRange": "$$",
+      "email": "info@vatans.com"
     }
   ]
 }
@@ -311,7 +331,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="call-sep"></div>
       <div class="call-loc-soon">
         <div class="call-loc-label">Edison</div>
-        <span>Coming Soon</span>
+        <span>Phone coming soon</span>
       </div>
     </div>
   </div>
@@ -403,12 +423,20 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         </div>
       </div>
 
-      <!-- Edison coming soon -->
-      <div class="coming-soon-card">
-        <div class="cs-icon">🏗️</div>
-        <div class="cs-title">Edison, NJ</div>
-        <div class="cs-badge">Coming Soon</div>
-        <div class="cs-text">Our third location is on its way. Follow us on Instagram for updates!</div>
+      <!-- Edison -->
+      <div class="loc-card" id="edison">
+        <div class="loc-card-header">
+          <span class="loc-card-name">Edison</span>
+          <span class="loc-card-badge">Grand Opening Nov 4</span>
+        </div>
+        <div class="loc-card-body">
+          <div class="loc-row"><span class="loc-icon">📍</span><a href="https://www.google.com/maps/search/?api=1&amp;query=1667+Oak+Tree+Road+Edison+NJ+08820" target="_blank" rel="noopener">1667 Oak Tree Road, Edison, NJ 08820</a></div>
+          <div class="loc-row"><span class="loc-icon">🎉</span><span>Grand Inauguration: Wednesday, November 4 at 12:00 PM</span></div>
+          <div class="loc-row"><span class="loc-icon">✉️</span><a href="mailto:info@vatans.com">info@vatans.com</a></div>
+          <div class="loc-socials">
+            <button type="button" class="social-chip invite-trigger" onclick="openInvite()">🎉 View Grand Opening Invitation</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -417,6 +445,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="hours-title">Hours at a Glance</div>
       <div class="hours-row"><strong>Jersey City</strong><span>Mon–Sun 11AM–3PM, 4:30–9:30PM</span></div>
       <div class="hours-row"><strong>East Windsor</strong><span>Tue–Sun 11AM–3PM, 4:30–9:30PM</span></div>
+      <div class="hours-row"><strong>Edison</strong><span>Regular hours to be announced</span></div>
       <div class="hours-row"><strong>Email</strong><span><a href="mailto:info@vatans.com" style="color:var(--saffron)">info@vatans.com</a></span></div>
     </div>
 
@@ -426,12 +455,16 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="map-tabs">
         <button class="map-tab active" onclick="showMap('jc',this)">Jersey City</button>
         <button class="map-tab" onclick="showMap('ew',this)">East Windsor</button>
+        <button class="map-tab" onclick="showMap('ed',this)">Edison</button>
       </div>
       <div class="map-frame" id="mapJC">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12092.77049899389!2d-74.07558442890249!3d40.73578680136605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2572fc6d5d4a5%3A0x7bd7501441dba105!2sVatan%20Indian%20Vegetarian%20Cuisine%20%26%20Bakery%2C%20Jersey%20City!5e0!3m2!1sen!2sus!4v1782584557848!5m2!1sen!2sus" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Vatan Jersey City"></iframe>
       </div>
       <div class="map-frame" id="mapEW" style="display:none;">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12179.380610059468!2d-74.55776572919292!3d40.256972519027826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3df6c8cf6428f%3A0x2c1459664ceff894!2sVatan%20Indian%20Vegetarian%20Cuisine%20%26%20Bakery%2C%20East%20Windsor%2C%20NJ!5e0!3m2!1sen!2sus!4v1782584798544!5m2!1sen!2sus" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Vatan East Windsor"></iframe>
+      </div>
+      <div class="map-frame" id="mapED" style="display:none;">
+        <iframe src="https://www.google.com/maps?q=1667+Oak+Tree+Road,+Edison,+NJ+08820&amp;output=embed" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Vatan Edison"></iframe>
       </div>
     </div>
 
@@ -518,6 +551,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
               <option value="">Both / Not sure</option>
               <option>Jersey City — 808 Newark Ave</option>
               <option>East Windsor — 761 NJ-33 West</option>
+              <option>Edison — 1667 Oak Tree Road</option>
             </select>
           </div>
 
@@ -539,7 +573,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
             Your message goes to <a href="mailto:info@vatans.com">info@vatans.com</a>. We typically respond within 24 hours. For faster assistance, call <a href="tel:+12018395426">(201) 839-5426</a> (Jersey City) or <a href="tel:+16093367333">(609) 336-7333</a> (East Windsor).
           </p>
           <p id="cfFormError" style="display:none;color:#C8220A;font-size:0.82rem;text-align:center;margin-top:0.75rem;">Something went wrong. Please email us directly at <a href="mailto:info@vatans.com" style="color:var(--saffron)">info@vatans.com</a> or call us.</p>
-          <input type="hidden" name="note" value="Submitted via the Vatan contact form. Vatan Indian Vegetarian Cuisine and Bakery — Jersey City and East Windsor, NJ.">
+          <input type="hidden" name="note" value="Submitted via the Vatan contact form. Vatan Indian Vegetarian Cuisine and Bakery — Jersey City, East Windsor, and Edison, NJ.">
         </form>
       </div>
     </div>
@@ -553,7 +587,8 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <p>© 2026 Vatan Indian Vegetarian Cuisine &amp; Bakery.</p>
       <p style="font-size:0.74rem;color:rgba(253,246,233,0.25);margin-top:0.35rem;">
         Jersey City: 808 Newark Ave, NJ 07306 · (201) 839-5426 &nbsp;|&nbsp;
-        East Windsor: 761 NJ-33 West, East Windsor, NJ 08520 · +1 609-336-7333
+        East Windsor: 761 NJ-33 West, East Windsor, NJ 08520 · +1 609-336-7333 &nbsp;|&nbsp;
+        Edison: 1667 Oak Tree Road, Edison, NJ 08820
       </p>
     </div>
     <div class="footer-links">
@@ -566,6 +601,13 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 
 <button class="float-order" onclick="document.getElementById('orderModal').classList.add('open')">🛵 &nbsp; Order Online</button>
 <a href="#" class="float-top" id="backToTop">↑</a>
+
+<div class="invite-overlay" id="inviteModal" onclick="closeInviteOutside(event)" aria-hidden="true">
+  <div class="invite-dialog" role="dialog" aria-modal="true" aria-label="Edison grand opening invitation">
+    <button type="button" class="invite-close" onclick="closeInvite()" aria-label="Close invitation">×</button>
+    <img src="images/promos/Edison_Grand_Inauguration_2026.jpeg" alt="Vatan Edison grand inauguration invitation for November 4 at noon">
+  </div>
+</div>
 
 <div class="modal-overlay" id="orderModal">
   <div class="modal">
@@ -596,6 +638,26 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 </div>
 
 <script>
+function openInvite() {
+  const modal = document.getElementById('inviteModal');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  modal.querySelector('.invite-close').focus();
+}
+function closeInvite() {
+  const modal = document.getElementById('inviteModal');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+function closeInviteOutside(event) {
+  if (event.target === event.currentTarget) closeInvite();
+}
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && document.getElementById('inviteModal').classList.contains('open')) closeInvite();
+});
+
 function toggleCallDropdown(e) {
   e.stopPropagation();
   const dd = document.getElementById('callUsDropdown');
@@ -629,6 +691,7 @@ document.getElementById('orderModal').addEventListener('click', e => {
 function showMap(loc, btn) {
   document.getElementById('mapJC').style.display = loc==='jc' ? 'block' : 'none';
   document.getElementById('mapEW').style.display = loc==='ew' ? 'block' : 'none';
+  document.getElementById('mapED').style.display = loc==='ed' ? 'block' : 'none';
   document.querySelectorAll('.map-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
 }
