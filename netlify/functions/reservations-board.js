@@ -1,7 +1,7 @@
 // Read-only proxy for the reservations board (reservations-board.html).
 // Reads today's rows straight out of Netlify Forms — the same store the
 // "reservation" form already writes to — and returns only display-safe
-// fields (initials, time, party size). Email/phone/notes never leave here.
+// fields (initials, time, location code, party size). Email/phone/notes never leave here.
 //
 // Requires NETLIFY_ACCESS_TOKEN (a Personal Access Token from Netlify
 // User settings > Applications, no special scope needed beyond your own
@@ -25,6 +25,14 @@ function initials(first, last) {
   return [fi, l3cap].filter(Boolean).join(' ');
 }
 
+function locationCode(location) {
+  const value = (location || '').trim().toLowerCase();
+  if (value === 'jersey city' || value === 'jc') return 'JC';
+  if (value === 'east windsor' || value === 'ew') return 'EW';
+  if (value === 'edison' || value === 'edi' || value === 'ed') return 'EDI';
+  return '—';
+}
+
 // "7:00 PM" -> minutes since midnight, for sorting
 function timeToMinutes(t) {
   const m = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i.exec((t || '').trim());
@@ -46,7 +54,13 @@ exports.handler = async (event) => {
   }
 
   const locParam = ((event.queryStringParameters && event.queryStringParameters.loc) || '').toLowerCase();
-  const locationFilter = locParam === 'jc' ? 'Jersey City' : locParam === 'ew' ? 'East Windsor' : null;
+  const locationFilter = locParam === 'jc'
+    ? 'Jersey City'
+    : locParam === 'ew'
+      ? 'East Windsor'
+      : (locParam === 'edi' || locParam === 'ed')
+        ? 'Edison'
+        : null;
 
   const authHeaders = { Authorization: `Bearer ${token}` };
 
@@ -76,6 +90,7 @@ exports.handler = async (event) => {
       .filter((s) => !locationFilter || s.data.location === locationFilter)
       .map((s) => ({
         time: s.data.time || '',
+        location: locationCode(s.data.location),
         name: initials(s.data.first_name, s.data.last_name),
         party: s.data.party_size || '',
         minutes: timeToMinutes(s.data.time),

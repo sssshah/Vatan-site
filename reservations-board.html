@@ -66,7 +66,7 @@ main{flex:1;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex;flex-directi
 
 .board-cols{
   display:grid;
-  grid-template-columns:1.1fr 2fr 1fr;
+  grid-template-columns:0.9fr 0.8fr 2fr 0.8fr;
   padding:0.9rem 1.5rem;
   font-size:0.78rem;
   font-weight:700;
@@ -81,7 +81,7 @@ main{flex:1;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex;flex-directi
 
 .board-row{
   display:grid;
-  grid-template-columns:1.1fr 2fr 1fr;
+  grid-template-columns:0.9fr 0.8fr 2fr 0.8fr;
   align-items:center;
   padding:1.1rem 1.5rem;
   border-bottom:1px solid rgba(212,168,83,0.12);
@@ -90,6 +90,7 @@ main{flex:1;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex;flex-directi
 .board-row:nth-child(odd){background:rgba(212,168,83,0.04);}
 .board-row.past{opacity:0.35;}
 .row-time{font-size:1.6rem;font-weight:600;color:var(--saffron-light);font-variant-numeric:tabular-nums;}
+.row-location{justify-self:start;min-width:3.2rem;padding:0.28rem 0.55rem;border:1px solid rgba(212,168,83,0.45);border-radius:999px;background:rgba(212,168,83,0.1);font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-align:center;color:var(--gold-light);}
 .row-name{font-size:1.7rem;font-weight:600;letter-spacing:0.02em;}
 .row-party{font-size:1.15rem;color:rgba(253,246,233,0.75);}
 
@@ -159,6 +160,7 @@ footer{
   <div id="boardWrap">
     <div class="board-cols">
       <span>Time</span>
+      <span>Location</span>
       <span>Name</span>
       <span>Party</span>
     </div>
@@ -176,7 +178,7 @@ footer{
 <script>
 const params = new URLSearchParams(location.search);
 const loc = (params.get('loc') || '').toLowerCase();
-const locLabel = loc === 'jc' ? 'Jersey City' : loc === 'ew' ? 'East Windsor' : 'All Locations';
+const locLabel = loc === 'jc' ? 'Jersey City' : loc === 'ew' ? 'East Windsor' : (loc === 'edi' || loc === 'ed') ? 'Edison' : 'All Locations';
 document.getElementById('locLabel').textContent = locLabel;
 
 function updateClock() {
@@ -231,6 +233,7 @@ function renderBoard(rows) {
   body.innerHTML = rows.map((r) => `
     <div class="board-row ${timeToMinutes(r.time) < nowMin - 90 ? 'past' : ''}">
       <span class="row-time">${escapeHtml(r.time)}</span>
+      <span class="row-location">${escapeHtml(r.location)}</span>
       <span class="row-name">${escapeHtml(r.name)}</span>
       <span class="row-party">${escapeHtml(r.party)}</span>
     </div>
