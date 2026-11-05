@@ -37,7 +37,7 @@ This is a **pure static site** — no frameworks, no bundler, no package.json. A
 - `blog/*.html` — 23 article pages (grew from the original 10 written up in the v1.4 changelog entry; that entry's file list is now incomplete — treat the `blog/` directory listing as current truth)
 
 **Kiosk / display pages (not linked from nav, no login):**
-- `reservations-board.html` — added v1.7. Airport-departures-style live display of today's reservations for a host stand TV/tablet. The combined view shows location codes (`JC`, `EW`, `EDI`); `?loc=jc`, `?loc=ew`, or `?loc=edi` scopes to one location. Polls `netlify/functions/reservations-board.js` every 5 minutes. Shows only time, location code, party size, and privacy-safe initials (first initial + first 3 letters of last name) — never email, phone, or notes. Deliberately has no login: the URL is unlisted (like the print-review-card templates below) and the data it shows is low-sensitivity. See Serverless Functions below for how it reads Netlify Forms data.
+- `reservations-board.html` — added v1.7. Airport-departures-style live display of today's reservations for a host stand TV/tablet. The combined view shows location codes (`JC`, `EW`, `EDI`) and includes an All/JC/EW/EDI filter bar; `?loc=jc`, `?loc=ew`, or `?loc=edi` scopes to one location. Rows are sorted earliest-time-first. Polls `netlify/functions/reservations-board.js` every 5 minutes. Shows only time, location code, party size, and privacy-safe initials (first initial + first 3 letters of last name) — never email, phone, or notes. Deliberately has no login: the URL is unlisted (like the print-review-card templates below) and the data it shows is low-sensitivity. See Serverless Functions below for how it reads Netlify Forms data.
 
 **Not real pages — exclude from page-list/nav-audit work:**
 - `index_backup.html`, `all-menu.backup-2026-07-15.html`, `all-menu.backup-2026-07-15-before-font-bump.html` — manual backups, not linked from nav, not deployed-as-current
@@ -87,7 +87,7 @@ The file ends with `if (typeof module !== 'undefined') module.exports = VATAN_ME
 
 ### Shared nav pattern (v1.1+)
 
-All 5 pages have a **"Call Us" dropdown** in the nav — a button with phone icon that opens a 3-location dropdown (Jersey City, East Windsor, Edison Coming Soon). It sits between `.nav-links` and `.hamburger`. On mobile (≤768px), text and chevron are hidden so it displays as a round phone icon button. The dropdown closes on outside click via a `document.addEventListener('click', ...)` handler. All pages also declare `const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com'` at the top of their script block — used as silent CC on mailto links only; never shown publicly.
+All pages have a **"Call Us" dropdown** in the nav — a button with phone icon that opens a 3-location dropdown (Jersey City, East Windsor, Edison). It sits between `.nav-links` and `.hamburger`. On mobile (≤768px), text and chevron are hidden so it displays as a round phone icon button. The dropdown closes on outside click via a `document.addEventListener('click', ...)` handler. All pages also declare `const VATAN_CONTACT_EMAIL = 'nraikundalia@yahoo.com'` at the top of their script block — used as silent CC on mailto links only; never shown publicly.
 
 ### JavaScript on index.html
 
@@ -176,7 +176,7 @@ Both predate the MailerLite work and were previously undocumented here:
 
 - **Jersey City**: 808 Newark Ave, NJ 07306 · (201) 839-5426 · `tel:+12018395426`
 - **East Windsor**: 761 Route 33 West, NJ 08520 · (609) 336-7333 · `tel:+16093367333`
-- **Edison, NJ**: Coming Soon
+- **Edison**: 1667 Oak Tree Road, Edison, NJ 08820 · (732) 556-6000 · `tel:+17325566000` · Tue–Sun 11AM–3PM and 4:30–9:30PM; Monday closed · Maps: `https://maps.app.goo.gl/vbMYtvgn4XZ2WWAJ8` · Instagram: `@vatan_edison` · Clover pickup: `https://vatan-restaurant-baker-edison.cloveronline.com` · nearby areas: Edison, Metuchen, Iselin, Woodbridge, Rahway, Piscataway (all NJ)
 
 ## Roadmap / Future TODOs
 
@@ -185,8 +185,8 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 - [ ] **Verify Netlify email notification for `takeout-order` form actually exists and works** — was supposed to be set up immediately after order.html's first deploy but was never confirmed; check Netlify dashboard → Forms → Form notifications
 - [ ] Decide whether to add MailerLite signup to `order.html` and/or create a MailerLite custom field for source tagging (reservation/contact/order) — currently only email is captured, no segmentation
 - [ ] Add item images to `menu-data.js` as `images/food/` paths are confirmed — ongoing
-- [ ] Edison location: add full card to locations section and footer when open — v1.2
-- [ ] Update promo `locations` field when Edison launches to reflect which specials it offers — ongoing
+- [x] Edison location: add full card, phone, hours, Maps link, and Instagram when open — completed locally 2026-11-04
+- [x] Update active weekly-special `locations` fields to include Edison — completed locally 2026-11-04
 - [ ] Consider a shared nav include (SSI or templating) to avoid per-page duplication — even more valuable now given the page count has grown to 20+ — v2.0
 - [ ] Add JSON-LD structured data to `all-menu.html`, `order.html`, `reservations.html`, and `blog.html` — currently the only pages with zero schema; most other pages already have Restaurant/Service/FAQPage/BreadcrumbList markup
 - [ ] Reconcile the v1.4 changelog's 10-article blog list against the current 23 files in `blog/` — changelog entry is stale, `blog/` directory listing is current truth
@@ -207,7 +207,7 @@ _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
 **`menu-data.js` is the single source of truth for prices.** Never hard-code prices in `order.html` or `all-menu.html`. Update `menu-data.js` only — once for both pages.
 
-**URL params for pre-selected state.** `order.html?loc=jc` / `?loc=ew` auto-checks the matching location radio on load. Use this pattern on any page that needs context from a referring link (location cards, modal CTAs, etc.).
+**URL params for pre-selected state.** `order.html?loc=jc` / `?loc=ew` auto-checks the matching order location. `reservations.html?loc=jc`, `?loc=ew`, and `?loc=edi` select Jersey City, East Windsor, or Edison in the reservation form. Use this pattern on any page that needs context from a referring link (location cards, modal CTAs, etc.).
 
 **Netlify form auto-registration.** Any form with `data-netlify="true"` and a `name` attribute is automatically detected and registered by Netlify at deploy time — no manual dashboard step needed to create the form. Email notifications, however, must be configured manually per form.
 

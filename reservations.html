@@ -5,15 +5,15 @@
 <meta name="google-site-verification" content="afd2aa76994074ad">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<title>Reserve a Table | Vatan Indian Vegetarian Restaurant | Jersey City & East Windsor, NJ</title>
-<meta name="description" content="Reserve your table at Vatan Indian Vegetarian Cuisine & Bakery. Jersey City or East Windsor, NJ (near BAPS Swaminarayan Akshardham, Robbinsville). Book a dine-in reservation online.">
+<title>Reserve a Table | Vatan Indian Vegetarian Restaurant | Jersey City, East Windsor & Edison, NJ</title>
+<meta name="description" content="Reserve your table at Vatan Indian Vegetarian Cuisine & Bakery in Jersey City, East Windsor, or Edison, NJ. Book a dine-in reservation online.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://vatans.com/reservations.html">
 <meta name="geo.region" content="US-NJ">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vatans.com/reservations.html">
 <meta property="og:title" content="Reserve a Table | Vatan Indian Vegetarian Cuisine & Bakery">
-<meta property="og:description" content="Book a dine-in table at Vatan Indian Vegetarian Cuisine & Bakery — Jersey City or East Windsor, NJ (near BAPS Swaminarayan Akshardham, Robbinsville).">
+<meta property="og:description" content="Book a dine-in table at Vatan Indian Vegetarian Cuisine & Bakery in Jersey City, East Windsor, or Edison, NJ.">
 <meta property="og:image" content="https://vatans.com/images/og-image.jpg">
 <meta property="og:site_name" content="Vatan Indian Vegetarian Cuisine & Bakery">
 <meta name="twitter:card" content="summary">
@@ -221,7 +221,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 
 /* LOCATION SELECTOR */
 .loc-selector{
-  display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.6rem;
   margin-bottom:1.5rem;
 }
 .loc-btn{
@@ -378,7 +378,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:2000;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--dark-mid);border:1px solid rgba(212,168,83,0.25);border-radius:var(--radius-lg);padding:2.5rem 2rem;max-width:480px;width:100%;position:relative;animation:slideUp 0.3s ease;}
+.modal{background:var(--dark-mid);border:1px solid rgba(212,168,83,0.25);border-radius:var(--radius-lg);padding:2.5rem 2rem;max-width:480px;width:100%;position:relative;animation:slideUp 0.3s ease;max-height:calc(100vh - 2rem);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
 @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(253,246,233,0.5);font-size:1.4rem;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;}
 .modal-close:hover{background:rgba(255,255,255,0.1);color:var(--ivory);}
@@ -450,11 +450,12 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       "@type": "WebPage",
       "@id": "https://vatans.com/reservations.html",
       "url": "https://vatans.com/reservations.html",
-      "name": "Reserve a Table | Vatan Indian Vegetarian Restaurant | Jersey City & East Windsor, NJ",
-      "description": "Reserve your table at Vatan Indian Vegetarian Cuisine & Bakery. Jersey City or East Windsor, NJ (near BAPS Swaminarayan Akshardham, Robbinsville). Book a dine-in reservation online.",
+      "name": "Reserve a Table | Vatan Indian Vegetarian Restaurant | Jersey City, East Windsor & Edison, NJ",
+      "description": "Reserve your table at Vatan Indian Vegetarian Cuisine & Bakery in Jersey City, East Windsor, or Edison, NJ. Book a dine-in reservation online.",
       "about": [
         {"@id": "https://vatans.com/#restaurant-jersey-city"},
-        {"@id": "https://vatans.com/#restaurant-east-windsor"}
+        {"@id": "https://vatans.com/#restaurant-east-windsor"},
+        {"@id": "https://vatans.com/#restaurant-edison"}
       ],
       "breadcrumb": {
         "@type": "BreadcrumbList",
@@ -501,9 +502,9 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         <a href="tel:+16093367333">📞 (609) 336-7333</a>
       </div>
       <div class="call-sep"></div>
-      <div class="call-loc-soon">
+      <div class="call-loc">
         <div class="call-loc-label">Edison</div>
-        <span>Coming Soon</span>
+        <a href="tel:+17325566000">📞 (732) 556-6000</a>
       </div>
     </div>
   </div>
@@ -585,6 +586,28 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         </div>
       </div>
 
+      <!-- Edison -->
+      <div class="location-res-card">
+        <div class="loc-res-header">
+          <span class="loc-res-name">Edison</span>
+          <span class="loc-res-badge">Tue–Sun</span>
+        </div>
+        <div class="loc-res-body">
+          <div class="loc-res-row">
+            <span class="loc-icon">📍</span>
+            <a href="https://maps.app.goo.gl/vbMYtvgn4XZ2WWAJ8" target="_blank" rel="noopener">1667 Oak Tree Road, Edison, NJ 08820</a>
+          </div>
+          <div class="loc-res-row">
+            <span class="loc-icon">📞</span>
+            <a href="tel:+17325566000">(732) 556-6000</a>
+          </div>
+          <div class="loc-res-row">
+            <span class="loc-icon">🕐</span>
+            <span>Mon: Closed &nbsp;|&nbsp; Tue–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
+          </div>
+        </div>
+      </div>
+
       <div class="hours-note">
         <strong>Large parties & special occasions?</strong> We love hosting groups! For parties of 10 or more, please call your preferred location directly so we can prepare the best experience for you.
       </div>
@@ -629,7 +652,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
             </svg>
           </div>
           <div class="success-title">Request Received!</div>
-          <p class="success-text">We've got your reservation request and will confirm your table within a few hours via email or phone.<br><br>Can't wait? Call us directly — <a href="tel:+12018395426" style="color:var(--saffron)">Jersey City (201) 839-5426</a> or <a href="tel:+16093367333" style="color:var(--saffron)">East Windsor (609) 336-7333</a>.</p>
+          <p class="success-text">We've got your reservation request and will confirm your table within a few hours via email or phone.<br><br>Can't wait? Call us directly — <a href="tel:+12018395426" style="color:var(--saffron)">Jersey City (201) 839-5426</a>, <a href="tel:+16093367333" style="color:var(--saffron)">East Windsor (609) 336-7333</a>, or <a href="tel:+17325566000" style="color:var(--saffron)">Edison (732) 556-6000</a>.</p>
           <button class="btn-another" onclick="resetForm()">Make Another Reservation</button>
         </div>
 
@@ -651,6 +674,10 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
               <div class="loc-btn" id="locJC" onclick="selectLoc('JC')">
                 <span class="loc-btn-name">Jersey City</span>
                 <span class="loc-btn-addr">808 Newark Ave</span>
+              </div>
+              <div class="loc-btn" id="locEDI" onclick="selectLoc('EDI')">
+                <span class="loc-btn-name">Edison</span>
+                <span class="loc-btn-addr">1667 Oak Tree Road</span>
               </div>
             </div>
             <input type="hidden" id="selectedLocation" name="location" value="East Windsor">
@@ -770,7 +797,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
           </button>
 
           <p class="form-note">
-            <strong>Your reservation is not confirmed until you receive a response.</strong> We'll reach out within a few hours. If you don't hear back within 24 hours, please call us directly — <a href="tel:+12018395426">Jersey City (201) 839-5426</a> or <a href="tel:+16093367333">East Windsor (609) 336-7333</a>.
+            <strong>Your reservation is not confirmed until you receive a response.</strong> We'll reach out within a few hours. If you don't hear back within 24 hours, please call us directly — <a href="tel:+12018395426">Jersey City (201) 839-5426</a>, <a href="tel:+16093367333">East Windsor (609) 336-7333</a>, or <a href="tel:+17325566000">Edison (732) 556-6000</a>.
           </p>
           <p id="resFormError" style="display:none;color:#C8220A;font-size:0.82rem;text-align:center;margin-top:0.75rem;">Something went wrong. Please email us at <a href="mailto:info@vatans.com" style="color:var(--saffron)">info@vatans.com</a> or call us directly.</p>
         </form>
@@ -836,6 +863,12 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         <a href="https://www.grubhub.com/restaurant/vatan-pure-vegetarian-indian-cuisine-and-bakery-761-nj-33-east-windsor/2466210" target="_blank" rel="noopener" class="modal-order-btn">🥡 GrubHub</a>
       </div>
     </div>
+    <div class="modal-location">
+      <div class="modal-location-title">📍 Edison — 1667 Oak Tree Road</div>
+      <div class="modal-order-grid">
+        <a href="https://vatan-restaurant-baker-edison.cloveronline.com" target="_blank" rel="noopener" class="modal-order-btn" style="grid-column:1/-1;background:rgba(200,102,10,0.13);border-color:rgba(200,102,10,0.5);color:var(--gold-light);font-weight:700;">🛍️ Direct Pickup Order</a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -886,8 +919,16 @@ dateInput.min = `${yyyy}-${mm2}-${dd}`;
 function selectLoc(loc) {
   document.getElementById('locJC').classList.toggle('selected', loc === 'JC');
   document.getElementById('locEW').classList.toggle('selected', loc === 'EW');
-  document.getElementById('selectedLocation').value = loc === 'JC' ? 'Jersey City' : 'East Windsor';
+  document.getElementById('locEDI').classList.toggle('selected', loc === 'EDI');
+  const locationNames = { JC: 'Jersey City', EW: 'East Windsor', EDI: 'Edison' };
+  document.getElementById('selectedLocation').value = locationNames[loc] || 'East Windsor';
 }
+
+const requestedLocation = new URLSearchParams(window.location.search).get('loc');
+const initialLocation = requestedLocation && /^(jc|ew|edi|ed)$/i.test(requestedLocation)
+  ? (/^jc$/i.test(requestedLocation) ? 'JC' : /^ew$/i.test(requestedLocation) ? 'EW' : 'EDI')
+  : 'EW';
+selectLoc(initialLocation);
 
 // MailerLite signup — fire-and-forget, never blocks or fails the reservation itself
 function notifyMailerLite(email, source) {
@@ -954,7 +995,7 @@ function resetForm() {
   document.getElementById('resFormError').style.display = 'none';
   document.querySelector('.ot-section').style.display = '';
   document.getElementById('formSuccess').classList.remove('show');
-  selectLoc('EW');
+  selectLoc(initialLocation);
 }
 
 // Reveal

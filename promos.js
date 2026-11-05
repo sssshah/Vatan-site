@@ -42,7 +42,7 @@ const VATAN_PROMOS = [
     name:     "Grand Inauguration — Edison",
     desc:     "Join us for the grand inauguration of Vatan's third New Jersey location.",
     price:    "All Are Welcome",
-    active:   true,
+    active:   false,
     lightbox: true,
     lightboxFile: "Edison_Grand_Inauguration_2026.jpeg",
     locations: "1667 Oak Tree Road, Edison",
@@ -113,7 +113,7 @@ const VATAN_PROMOS = [
     price:    "$19.99",
     active:   true,
     lightbox: true,
-    locations: "East Windsor"
+    locations: "East Windsor, Edison"
   },
   {
     id:       "wednesday-chaat",
@@ -124,7 +124,7 @@ const VATAN_PROMOS = [
     price:    "$19.99",
     active:   true,
     lightbox: true,
-    locations: "East Windsor"
+    locations: "East Windsor, Edison"
   },
   {
     id:       "thursday-dosa",
@@ -135,7 +135,7 @@ const VATAN_PROMOS = [
     price:    "$19.99",
     active:   true,
     lightbox: true,
-    locations: "East Windsor"
+    locations: "East Windsor, Edison"
   },
   {
     id:       "friday-fun-night",
@@ -146,7 +146,7 @@ const VATAN_PROMOS = [
     price:    "$19.99",
     active:   true,
     lightbox: true,
-    locations: "East Windsor"
+    locations: "East Windsor, Edison"
   },
   {
     id:       "farali-thali",

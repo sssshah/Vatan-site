@@ -104,6 +104,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .loc-options{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;}
 .loc-opt input[type="radio"]{position:absolute;opacity:0;width:0;height:0;}
 .loc-opt{cursor:pointer;}
+.loc-opt-link{text-decoration:none;}
 .loc-card{display:block;border:2px solid rgba(212,168,83,0.2);border-radius:var(--radius);padding:1rem;transition:all 0.2s;background:var(--ivory);}
 .loc-opt input:checked + .loc-card{border-color:var(--saffron);background:rgba(200,102,10,0.05);}
 .loc-card-name{font-weight:600;font-size:0.95rem;color:var(--dark);margin-bottom:0.2rem;}
@@ -286,9 +287,9 @@ footer{background:var(--dark);padding:2rem 2rem 1.5rem;border-top:1px solid rgba
         <a href="tel:+16093367333">📞 (609) 336-7333</a>
       </div>
       <div class="call-sep"></div>
-      <div class="call-loc-soon">
+      <div class="call-loc">
         <div class="call-loc-label">Edison</div>
-        <span>Coming Soon</span>
+        <a href="tel:+17325566000">📞 (732) 556-6000</a>
       </div>
     </div>
   </div>
@@ -371,14 +372,13 @@ footer{background:var(--dark);padding:2rem 2rem 1.5rem;border-top:1px solid rgba
               <div class="loc-card-hours">Open Daily &middot; 11 AM–3 PM &amp; 4:30–9:30 PM</div>
             </span>
           </label>
-          <label class="loc-opt loc-opt-disabled">
-            <input type="radio" name="location" id="locED" disabled>
-            <span class="loc-card loc-card-disabled">
-              <div class="loc-card-name">Edison <span style="font-size:0.7rem;font-weight:400;color:var(--text-muted);">Coming Soon</span></div>
-              <div class="loc-card-detail">Edison, NJ</div>
-              <div class="loc-card-hours">&nbsp;</div>
+          <a class="loc-opt loc-opt-link" href="https://vatan-restaurant-baker-edison.cloveronline.com" target="_blank" rel="noopener">
+            <span class="loc-card">
+              <div class="loc-card-name">Edison</div>
+              <div class="loc-card-detail">1667 Oak Tree Road, NJ 08820</div>
+              <div class="loc-card-hours">Order pickup on Clover ↗</div>
             </span>
-          </label>
+          </a>
         </div>
       </div>
 

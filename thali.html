@@ -223,7 +223,7 @@ footer p{font-size:0.8rem;color:rgba(253,246,233,0.35);}
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--dark-mid);border:1px solid rgba(212,168,83,0.2);border-radius:var(--radius-lg);padding:2rem;max-width:460px;width:100%;position:relative;}
+.modal{background:var(--dark-mid);border:1px solid rgba(212,168,83,0.2);border-radius:var(--radius-lg);padding:2rem;max-width:460px;width:100%;position:relative;max-height:calc(100vh - 2rem);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
 .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(253,246,233,0.5);font-size:1.2rem;cursor:pointer;transition:color 0.2s;}
 .modal-close:hover{color:var(--gold-light);}
 .modal h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--ivory);margin-bottom:0.25rem;}
@@ -292,7 +292,7 @@ footer p{font-size:0.8rem;color:rgba(253,246,233,0.35);}
       <div class="call-sep"></div>
       <div class="call-loc"><div class="call-loc-label">East Windsor</div><a href="tel:+16093367333">📞 (609) 336-7333</a></div>
       <div class="call-sep"></div>
-      <div class="call-loc-soon"><div class="call-loc-label">Edison</div><span>Coming Soon</span></div>
+      <div class="call-loc"><div class="call-loc-label">Edison</div><a href="tel:+17325566000">📞 (732) 556-6000</a></div>
     </div>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -431,7 +431,7 @@ footer p{font-size:0.8rem;color:rgba(253,246,233,0.35);}
       <div class="why-card">
         <div class="why-icon">📍</div>
         <h4>Two NJ Locations</h4>
-        <p>Jersey City (open daily) and East Windsor (Tue–Sun), near BAPS Akshardham. Conveniently located for diners from Plainsboro, South Brunswick, Princeton, West Windsor, Robbinsville, Hightstown, Monroe Township &amp; Princeton Junction. Edison coming soon.</p>
+        <p>Visit us in Jersey City (open daily), East Windsor (Tue–Sun) near BAPS Akshardham, or Edison (Tue–Sun) at 1667 Oak Tree Road. Convenient for diners across Central and North Jersey.</p>
       </div>
     </div>
   </div>
@@ -519,6 +519,12 @@ footer p{font-size:0.8rem;color:rgba(253,246,233,0.35);}
         <a href="https://www.doordash.com/store/vatan-indian-vegetarian-cuisine-bakery-east-windsor-1354547" target="_blank" rel="noopener" class="modal-order-btn">🛵 DoorDash</a>
         <a href="https://www.seamless.com/menu/vatan-pure-vegetarian-indian-cuisine-and-bakery-761-nj-33-east-windsor/2466210" target="_blank" rel="noopener" class="modal-order-btn">🍴 Seamless</a>
         <a href="https://www.grubhub.com/restaurant/vatan-pure-vegetarian-indian-cuisine-and-bakery-761-nj-33-east-windsor/2466210" target="_blank" rel="noopener" class="modal-order-btn">🥡 GrubHub</a>
+      </div>
+    </div>
+    <div class="modal-location">
+      <div class="modal-location-title">📍 Edison — 1667 Oak Tree Road</div>
+      <div class="modal-order-grid">
+        <a href="https://vatan-restaurant-baker-edison.cloveronline.com" target="_blank" rel="noopener" class="modal-order-btn" style="grid-column:1/-1;background:rgba(200,102,10,0.13);border-color:rgba(200,102,10,0.5);color:var(--gold-light);font-weight:700;">🛍️ Direct Pickup Order</a>
       </div>
     </div>
   </div>
