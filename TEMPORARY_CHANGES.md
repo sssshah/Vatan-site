@@ -2,12 +2,14 @@
 
 Use this checklist to restore the normal site after the temporary promotions and operational changes end.
 
-## Edison online reservations paused
+## Edison online reservations pause (ended)
 
 - **Added:** November 8, 2026
+- **Ended:** November 8, 2026
 - **File:** `reservations.html`
-- **Current setting:** `EDISON_RESERVATIONS_ENABLED = false`
-- **Rollback:** Change the setting to `true`. The Edison selector styling, pause label, direct `?loc=edi` behavior, and submission guard all follow this single setting.
+- **Current setting:** `EDISON_RESERVATIONS_ENABLED = true`
+- **Current behavior:** Edison reservations are open. The selector, direct `?loc=edi` link, form fields, and submission all work normally.
+- **Future pause:** Change the setting to `false`. The Edison selector styling, pause label, direct `?loc=edi` behavior, and submission guard all follow this single setting.
 
 ## Happy Diwali homepage decoration
 

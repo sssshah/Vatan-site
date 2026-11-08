@@ -74,7 +74,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 /* PAGE HERO */
 .page-hero{
   margin-top:70px;
-  min-height:340px;
+  min-height:280px;
   position:relative;
   display:flex;
   align-items:center;
@@ -111,7 +111,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .hero-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 1.2rem;}
 
 /* MAIN LAYOUT */
-.res-body{max-width:1100px;margin:0 auto;padding:4rem 1.5rem 6rem;display:grid;grid-template-columns:1fr 420px;gap:3.5rem;align-items:start;}
+.res-body{max-width:1100px;margin:0 auto;padding:3rem 1.5rem 5rem;display:grid;grid-template-columns:1fr 420px;gap:3.5rem;align-items:start;}
 
 /* LEFT SIDE - info */
 .res-info{}
@@ -182,6 +182,7 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   padding-top:0.4rem;padding-bottom:0.4rem;line-height:1.5;
 }
 .policy-list li::before{content:'•';color:var(--gold);font-size:1rem;position:absolute;left:0;top:0.4rem;}
+.good-to-know{grid-column:1/-1;margin-bottom:0;}
 
 /* FORM SIDE */
 .res-form-wrap{
@@ -369,20 +370,9 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   transition:all 0.2s;box-shadow:0 3px 12px rgba(218,55,67,0.3);
 }
 .ot-btn:hover{background:#C02535;transform:translateY(-1px);box-shadow:0 6px 20px rgba(218,55,67,0.4);}
+.ot-btn-disabled{background:#DA3743;box-shadow:0 3px 12px rgba(218,55,67,0.3);cursor:not-allowed;opacity:1;}
+.ot-btn-disabled:hover{background:#DA3743;transform:none;box-shadow:0 3px 12px rgba(218,55,67,0.3);}
 .ot-logo{font-size:1.2rem;}
-
-/* GALLERY STRIP */
-.res-gallery{
-  grid-column:1/-1;
-  display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:1rem;margin-top:1rem;border-radius:var(--radius-lg);overflow:hidden;
-}
-.res-gallery-img{
-  width:100%;height:200px;object-fit:cover;
-  transition:transform 0.5s ease,filter 0.3s;
-  filter:brightness(0.85) saturate(0.9);
-}
-.res-gallery-img:hover{transform:scale(1.04);filter:brightness(1) saturate(1.1);}
 
 /* FLOATING */
 .float-order{position:fixed;bottom:1.5rem;right:1.5rem;z-index:500;background:linear-gradient(135deg,var(--saffron),var(--maroon));color:var(--white);text-decoration:none;padding:0.8rem 1.4rem;border-radius:50px;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;display:flex;align-items:center;gap:0.5rem;box-shadow:0 4px 20px rgba(200,102,10,0.5);transition:all 0.3s;cursor:pointer;border:none;}
@@ -423,17 +413,18 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
 @media(max-width:960px){
   .res-body{grid-template-columns:1fr;gap:2.5rem;}
   .res-form-wrap{position:static;}
-  .res-gallery{grid-template-columns:1fr 1fr;}
-  .res-gallery-img:last-child{display:none;}
 }
 @media(max-width:768px){
   .nav-links{display:none;}
   .hamburger{display:flex;}
   .call-text,.call-chevron{display:none;}
   .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
+  .page-hero{min-height:210px;}
+  .page-hero-content{padding:2rem 1.25rem;}
+  .page-hero p{font-size:1rem;}
+  .hero-divider{margin-bottom:0.8rem;}
+  .res-body{padding:2rem 1rem 4rem;gap:2rem;}
   .field-row{grid-template-columns:1fr;}
-  .res-gallery{grid-template-columns:1fr;height:200px;}
-  .res-gallery-img:not(:first-child){display:none;}
   .modal-order-grid{grid-template-columns:1fr;}
   .loc-selector{grid-template-columns:1fr;}
 }
@@ -557,24 +548,29 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
     <div class="info-block reveal">
       <h3>Choose Your <em>Location</em></h3>
 
-      <!-- Jersey City -->
+      <!-- Edison -->
       <div class="location-res-card">
         <div class="loc-res-header">
-          <span class="loc-res-name">Jersey City</span>
-          <span class="loc-res-badge">Open Daily</span>
+          <span class="loc-res-name">Edison</span>
+          <span class="loc-res-badge">Open Mon Nov 9</span>
         </div>
         <div class="loc-res-body">
           <div class="loc-res-row">
             <span class="loc-icon">📍</span>
-            <a href="https://g.page/VatanIndianRestaurant?share" target="_blank" rel="noopener">808 Newark Ave, Jersey City, NJ 07306</a>
+            <a href="https://maps.app.goo.gl/vbMYtvgn4XZ2WWAJ8" target="_blank" rel="noopener">1667 Oak Tree Road, Edison, NJ 08820</a>
           </div>
           <div class="loc-res-row">
             <span class="loc-icon">📞</span>
-            <a href="tel:+12018395426">(201) 839-5426</a>
+            <a href="tel:+17325566000">(732) 556-6000</a>
           </div>
           <div class="loc-res-row">
             <span class="loc-icon">🕐</span>
-            <span>Mon–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
+            <span>Mon: Closed &nbsp;|&nbsp; Tue–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
+          </div>
+          <!-- TEMP 2026-11-09 SPECIAL OPENING: remove this row and restore the Tue–Sun badge after Nov 9 -->
+          <div class="loc-res-row">
+            <span class="loc-icon">🪔</span>
+            <strong style="color:var(--saffron)">Special opening: Monday, November 9</strong>
           </div>
         </div>
       </div>
@@ -606,29 +602,24 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         </div>
       </div>
 
-      <!-- Edison -->
+      <!-- Jersey City -->
       <div class="location-res-card">
         <div class="loc-res-header">
-          <span class="loc-res-name">Edison</span>
-          <span class="loc-res-badge">Open Mon Nov 9</span>
+          <span class="loc-res-name">Jersey City</span>
+          <span class="loc-res-badge">Open Daily</span>
         </div>
         <div class="loc-res-body">
           <div class="loc-res-row">
             <span class="loc-icon">📍</span>
-            <a href="https://maps.app.goo.gl/vbMYtvgn4XZ2WWAJ8" target="_blank" rel="noopener">1667 Oak Tree Road, Edison, NJ 08820</a>
+            <a href="https://g.page/VatanIndianRestaurant?share" target="_blank" rel="noopener">808 Newark Ave, Jersey City, NJ 07306</a>
           </div>
           <div class="loc-res-row">
             <span class="loc-icon">📞</span>
-            <a href="tel:+17325566000">(732) 556-6000</a>
+            <a href="tel:+12018395426">(201) 839-5426</a>
           </div>
           <div class="loc-res-row">
             <span class="loc-icon">🕐</span>
-            <span>Mon: Closed &nbsp;|&nbsp; Tue–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
-          </div>
-          <!-- TEMP 2026-11-09 SPECIAL OPENING: remove this row and restore the Tue–Sun badge after Nov 9 -->
-          <div class="loc-res-row">
-            <span class="loc-icon">🪔</span>
-            <strong style="color:var(--saffron)">Special opening: Monday, November 9</strong>
+            <span>Mon–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
           </div>
         </div>
       </div>
@@ -636,25 +627,6 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="hours-note">
         <strong>Large parties & special occasions?</strong> We love hosting groups! For parties of 10 or more, please call your preferred location directly so we can prepare the best experience for you.
       </div>
-    </div>
-
-    <div class="info-block reveal">
-      <h3>Good to <em>Know</em></h3>
-      <ul class="policy-list">
-        <li>Reservations are recommended, especially on weekends and during special events.</li>
-        <li>We hold reserved tables for up to <strong>15 minutes</strong> past the booking time.</li>
-        <li>Our entire menu is <strong>100% vegetarian</strong> — with extensive Jain, Swaminarayan, and vegan options.</li>
-        <li>Please note any dietary restrictions or allergies in the special requests field.</li>
-        <li>For catering inquiries or private events, please visit our <a href="contact.html" style="color:var(--saffron);font-weight:500;">Contact page</a>.</li>
-        <li>Walk-ins are always welcome, subject to availability.</li>
-      </ul>
-    </div>
-
-    <!-- Gallery strip -->
-    <div class="res-gallery reveal">
-      <img src="images/food/Paneerbuttermasala.jpg" alt="Paneer Butter Masala" class="res-gallery-img">
-      <img src="images/food/Palakpaneer.jpg" alt="Palak Paneer" class="res-gallery-img">
-      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=900&q=80" alt="Thali" class="res-gallery-img" loading="lazy">
     </div>
 
   </div>
@@ -691,7 +663,12 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
           <div style="margin-bottom:1.2rem;">
             <label style="display:block;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem;">Select Location</label>
             <div class="loc-selector">
-              <div class="loc-btn selected" id="locEW" onclick="selectLoc('EW')">
+              <div class="loc-btn selected" id="locEDI" onclick="selectLoc('EDI')" aria-disabled="false">
+                <span class="loc-btn-name">Edison</span>
+                <span class="loc-btn-addr">1667 Oak Tree Road</span>
+                <span class="loc-btn-status">Reservations temporarily paused</span>
+              </div>
+              <div class="loc-btn" id="locEW" onclick="selectLoc('EW')">
                 <span class="loc-btn-name">East Windsor</span>
                 <span class="loc-btn-addr">761 NJ-33 West</span>
                 <span class="loc-btn-addr">Near BAPS Akshardham</span>
@@ -700,13 +677,8 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
                 <span class="loc-btn-name">Jersey City</span>
                 <span class="loc-btn-addr">808 Newark Ave</span>
               </div>
-              <div class="loc-btn" id="locEDI" onclick="selectLoc('EDI')" aria-disabled="false">
-                <span class="loc-btn-name">Edison</span>
-                <span class="loc-btn-addr">1667 Oak Tree Road</span>
-                <span class="loc-btn-status">Reservations temporarily paused</span>
-              </div>
             </div>
-            <input type="hidden" id="selectedLocation" name="location" value="East Windsor">
+            <input type="hidden" id="selectedLocation" name="location" value="Edison">
             <div class="edi-res-pause" id="ediReservationPause" role="status">Online reservations for Edison are temporarily paused. Please call <a href="tel:+17325566000">(732) 556-6000</a> for assistance.</div>
           </div>
 
@@ -832,14 +804,26 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
         <!-- OpenTable alternate -->
         <div class="ot-section">
           <span class="ot-label">Prefer to book via OpenTable?</span>
-          <a href="https://www.opentable.com/s?covers=2&dateTime=&metroId=&term=Vatan+Indian+New+Jersey&latitude=&longitude=&corrid=" target="_blank" rel="noopener" class="ot-btn">
+          <span class="ot-btn ot-btn-disabled" aria-disabled="true" aria-label="OpenTable booking coming soon">
             <span class="ot-logo">🍽️</span>
-            Book on OpenTable
-          </a>
+            OpenTable — Coming Soon
+          </span>
         </div>
 
       </div>
     </div>
+  </div>
+
+  <div class="info-block good-to-know reveal">
+    <h3>Good to <em>Know</em></h3>
+    <ul class="policy-list">
+      <li>Reservations are recommended, especially on weekends and during special events.</li>
+      <li>We hold reserved tables for up to <strong>5 minutes</strong> past the booking time.</li>
+      <li>Our entire menu is <strong>100% vegetarian</strong> — with extensive Jain, Swaminarayan, and vegan options.</li>
+      <li>Please note any dietary restrictions or allergies in the special requests field.</li>
+      <li>For catering inquiries or private events, please visit our <a href="contact.html" style="color:var(--saffron);font-weight:500;">Contact page</a>.</li>
+      <li>Walk-ins are always welcome, subject to availability.</li>
+    </ul>
   </div>
 
 </div><!-- end res-body -->
@@ -943,7 +927,7 @@ const dd = String(today.getDate()).padStart(2,'0');
 dateInput.min = `${yyyy}-${mm2}-${dd}`;
 
 // Location selector
-const EDISON_RESERVATIONS_ENABLED = false;
+const EDISON_RESERVATIONS_ENABLED = true;
 const ediLocationButton = document.getElementById('locEDI');
 ediLocationButton.classList.toggle('disabled', !EDISON_RESERVATIONS_ENABLED);
 ediLocationButton.setAttribute('aria-disabled', String(!EDISON_RESERVATIONS_ENABLED));
@@ -974,13 +958,13 @@ function selectLoc(loc) {
   document.getElementById('locEW').classList.toggle('selected', loc === 'EW');
   document.getElementById('locEDI').classList.toggle('selected', loc === 'EDI');
   const locationNames = { JC: 'Jersey City', EW: 'East Windsor', EDI: 'Edison' };
-  document.getElementById('selectedLocation').value = locationNames[loc] || 'East Windsor';
+  document.getElementById('selectedLocation').value = locationNames[loc] || 'Edison';
 }
 
 const requestedLocation = new URLSearchParams(window.location.search).get('loc');
 const initialLocation = requestedLocation && /^(jc|ew|edi|ed)$/i.test(requestedLocation)
   ? (/^jc$/i.test(requestedLocation) ? 'JC' : /^ew$/i.test(requestedLocation) ? 'EW' : 'EDI')
-  : 'EW';
+  : 'EDI';
 selectLoc(initialLocation);
 
 // MailerLite signup — fire-and-forget, never blocks or fails the reservation itself
