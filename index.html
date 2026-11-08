@@ -97,6 +97,16 @@ nav.scrolled{background:rgba(28,16,8,0.99);box-shadow:0 4px 24px rgba(0,0,0,0.3)
 
 /* HERO */
 .hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--dark);}
+.diwali-corner{position:absolute;top:80px;right:8px;z-index:4;width:132px;overflow:visible;animation:diwaliFloat 4s ease-in-out infinite;}
+.diwali-corner img{display:block;width:100%;height:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,0.34)) drop-shadow(0 0 12px rgba(232,130,15,0.2));}
+.diwali-close{position:absolute;top:4px;right:4px;z-index:3;width:23px;height:23px;border-radius:50%;border:1px solid rgba(240,200,120,0.35);background:rgba(20,10,5,0.72);color:var(--ivory);font-size:0.9rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.diwali-flame{position:absolute;top:40%;width:4%;height:9%;margin-left:-2%;border-radius:50% 50% 45% 45%;background:radial-gradient(ellipse at 50% 75%,#fff6ae 0 18%,#ffd33d 35%,#ff7b00 66%,rgba(255,72,0,0) 74%);filter:drop-shadow(0 0 4px #ff9d16) drop-shadow(0 0 9px rgba(255,104,0,0.85));transform-origin:50% 100%;mix-blend-mode:screen;animation:diyaFlicker 0.72s ease-in-out infinite alternate;pointer-events:none;}
+.diwali-flame.flame-1{left:31.5%;animation-delay:-0.18s;}
+.diwali-flame.flame-2{left:54.5%;top:43%;animation-delay:-0.46s;}
+.diwali-flame.flame-3{left:77.5%;animation-delay:-0.31s;}
+@keyframes diyaFlicker{0%{transform:rotate(-3deg) scale(.86,1);opacity:.72;}45%{transform:rotate(2deg) scale(1.12,.92);opacity:1;}100%{transform:rotate(-1deg) scale(.94,1.12);opacity:.84;}}
+@keyframes diwaliFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+@media(prefers-reduced-motion:reduce){.diwali-corner,.diwali-flame{animation:none;}}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(200,102,10,0.22) 0%,transparent 55%),radial-gradient(ellipse at 20% 80%,rgba(122,28,46,0.28) 0%,transparent 50%),radial-gradient(ellipse at 50% 20%,rgba(212,168,83,0.12) 0%,transparent 45%),linear-gradient(160deg,#1C1008 0%,#2E1505 40%,#1A0C14 100%);}
 .hero-ring{position:absolute;right:-5%;top:50%;transform:translateY(-50%);width:min(600px,65vw);height:min(600px,65vw);border-radius:50%;border:1px solid rgba(212,168,83,0.12);box-shadow:inset 0 0 80px rgba(200,102,10,0.08),0 0 120px rgba(200,102,10,0.06);animation:slowRotate 40s linear infinite;}
 .hero-ring::before{content:'';position:absolute;inset:20px;border-radius:50%;border:1px solid rgba(212,168,83,0.08);background:radial-gradient(circle,rgba(200,102,10,0.06) 0%,transparent 70%);}
@@ -718,7 +728,9 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
   .hamburger{display:flex;}
   .call-text,.call-chevron{display:none;}
   .nav-call-btn{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%;}
-  .hero-content{grid-template-columns:1fr;grid-template-areas:"left" "right" "social";padding:9rem 1.5rem 7rem;gap:1.25rem;text-align:center;}
+  .hero-content{grid-template-columns:1fr;grid-template-areas:"left" "right" "social";padding:10.5rem 1.5rem 7rem;gap:1.25rem;text-align:center;}
+  .diwali-corner{top:74px;right:7px;width:100px;}
+  .diwali-close{width:21px;height:21px;font-size:0.8rem;}
   .hero-left{text-align:center;}
   .hero-right{display:block;min-width:0;}
   .hero-divider{margin:0 auto 2rem;}
@@ -957,6 +969,13 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
 <section class="hero" id="top">
   <div class="hero-bg"></div>
   <div class="hero-ring"></div>
+  <div class="diwali-corner" id="diwaliCorner" aria-label="Happy Diwali">
+    <button class="diwali-close" type="button" aria-label="Close Diwali greeting" onclick="dismissDiwali()">&times;</button>
+    <img src="images/promos/happy-diwali.png" alt="Happy Diwali greeting with decorative diyas">
+    <span class="diwali-flame flame-1" aria-hidden="true"></span>
+    <span class="diwali-flame flame-2" aria-hidden="true"></span>
+    <span class="diwali-flame flame-3" aria-hidden="true"></span>
+  </div>
   <div class="spice-dot" style="width:8px;height:8px;background:var(--gold);top:25%;left:15%;animation-delay:0s;"></div>
   <div class="spice-dot" style="width:5px;height:5px;background:var(--saffron);top:60%;left:8%;animation-delay:1.5s;"></div>
   <div class="spice-dot" style="width:6px;height:6px;background:var(--gold);top:35%;left:30%;animation-delay:3s;"></div>
@@ -1363,13 +1382,15 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="location-card reveal reveal-delay-2">
         <div class="location-header">
           <div class="location-name">East Windsor</div>
-          <span class="location-badge">Tue–Sun</span>
+          <span class="location-badge">Open Mon Nov 9</span>
         </div>
         <div class="location-card-body">
           <ul class="location-info">
             <li><span class="info-icon">📍</span><a href="https://maps.app.goo.gl/7EeXnaDAekc8pQC2A" target="_blank" rel="noopener">761 NJ-33 West, East Windsor, NJ 08520</a></li>
             <li><span class="info-icon">📞</span><a href="tel:+16093367333">(609) 336-7333</a></li>
             <li><span class="info-icon">🕐</span><span>Mon: Closed<br>Tue–Sun: 11:00 AM – 3:00 PM<br>4:30 PM – 9:30 PM</span></li>
+            <!-- TEMP 2026-11-09 SPECIAL OPENING: remove this item and restore the Tue–Sun badge after Nov 9 -->
+            <li><span class="info-icon">🪔</span><strong style="color:var(--saffron)">Special opening: Monday, November 9</strong></li>
             <li><span class="info-icon">✉️</span><a href="mailto:info@vatans.com">info@vatans.com</a></li>
             <li><span class="info-icon">🛕</span><span style="color:var(--text-muted)">Near BAPS Swaminarayan Akshardham, Robbinsville</span></li>
             <li><span class="info-icon">🎓</span><span style="color:var(--text-muted)">15 minutes from Princeton · Serving Princeton, Robbinsville &amp; Central NJ</span></li>
@@ -1393,13 +1414,15 @@ footer{background:var(--dark);padding:4rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="location-card reveal reveal-delay-3" id="edison">
         <div class="location-header">
           <div class="location-name">Edison</div>
-          <span class="location-badge">Tue–Sun</span>
+          <span class="location-badge">Open Mon Nov 9</span>
         </div>
         <div class="location-card-body">
           <ul class="location-info">
             <li><span class="info-icon">📍</span><a href="https://maps.app.goo.gl/vbMYtvgn4XZ2WWAJ8" target="_blank" rel="noopener">1667 Oak Tree Road, Edison, NJ 08820</a></li>
             <li><span class="info-icon">📞</span><a href="tel:+17325566000">(732) 556-6000</a></li>
             <li><span class="info-icon">🕐</span><span>Mon: Closed<br>Tue–Sun: 11:00 AM – 3:00 PM<br>4:30 PM – 9:30 PM</span></li>
+            <!-- TEMP 2026-11-09 SPECIAL OPENING: remove this item and restore the Tue–Sun badge after Nov 9 -->
+            <li><span class="info-icon">🪔</span><strong style="color:var(--saffron)">Special opening: Monday, November 9</strong></li>
             <li><span class="info-icon">✉️</span><a href="mailto:info@vatans.com">info@vatans.com</a></li>
             <li><span class="info-icon">🚗</span><span style="color:var(--text-muted)">Convenient for guests from Edison, Metuchen, Iselin, Woodbridge, Rahway &amp; Piscataway, NJ</span></li>
           </ul>
@@ -1611,6 +1634,12 @@ document.addEventListener('click', function(e) {
 });
 
 const navbar = document.getElementById('navbar');
+const diwaliCorner = document.getElementById('diwaliCorner');
+if (sessionStorage.getItem('vatan-diwali-dismissed') === '1') diwaliCorner.style.display = 'none';
+function dismissDiwali() {
+  diwaliCorner.style.display = 'none';
+  sessionStorage.setItem('vatan-diwali-dismissed', '1');
+}
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 60);
   document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);

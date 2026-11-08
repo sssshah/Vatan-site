@@ -237,8 +237,23 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   border-color:var(--saffron);
   background:rgba(200,102,10,0.08);
 }
+.loc-btn.disabled{
+  background:#eee9df;border-color:rgba(122,92,64,0.16);
+  cursor:not-allowed;filter:grayscale(1);opacity:0.62;
+}
+.loc-btn.disabled:hover{background:#eee9df;border-color:rgba(122,92,64,0.16);}
+.loc-btn-status{display:none;font-size:0.65rem;font-weight:700;color:var(--maroon);margin-top:0.35rem;line-height:1.25;}
+.loc-btn.disabled .loc-btn-status{display:block;}
 .loc-btn-name{font-size:0.88rem;font-weight:600;color:var(--dark);display:block;}
 .loc-btn-addr{font-size:0.72rem;color:var(--text-muted);margin-top:0.15rem;display:block;}
+.edi-res-pause{display:none;margin:-0.8rem 0 1.2rem;padding:0.75rem 0.9rem;border-radius:10px;background:rgba(122,28,46,0.07);border:1px solid rgba(122,28,46,0.18);color:var(--text-muted);font-size:0.78rem;line-height:1.5;text-align:center;}
+.edi-res-pause.show{display:block;}
+.edi-res-pause a{color:var(--maroon);font-weight:700;text-decoration:none;}
+#resForm.edison-paused input:disabled,
+#resForm.edison-paused select:disabled,
+#resForm.edison-paused textarea:disabled,
+#resForm.edison-paused .btn-reserve:disabled{opacity:0.48;cursor:not-allowed;filter:grayscale(0.55);}
+#resForm.edison-paused .diet-opt{opacity:0.48;cursor:not-allowed;}
 
 /* FORM FIELDS */
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
@@ -568,7 +583,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="location-res-card">
         <div class="loc-res-header">
           <span class="loc-res-name">East Windsor</span>
-          <span class="loc-res-badge">Tue–Sun</span>
+          <span class="loc-res-badge">Open Mon Nov 9</span>
         </div>
         <div class="loc-res-body">
           <div class="loc-res-row">
@@ -583,6 +598,11 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
             <span class="loc-icon">🕐</span>
             <span>Mon: Closed &nbsp;|&nbsp; Tue–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
           </div>
+          <!-- TEMP 2026-11-09 SPECIAL OPENING: remove this row and restore the Tue–Sun badge after Nov 9 -->
+          <div class="loc-res-row">
+            <span class="loc-icon">🪔</span>
+            <strong style="color:var(--saffron)">Special opening: Monday, November 9</strong>
+          </div>
         </div>
       </div>
 
@@ -590,7 +610,7 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
       <div class="location-res-card">
         <div class="loc-res-header">
           <span class="loc-res-name">Edison</span>
-          <span class="loc-res-badge">Tue–Sun</span>
+          <span class="loc-res-badge">Open Mon Nov 9</span>
         </div>
         <div class="loc-res-body">
           <div class="loc-res-row">
@@ -604,6 +624,11 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
           <div class="loc-res-row">
             <span class="loc-icon">🕐</span>
             <span>Mon: Closed &nbsp;|&nbsp; Tue–Sun: 11:00 AM – 3:00 PM &nbsp;|&nbsp; 4:30 PM – 9:30 PM</span>
+          </div>
+          <!-- TEMP 2026-11-09 SPECIAL OPENING: remove this row and restore the Tue–Sun badge after Nov 9 -->
+          <div class="loc-res-row">
+            <span class="loc-icon">🪔</span>
+            <strong style="color:var(--saffron)">Special opening: Monday, November 9</strong>
           </div>
         </div>
       </div>
@@ -675,12 +700,14 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
                 <span class="loc-btn-name">Jersey City</span>
                 <span class="loc-btn-addr">808 Newark Ave</span>
               </div>
-              <div class="loc-btn" id="locEDI" onclick="selectLoc('EDI')">
+              <div class="loc-btn" id="locEDI" onclick="selectLoc('EDI')" aria-disabled="false">
                 <span class="loc-btn-name">Edison</span>
                 <span class="loc-btn-addr">1667 Oak Tree Road</span>
+                <span class="loc-btn-status">Reservations temporarily paused</span>
               </div>
             </div>
             <input type="hidden" id="selectedLocation" name="location" value="East Windsor">
+            <div class="edi-res-pause" id="ediReservationPause" role="status">Online reservations for Edison are temporarily paused. Please call <a href="tel:+17325566000">(732) 556-6000</a> for assistance.</div>
           </div>
 
           <div class="field-row">
@@ -916,7 +943,33 @@ const dd = String(today.getDate()).padStart(2,'0');
 dateInput.min = `${yyyy}-${mm2}-${dd}`;
 
 // Location selector
+const EDISON_RESERVATIONS_ENABLED = false;
+const ediLocationButton = document.getElementById('locEDI');
+ediLocationButton.classList.toggle('disabled', !EDISON_RESERVATIONS_ENABLED);
+ediLocationButton.setAttribute('aria-disabled', String(!EDISON_RESERVATIONS_ENABLED));
+
+function setReservationFieldsDisabled(disabled) {
+  const form = document.getElementById('resForm');
+  form.classList.toggle('edison-paused', disabled);
+  form.querySelectorAll('input:not([type="hidden"]), select, textarea, button[type="submit"]').forEach(control => {
+    control.disabled = disabled;
+  });
+  document.querySelector('.ot-section').style.display = disabled ? 'none' : '';
+}
+
 function selectLoc(loc) {
+  const ediPause = document.getElementById('ediReservationPause');
+  if (loc === 'EDI' && !EDISON_RESERVATIONS_ENABLED) {
+    document.getElementById('locJC').classList.remove('selected');
+    document.getElementById('locEW').classList.remove('selected');
+    document.getElementById('locEDI').classList.remove('selected');
+    document.getElementById('selectedLocation').value = '';
+    ediPause.classList.add('show');
+    setReservationFieldsDisabled(true);
+    return;
+  }
+  ediPause.classList.remove('show');
+  setReservationFieldsDisabled(false);
   document.getElementById('locJC').classList.toggle('selected', loc === 'JC');
   document.getElementById('locEW').classList.toggle('selected', loc === 'EW');
   document.getElementById('locEDI').classList.toggle('selected', loc === 'EDI');
@@ -944,6 +997,11 @@ function notifyMailerLite(email, source) {
 // Form submit
 document.getElementById('resForm').addEventListener('submit', function(e) {
   e.preventDefault();
+  const selectedLocation = document.getElementById('selectedLocation');
+  if (!selectedLocation.value || (!EDISON_RESERVATIONS_ENABLED && selectedLocation.value === 'Edison')) {
+    document.getElementById('ediReservationPause').classList.add('show');
+    return;
+  }
   const required = ['firstName','lastName','email','phone','resDate','resTime','partySize'];
   let valid = true;
   required.forEach(id => {

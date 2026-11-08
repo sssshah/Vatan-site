@@ -6,6 +6,7 @@
 - **Phone:** (732) 556-6000 (`tel:+17325566000`)
 - **Hours:** Monday closed; Tuesday–Sunday 11:00 AM–3:00 PM and 4:30 PM–9:30 PM
 - **Google Maps:** https://maps.app.goo.gl/vbMYtvgn4XZ2WWAJ8
+- **Google review link:** https://g.page/r/CXUC21m7FQ3DEBM/review
 - **Instagram:** `@vatan_edison` — https://www.instagram.com/vatan_edison/
 - **Weekly specials:** the active Tuesday, Wednesday, Thursday, and Friday specials apply to East Windsor and Edison
 - **Nearby areas:** Edison, Metuchen, Iselin, Woodbridge, Rahway, and Piscataway, NJ
@@ -31,7 +32,8 @@
 - [ ] Get and add the Edison **DoorDash** ordering link.
 - [ ] Get and add the Edison **Seamless** ordering link, if Edison will use Seamless.
 - [ ] Decide whether Edison should accept orders through the site's own `order.html` form; if yes, enable the Edison option and add its hours and confirmation text.
-- [ ] Get and add the Edison Google review link, then create an Edison-specific review QR card if wanted.
+- [x] Get the Edison Google review link: https://g.page/r/CXUC21m7FQ3DEBM/review
+- [ ] Add the Edison Google review link to the website and create an Edison-specific review QR card if wanted.
 - [ ] Add an Edison Facebook or other social link if the location receives a separate account.
 - [ ] Confirm whether contact, catering, reservation, or order submissions need location-specific routing or notifications for Edison.
 - [ ] Verify Netlify form submissions and email notifications after any Edison-specific form options are added.
