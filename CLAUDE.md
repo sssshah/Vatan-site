@@ -174,7 +174,7 @@ Both predate the MailerLite work and were previously undocumented here:
 
 ## Locations
 
-- **Jersey City**: 808 Newark Ave, NJ 07306 · (201) 839-5426 · `tel:+12018395426`
+- **Jersey City**: 808 Newark Ave, NJ 07306 · (201) 839-5426 · `tel:+12018395426` · Clover pickup: `https://vatan-restaurant-jersey-city.cloveronline.com`
 - **East Windsor**: 761 Route 33 West, NJ 08520 · (609) 336-7333 · `tel:+16093367333`
 - **Edison**: 1667 Oak Tree Road, Edison, NJ 08820 · (732) 556-6000 · `tel:+17325566000` · Tue–Sun 11AM–3PM and 4:30–9:30PM; Monday closed · Maps: `https://maps.app.goo.gl/vbMYtvgn4XZ2WWAJ8` · Instagram: `@vatan_edison` · Clover pickup: `https://vatan-restaurant-baker-edison.cloveronline.com` · nearby areas: Edison, Metuchen, Iselin, Woodbridge, Rahway, Piscataway (all NJ)
 
