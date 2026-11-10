@@ -5,7 +5,7 @@
   <!-- Main pages -->
   <url>
     <loc>https://vatans.com/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <image:image><image:loc>https://vatans.com/images/food/Paneerbuttermasala.jpg</image:loc><image:title>Paneer Butter Masala at Vatan</image:title></image:image>
     <image:image><image:loc>https://vatans.com/images/food/Panipuri.jpg</image:loc><image:title>Pani Puri at Vatan</image:title></image:image>
     <image:image><image:loc>https://vatans.com/images/food/Palakpaneer.jpg</image:loc><image:title>Palak Paneer at Vatan</image:title></image:image>
@@ -24,7 +24,7 @@
 
   <url>
     <loc>https://vatans.com/all-menu.html</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <image:image><image:loc>https://vatans.com/images/food/Paneerbuttermasala.jpg</image:loc><image:title>Paneer Butter Masala — Vatan Menu</image:title></image:image>
     <image:image><image:loc>https://vatans.com/images/food/chole-bhature.jpg</image:loc><image:title>Chole Bhature — Vatan Menu</image:title></image:image>
     <image:image><image:loc>https://vatans.com/images/food/dal-makhani.jpg</image:loc><image:title>Dal Makhani — Vatan Menu</image:title></image:image>
@@ -32,13 +32,13 @@
 
   <url>
     <loc>https://vatans.com/thali.html</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <image:image><image:loc>https://vatans.com/images/blog/thali-east-windsor.jpg</image:loc><image:title>Indian Vegetarian Thali at Vatan East Windsor NJ</image:title></image:image>
   </url>
 
   <url>
     <loc>https://vatans.com/indo-chinese.html</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <image:image><image:loc>https://vatans.com/images/food/chinese-sizzler.jpg</image:loc><image:title>Indo-Chinese Sizzler Platter at Vatan NJ</image:title></image:image>
   </url>
 
@@ -54,17 +54,17 @@
 
   <url>
     <loc>https://vatans.com/catering.html</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
 
   <url>
     <loc>https://vatans.com/contact.html</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
 
   <url>
     <loc>https://vatans.com/faq.html</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
 
 
@@ -108,7 +108,7 @@
   <!-- Blog index -->
   <url>
     <loc>https://vatans.com/blog.html</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-11-09</lastmod>
   </url>
 
   <!-- Blog articles -->
