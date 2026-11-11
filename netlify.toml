@@ -20,3 +20,8 @@
   for = "/menu-data.js"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/reservation-availability.json"
+  [headers.values]
+    Cache-Control = "no-store, max-age=0"

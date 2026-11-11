@@ -145,6 +145,14 @@ Notification arrives at info@vatans.com (M365 via GoDaddy MX records)
 - `contact.html` and `reservations.html` capture a `marketing_optin` checkbox and, if checked, also subscribe the email to MailerLite (see Serverless Functions below). `order.html` has the same checkbox but is **not** wired to MailerLite (deliberately out of scope, may be added later)
 - All submissions are visible in Netlify dashboard regardless of email delivery — check there if emails are missed
 
+### Reservation availability controls
+
+- `reservation-availability.json` is the manual source of truth for dates that should not accept online reservations. It has a master `enabled` switch, an `enabled` switch for each location (`EDI`, `EW`, `JC`), and an `active` switch on each blocked date.
+- Dates use `YYYY-MM-DD`. For a full-day block use `"2026-11-14": { "active": true, "allDay": true, "reason": "Fully booked" }`. For part of a day, set `allDay` to `false` and add one or more inclusive `blockedRanges`, such as `{ "start": "4:30 PM", "end": "9:30 PM" }`. Set `active` to `false` to retain the entry without blocking it, or remove the entry to reopen it.
+- `reservations.html` fetches the file with `cache: "no-store"`, checks it whenever location or date changes, and checks again immediately before submission. A full-day block disables time selection and submission; a range block disables only matching time options. Other locations remain unaffected.
+- If the availability file cannot be loaded, the form fails safely: online submission stays disabled and the selected location's telephone number is shown.
+- `netlify.toml` sets `Cache-Control: no-store` for the JSON file so changes take effect as soon as the new deploy is published.
+
 ### Environment variables
 Set in Netlify dashboard → Project configuration → Environment variables (never in git):
 - `MAILERLITE_API_KEY` — MailerLite API token, marked "Contains secret values". Scope: All scopes (the "Specific scopes"/Functions-only option is locked behind a paid plan upgrade on the current account)

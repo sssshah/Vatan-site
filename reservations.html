@@ -307,6 +307,17 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
   box-shadow:0 8px 30px rgba(200,102,10,0.5);
 }
 .btn-reserve:active{transform:translateY(0);}
+.btn-reserve:disabled{
+  cursor:not-allowed;opacity:0.5;transform:none;box-shadow:none;
+}
+.availability-notice{
+  display:none;margin:-0.25rem 0 1rem;padding:0.85rem 1rem;
+  border-radius:10px;border:1px solid rgba(122,28,46,0.2);
+  background:rgba(122,28,46,0.07);color:var(--text-muted);
+  font-size:0.8rem;line-height:1.5;text-align:center;
+}
+.availability-notice.show{display:block;}
+.availability-notice a{color:var(--maroon);font-weight:700;text-decoration:none;}
 
 /* SUCCESS STATE */
 .form-success{
@@ -712,6 +723,8 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
             </div>
           </div>
 
+          <div class="availability-notice" id="availabilityNotice" role="status" aria-live="polite"></div>
+
           <div class="field">
             <label for="partySize">Party Size *</label>
             <select id="partySize" name="party_size" required>
@@ -764,8 +777,8 @@ footer{background:var(--dark);padding:3rem 2rem 2rem;border-top:1px solid rgba(2
             </label>
           </div>
 
-          <button type="submit" class="btn-reserve">
-            ✨ &nbsp; Confirm Reservation
+          <button type="submit" class="btn-reserve" disabled>
+            Checking availability…
           </button>
 
           <p class="form-note">
@@ -900,12 +913,122 @@ const dd = String(today.getDate()).padStart(2,'0');
 dateInput.min = `${yyyy}-${mm2}-${dd}`;
 
 // Location selector
+let reservationAvailability = null;
+let availabilityReady = false;
+let availabilityLoadFailed = false;
+let currentLocationCode = 'EDI';
+
+const reservationPhones = {
+  EDI: { display: '(732) 556-6000', href: 'tel:+17325566000' },
+  EW: { display: '(609) 336-7333', href: 'tel:+16093367333' },
+  JC: { display: '(201) 839-5426', href: 'tel:+12018395426' }
+};
+
+function getReservationBlock(config, locationCode, date) {
+  if (!config || config.enabled !== true || !date) return null;
+  const location = config.locations && config.locations[locationCode];
+  if (!location || location.enabled !== true || !location.blockedDates) return null;
+  const block = location.blockedDates[date];
+  return block && block.active === true ? block : null;
+}
+
+function reservationTimeToMinutes(time) {
+  const match = String(time || '').trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return null;
+  let hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (hours < 1 || hours > 12 || minutes < 0 || minutes > 59) return null;
+  if (hours === 12) hours = 0;
+  if (match[3].toUpperCase() === 'PM') hours += 12;
+  return (hours * 60) + minutes;
+}
+
+function isReservationTimeBlocked(block, time) {
+  if (!block || block.active !== true) return false;
+  if (block.allDay === true || !Array.isArray(block.blockedRanges)) return true;
+  const selectedMinutes = reservationTimeToMinutes(time);
+  if (selectedMinutes === null) return false;
+  return block.blockedRanges.some(range => {
+    const start = reservationTimeToMinutes(range && range.start);
+    const end = reservationTimeToMinutes(range && range.end);
+    return start !== null && end !== null && selectedMinutes >= start && selectedMinutes <= end;
+  });
+}
+
+function isFullDayReservationBlock(block) {
+  return Boolean(block && (block.allDay === true || !Array.isArray(block.blockedRanges)));
+}
+
+function updateReservationAvailability() {
+  const notice = document.getElementById('availabilityNotice');
+  const timeSelect = document.getElementById('resTime');
+  const submitButton = document.querySelector('.btn-reserve');
+
+  if (!availabilityReady) {
+    timeSelect.disabled = true;
+    submitButton.disabled = true;
+    submitButton.textContent = availabilityLoadFailed ? 'Availability unavailable' : 'Checking availability…';
+    notice.classList.add('show');
+    if (availabilityLoadFailed) {
+      const phone = reservationPhones[currentLocationCode];
+      notice.innerHTML = `Online availability is temporarily unavailable. Please call <a href="${phone.href}">${phone.display}</a> for assistance.`;
+    } else {
+      notice.textContent = 'Checking online reservation availability…';
+    }
+    return false;
+  }
+
+  const block = getReservationBlock(reservationAvailability, currentLocationCode, dateInput.value);
+  const fullDayBlock = isFullDayReservationBlock(block);
+  const selectedTimeWasBlocked = Boolean(timeSelect.value && isReservationTimeBlocked(block, timeSelect.value));
+
+  Array.from(timeSelect.options).forEach(option => {
+    if (option.value) option.disabled = Boolean(block && !fullDayBlock && isReservationTimeBlocked(block, option.value));
+  });
+
+  if (fullDayBlock) {
+    const phone = reservationPhones[currentLocationCode];
+    const reason = block.reason ? ` ${block.reason}.` : '';
+    timeSelect.value = '';
+    timeSelect.disabled = true;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Date unavailable';
+    notice.innerHTML = `Online reservations are unavailable for this location on the selected date.${reason} Please choose another date or call <a href="${phone.href}">${phone.display}</a>.`;
+    notice.classList.add('show');
+    return false;
+  }
+
+  if (block && Array.isArray(block.blockedRanges) && block.blockedRanges.length) {
+    const phone = reservationPhones[currentLocationCode];
+    const ranges = block.blockedRanges
+      .filter(range => range && range.start && range.end)
+      .map(range => `${range.start}–${range.end}`)
+      .join(', ');
+    if (selectedTimeWasBlocked) timeSelect.value = '';
+    timeSelect.disabled = false;
+    submitButton.disabled = false;
+    submitButton.innerHTML = '✨ &nbsp; Confirm Reservation';
+    notice.innerHTML = `Online reservations are full for ${ranges || 'some times'} on this date. Other times remain available, or call <a href="${phone.href}">${phone.display}</a>.`;
+    notice.classList.add('show');
+    return !selectedTimeWasBlocked;
+  }
+
+  timeSelect.disabled = false;
+  submitButton.disabled = false;
+  submitButton.innerHTML = '✨ &nbsp; Confirm Reservation';
+  notice.classList.remove('show');
+  notice.textContent = '';
+  return true;
+}
+
 function selectLoc(loc) {
   document.getElementById('locJC').classList.toggle('selected', loc === 'JC');
   document.getElementById('locEW').classList.toggle('selected', loc === 'EW');
   document.getElementById('locEDI').classList.toggle('selected', loc === 'EDI');
   const locationNames = { JC: 'Jersey City', EW: 'East Windsor', EDI: 'Edison' };
-  document.getElementById('selectedLocation').value = locationNames[loc] || 'Edison';
+  currentLocationCode = locationNames[loc] ? loc : 'EDI';
+  document.getElementById('selectedLocation').value = locationNames[currentLocationCode];
+  updateReservationAvailability();
 }
 
 const requestedLocation = new URLSearchParams(window.location.search).get('loc');
@@ -913,6 +1036,28 @@ const initialLocation = requestedLocation && /^(jc|ew|edi|ed)$/i.test(requestedL
   ? (/^jc$/i.test(requestedLocation) ? 'JC' : /^ew$/i.test(requestedLocation) ? 'EW' : 'EDI')
   : 'EDI';
 selectLoc(initialLocation);
+dateInput.addEventListener('change', updateReservationAvailability);
+
+async function loadReservationAvailability() {
+  try {
+    const response = await fetch('/reservation-availability.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error(`Availability request failed: ${response.status}`);
+    const config = await response.json();
+    if (!config || typeof config !== 'object' || !config.locations) {
+      throw new Error('Availability configuration is invalid');
+    }
+    reservationAvailability = config;
+    availabilityReady = true;
+    availabilityLoadFailed = false;
+  } catch (error) {
+    console.error('[Reservations] Availability configuration could not be loaded.', error);
+    availabilityReady = false;
+    availabilityLoadFailed = true;
+  }
+  updateReservationAvailability();
+}
+
+loadReservationAvailability();
 
 // MailerLite signup — fire-and-forget, never blocks or fails the reservation itself
 function notifyMailerLite(email, source) {
@@ -928,6 +1073,7 @@ function notifyMailerLite(email, source) {
 // Form submit
 document.getElementById('resForm').addEventListener('submit', function(e) {
   e.preventDefault();
+  if (!updateReservationAvailability()) return;
   const required = ['firstName','lastName','email','phone','resDate','resTime','partySize'];
   let valid = true;
   required.forEach(id => {
@@ -974,8 +1120,6 @@ document.getElementById('resForm').addEventListener('submit', function(e) {
 function resetForm() {
   document.getElementById('resForm').reset();
   document.getElementById('resForm').style.display = '';
-  document.getElementById('resForm').querySelector('.btn-reserve').disabled = false;
-  document.getElementById('resForm').querySelector('.btn-reserve').innerHTML = '✨ &nbsp; Confirm Reservation';
   document.getElementById('resFormError').style.display = 'none';
   document.querySelector('.ot-section').style.display = '';
   document.getElementById('formSuccess').classList.remove('show');

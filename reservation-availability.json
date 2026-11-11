@@ -1,0 +1,30 @@
+{
+  "enabled": true,
+  "updated": "2026-11-11",
+  "locations": {
+    "EDI": {
+      "enabled": true,
+      "blockedDates": {
+        "2026-11-13": {
+          "active": true,
+          "allDay": false,
+          "reason": "Dinner reservations are full",
+          "blockedRanges": [
+            {
+              "start": "4:30 PM",
+              "end": "9:30 PM"
+            }
+          ]
+        }
+      }
+    },
+    "EW": {
+      "enabled": true,
+      "blockedDates": {}
+    },
+    "JC": {
+      "enabled": true,
+      "blockedDates": {}
+    }
+  }
+}
