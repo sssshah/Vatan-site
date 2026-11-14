@@ -38,6 +38,7 @@ This is a **pure static site** — no frameworks, no bundler, no package.json. A
 
 **Kiosk / display pages (not linked from nav, no login):**
 - `reservations-board.html` — added v1.7. Airport-departures-style live display of today's reservations for a host stand TV/tablet. The combined view shows location codes (`JC`, `EW`, `EDI`) and includes an All/JC/EW/EDI filter bar; `?loc=jc`, `?loc=ew`, or `?loc=edi` scopes to one location. Rows are sorted earliest-time-first. Polls `netlify/functions/reservations-board.js` every 5 minutes. Shows only time, location code, party size, and privacy-safe initials (first initial + first 3 letters of last name) — never email, phone, or notes. Deliberately has no login: the URL is unlisted (like the print-review-card templates below) and the data it shows is low-sensitivity. See Serverless Functions below for how it reads Netlify Forms data.
+- The reservations board is also an installable web app (`reservation-board.webmanifest`, `reservation-board-sw.js`, and `images/reservation-board-icon-{192,512}.png`). Installed copies open fullscreen without forcing portrait or landscape, automatically request a screen wake lock, and remember the last location selected on each device. The service worker exists for install compatibility only and deliberately does not cache or intercept reservation requests, so board data remains live.
 
 **Not real pages — exclude from page-list/nav-audit work:**
 - `index_backup.html`, `all-menu.backup-2026-07-15.html`, `all-menu.backup-2026-07-15-before-font-bump.html` — manual backups, not linked from nav, not deployed-as-current
@@ -173,7 +174,7 @@ Set in Netlify dashboard → Project configuration → Environment variables (ne
 
 ### `netlify.toml`
 - `[functions] directory = "netlify/functions"` — added 2026-08-18 alongside the MailerLite function
-- Four `[[headers]]` blocks set `Cache-Control`: long-cache (`immutable`, 1 year) for `/images/*` and `/*.js`; `must-revalidate, max-age=0` for `/promos.js` and `/menu-data.js` specifically, since those are live-edited content files that must never be served stale
+- Header blocks set long-cache behavior for images and ordinary scripts, while live configuration files, the reservation-board manifest, and its service worker are revalidated or never cached so updates take effect promptly.
 
 ### `_headers` and `_redirects` (repo root)
 Both predate the MailerLite work and were previously undocumented here:
