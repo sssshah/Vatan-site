@@ -79,7 +79,15 @@ header{
 .filter-btn.active{border-color:var(--gold);background:var(--gold);color:var(--dark);box-shadow:0 0 14px rgba(212,168,83,0.2);}
 .sort-note{font-size:0.64rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(253,246,233,0.42);white-space:nowrap;}
 
-main{flex:1;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex;flex-direction:column;}
+main{flex:1;min-height:0;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex;flex-direction:column;}
+
+#boardWrap{
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
 
 .board-cols{
   display:grid;
@@ -94,7 +102,13 @@ main{flex:1;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex;flex-directi
   flex-shrink:0;
 }
 
-.board-body{flex:1;overflow-y:auto;}
+.board-body{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
 
 .board-row{
   display:grid;
@@ -292,7 +306,7 @@ function renderBoard(rows) {
     return;
   }
 
-  boardWrap.style.display = 'block';
+  boardWrap.style.display = 'flex';
   emptyState.style.display = 'none';
 
   const sortedRows = [...rows].sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time));
