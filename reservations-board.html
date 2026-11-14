@@ -380,6 +380,19 @@ function renderBoard(rows) {
       <span class="row-party">${escapeHtml(r.party)}</span>
     </div>
   `).join('');
+
+  const firstUpcomingIndex = sortedRows.findIndex((row) => timeToMinutes(row.time) >= nowMin);
+  const scrollTargetIndex = firstUpcomingIndex === -1
+    ? sortedRows.length - 1
+    : Math.max(0, firstUpcomingIndex - 1);
+
+  requestAnimationFrame(() => {
+    const targetRow = body.querySelectorAll('.board-row')[scrollTargetIndex];
+    if (!targetRow) return;
+    targetRow.dataset.autoScrollTarget = 'true';
+    const targetTop = targetRow.getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop;
+    body.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+  });
 }
 
 function escapeHtml(str) {
