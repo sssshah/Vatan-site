@@ -1,0 +1,47 @@
+{
+  "id": "/reservations-board.html",
+  "name": "Vatan Reservations Board",
+  "short_name": "Vatan Board",
+  "description": "Live reservation display for Vatan restaurant locations.",
+  "start_url": "/reservations-board.html?app=1",
+  "scope": "/reservations-board.html",
+  "display": "fullscreen",
+  "background_color": "#1C1008",
+  "theme_color": "#1C1008",
+  "icons": [
+    {
+      "src": "/images/reservation-board-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/reservation-board-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "All Locations",
+      "short_name": "All",
+      "url": "/reservations-board.html"
+    },
+    {
+      "name": "Edison",
+      "short_name": "EDI",
+      "url": "/reservations-board.html?loc=edi"
+    },
+    {
+      "name": "East Windsor",
+      "short_name": "EW",
+      "url": "/reservations-board.html?loc=ew"
+    },
+    {
+      "name": "Jersey City",
+      "short_name": "JC",
+      "url": "/reservations-board.html?loc=jc"
+    }
+  ]
+}

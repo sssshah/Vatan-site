@@ -4,7 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1C1008">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Today's Reservations — Vatan</title>
+<link rel="manifest" href="/reservation-board.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/reservation-board-icon-192.png">
+<link rel="apple-touch-icon" href="/images/reservation-board-icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -152,6 +159,10 @@ main{flex:1;min-height:0;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex
 
 footer{
   flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.7rem;
   text-align:center;
   padding:0.8rem;
   font-size:0.7rem;
@@ -159,6 +170,18 @@ footer{
   color:rgba(253,246,233,0.35);
   border-top:1px solid rgba(212,168,83,0.15);
 }
+.wake-lock-btn{
+  border:1px solid rgba(212,168,83,0.35);
+  border-radius:999px;
+  background:rgba(212,168,83,0.1);
+  color:var(--gold-light);
+  padding:0.25rem 0.55rem;
+  font:inherit;
+  letter-spacing:inherit;
+  cursor:pointer;
+}
+.wake-lock-btn:hover{border-color:var(--gold);}
+.wake-lock-btn[hidden]{display:none;}
 
 @media (max-width:900px){
   .row-time{font-size:1.2rem;}
@@ -246,10 +269,24 @@ footer{
   </div>
 </main>
 
-<footer>Vatan &mdash; auto-refreshes every 5 min</footer>
+<footer>
+  <span>Vatan &mdash; auto-refreshes every 5 min</span>
+  <button class="wake-lock-btn" id="wakeLockButton" type="button" hidden>Keep screen on</button>
+</footer>
 
 <script>
 const params = new URLSearchParams(location.search);
+const boardLocationKey = 'vatan-reservations-board-location';
+const requestedLoc = params.get('loc');
+if (requestedLoc !== null) {
+  localStorage.setItem(boardLocationKey, requestedLoc.toLowerCase());
+} else if (params.get('app') === '1') {
+  const savedLoc = localStorage.getItem(boardLocationKey);
+  if (savedLoc) {
+    params.set('loc', savedLoc);
+    history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+  }
+}
 const loc = (params.get('loc') || '').toLowerCase();
 const locLabel = loc === 'jc' ? 'Jersey City' : loc === 'ew' ? 'East Windsor' : (loc === 'edi' || loc === 'ed') ? 'Edison' : 'All Locations';
 document.getElementById('locLabel').textContent = locLabel;
@@ -258,7 +295,32 @@ document.querySelectorAll('.filter-btn').forEach((button) => {
   const isActive = button.dataset.loc === activeLoc;
   button.classList.toggle('active', isActive);
   if (isActive) button.setAttribute('aria-current', 'page');
+  button.addEventListener('click', () => {
+    localStorage.setItem(boardLocationKey, button.dataset.loc);
+  });
 });
+
+const wakeLockButton = document.getElementById('wakeLockButton');
+let screenWakeLock = null;
+
+async function keepScreenAwake() {
+  if (!('wakeLock' in navigator)) return;
+  try {
+    screenWakeLock = await navigator.wakeLock.request('screen');
+    wakeLockButton.hidden = true;
+    screenWakeLock.addEventListener('release', () => {
+      screenWakeLock = null;
+    }, { once: true });
+  } catch (error) {
+    wakeLockButton.hidden = false;
+  }
+}
+
+wakeLockButton.addEventListener('click', keepScreenAwake);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && !screenWakeLock) keepScreenAwake();
+});
+keepScreenAwake();
 
 function updateClock() {
   const now = new Date();
@@ -328,6 +390,12 @@ function escapeHtml(str) {
 
 loadBoard();
 setInterval(loadBoard, 300000); // 5 minutes
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/reservation-board-sw.js', { scope: '/reservations-board.html' }).catch(() => {});
+  });
+}
 </script>
 
 </body>
