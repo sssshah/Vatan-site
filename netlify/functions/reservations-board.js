@@ -93,11 +93,12 @@ exports.handler = async (event) => {
     if (!submissionId) {
       return { statusCode: 400, body: JSON.stringify({ error: 'submissionId required' }) };
     }
+    let entry;
     try {
       const key = `${SIGNOFF_PREFIX}${date}`;
       const state = (await signoffStore(token).get(key, { type: 'json' })) || {};
       const prev = state[submissionId] || {};
-      const entry = {
+      entry = {
         done: typeof body.done === 'boolean' ? body.done : prev.done === true,
         dismissed: typeof body.dismissed === 'boolean' ? body.dismissed : prev.dismissed === true,
         at: new Date().toISOString(),
