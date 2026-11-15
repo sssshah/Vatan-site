@@ -106,7 +106,7 @@ exports.handler = async (event) => {
       await signoffStore().setJSON(key, state);
     } catch (err) {
       console.error(`[ReservationsBoard] signoff write failed: ${err.message}`);
-      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save state' }) };
+      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save state', detail: String((err && err.message) || err).slice(0, 200) }) };
     }
     return { statusCode: 200, body: JSON.stringify({ ok: true, entry }) };
   }
