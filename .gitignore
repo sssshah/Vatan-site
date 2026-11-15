@@ -9,3 +9,24 @@
 
 # Scratch / backups
 index_backup.html
+_og-image-preview.html
+all-menu.backup-*.html
+menu-data.backup-*.js
+
+# Personal / non-site content
+images/Store Front.jpg
+images/foodprevious/
+images/logo-clover-final.png
+images/logo-clover-hq-square.png
+reels/
+vatan recipes/
+
+# Audit outputs (generated, not site content)
+vatans.com-audit/ACTION-PLAN.md
+vatans.com-audit/EW-seo-plan.pdf
+vatans.com-audit/FULL-AUDIT-REPORT.md
+vatans.com-audit/audit-data.json
+vatans.com-audit/findings/
+
+# GBP API automation — contains client_secret.json (OAuth credentials)
+Review Automation/

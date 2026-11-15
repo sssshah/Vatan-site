@@ -187,10 +187,18 @@ Both predate the MailerLite work and were previously undocumented here:
 - **East Windsor**: 761 Route 33 West, NJ 08520 · (609) 336-7333 · `tel:+16093367333`
 - **Edison**: 1667 Oak Tree Road, Edison, NJ 08820 · (732) 556-6000 · `tel:+17325566000` · Tue–Sun 11AM–3PM and 4:30–9:30PM; Monday closed · Maps: `https://maps.app.goo.gl/vbMYtvgn4XZ2WWAJ8` · Instagram: `@vatan_edison` · Clover pickup: `https://vatan-restaurant-baker-edison.cloveronline.com` · nearby areas: Edison, Metuchen, Iselin, Woodbridge, Rahway, Piscataway (all NJ)
 
+## QR cards
+
+- **All-menu card**: `print-menu-qr-card.html` and `output/pdf/Vatan_Menu_QR_Cards_4x4.pdf` — four 4x4-inch cards per US Letter sheet; QR destination: `https://vatans.com/all-menu.html`; shared by all three locations.
+- **Jersey City Google Review card**: `print-review-card-jc.html` — four 3.5-inch review cards per sheet; QR destination: `https://g.page/r/CQWh20EUUNd7EAE/review`.
+- **East Windsor Google Review cards**: `print-review-card-ew.html` (four-up sheet) and `print-review-card-ew-single.html` (single tent-card layout); QR destination: `https://g.page/r/CZT470xmWRQsEBM/review`.
+- **Edison Google Review card**: `print-review-card-edi.html` and `output/pdf/Vatan_Edison_Google_Review_QR_Cards_4x4.pdf` — four 4x4-inch cards per US Letter sheet, styled to match the all-menu card; QR destination: `https://g.page/r/CXUC21m7FQ3DEAE/review`.
+
 ## Roadmap / Future TODOs
 
 _Add future version to-dos here. Format: `[ ] Description — v1.x`_
 
+- [ ] **Consider connecting the Clover/GetSeat online reservation link** — saved URL: `https://getseat.net?channel=merchant_web#/public/online/reservation/856E6G57`; do not replace the current reservation flow until the intended location and rollout are confirmed
 - [ ] **Verify Netlify email notification for `takeout-order` form actually exists and works** — was supposed to be set up immediately after order.html's first deploy but was never confirmed; check Netlify dashboard → Forms → Form notifications
 - [ ] Decide whether to add MailerLite signup to `order.html` and/or create a MailerLite custom field for source tagging (reservation/contact/order) — currently only email is captured, no segmentation
 - [ ] Add item images to `menu-data.js` as `images/food/` paths are confirmed — ongoing

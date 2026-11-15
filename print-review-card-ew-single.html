@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vatan EW — Single Google Review QR Card (Print)</title>
+<!-- QRCode.js — generates QR code client-side, no server needed -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  /* Screen preview */
+  body {
+    font-family: Georgia, serif;
+    background: #e8e8e8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  .instructions {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    max-width: 500px;
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    color: #333;
+    line-height: 1.6;
+  }
+  .instructions strong { color: #000; }
+
+  /* Full page with fold guide lines splitting it into quadrants */
+  .page {
+    background: white;
+    width: 8.5in;
+    height: 11in;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    display: grid;
+    grid-template-columns: 4.25in 4.25in;
+    grid-template-rows: 5.5in 5.5in;
+    position: relative;
+  }
+  .fold-line-v {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    border-left: 1px dashed #bbb;
+  }
+  .fold-line-h {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px dashed #bbb;
+  }
+  .quadrant {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Individual card */
+  .card {
+    width: 4.9in;
+    min-height: 2.8in;
+    padding: 0.42in 0.42in 0.35in;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.17in;
+    border: 1px dashed #ccc; /* cut guide — won't print as solid line */
+    text-align: center;
+    position: relative;
+  }
+
+  .brand-logo {
+    height: 0.7in;
+    width: auto;
+  }
+
+  .ask {
+    font-family: Georgia, serif;
+    font-size: 15.5pt;
+    font-weight: bold;
+    color: #1C1008;
+    line-height: 1.25;
+    margin-top: 0.08in;
+  }
+
+  .scan-line {
+    font-family: Georgia, serif;
+    font-size: 12.5pt;
+    font-weight: bold;
+    color: #1C1008;
+    line-height: 1.25;
+    margin-top: -0.03in;
+  }
+
+  .sub {
+    font-family: Arial, sans-serif;
+    font-size: 7pt;
+    color: #555;
+    line-height: 1.4;
+    max-width: 2.6in;
+  }
+
+  /* QR code container */
+  #qr-placeholder {
+    width: 1.55in;
+    height: 1.55in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #qr-placeholder canvas {
+    width: 1.55in !important;
+    height: 1.55in !important;
+  }
+
+  .google-label {
+    font-family: Arial, sans-serif;
+    font-size: 8.5pt;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: -0.05in;
+  }
+  .g-dot { font-size: 11pt; font-weight: bold; color: #4285F4; }
+
+  .location-tag {
+    font-family: Arial, sans-serif;
+    font-size: 8.5pt;
+    color: #888;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.04in;
+  }
+
+  /* Print styles */
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+      margin: 0;
+    }
+    .instructions { display: none; }
+    .page {
+      width: 8.5in;
+      height: 11in;
+      border: none;
+      margin: 0 auto;
+    }
+    .fold-line-v, .fold-line-h {
+      border-color: #ddd;
+    }
+    .card {
+      border: 0.5pt dashed #bbb;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="instructions">
+  <strong>How to use this file:</strong><br>
+  1. Open in Chrome or Safari<br>
+  2. Wait a second for the QR code to generate (it appears automatically)<br>
+  3. File → Print → set paper to Letter, margins to None or Minimum<br>
+  4. The card sits in the top-left quadrant of the page — the two faint dashed lines mark the fold creases<br>
+  5. Fold vertically along the middle line (bring the right half over onto the left half), then fold horizontally along the middle line (bring the bottom half up and over onto the top half). The card ends up as the top face, right-side up.<br>
+  6. Print on cardstock for a stiffer standing tent card. Test the fold once — if it lands upside down or on the wrong face for your fold direction, let me know and I'll move the card to a different quadrant.<br>
+  <br>
+  <strong>QR code links to:</strong> East Windsor Google Reviews<br>
+  <strong>For the 4-up sheet:</strong> open <code>print-review-card-ew.html</code>
+</div>
+
+<div class="page" id="sheet">
+  <div class="fold-line-v"></div>
+  <div class="fold-line-h"></div>
+  <div class="quadrant" id="quadrant-tl"></div>
+  <div class="quadrant"></div>
+  <div class="quadrant"></div>
+  <div class="quadrant"></div>
+</div>
+
+<script>
+  const REVIEW_URL = 'https://g.page/r/CZT470xmWRQsEBM/review';
+
+  const quadrant = document.getElementById('quadrant-tl');
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <img src="images/logo.png" alt="Vatan" class="brand-logo">
+    <div class="ask">Enjoyed your visit?</div>
+    <div class="scan-line">Scan this for a quick Google Review!</div>
+    <div id="qr-placeholder"></div>
+    <div class="google-label">
+      <span class="g-dot">G</span> Leave a Google Review
+    </div>
+    <div class="location-tag">East Windsor · 761 Route 33 West</div>
+  `;
+  quadrant.appendChild(card);
+
+  new QRCode(document.getElementById('qr-placeholder'), {
+    text: REVIEW_URL,
+    width: 150,
+    height: 150,
+    colorDark: '#1C1008',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+</script>
+
+</body>
+</html>
