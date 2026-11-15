@@ -1,0 +1,7 @@
+{
+  "name": "vatan-site",
+  "private": true,
+  "dependencies": {
+    "@netlify/blobs": "^11.1.9"
+  }
+}

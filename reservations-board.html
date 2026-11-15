@@ -85,6 +85,19 @@ header{
 .filter-btn:hover{border-color:var(--gold);color:var(--gold-light);}
 .filter-btn.active{border-color:var(--gold);background:var(--gold);color:var(--dark);box-shadow:0 0 14px rgba(212,168,83,0.2);}
 .sort-note{font-size:0.64rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(253,246,233,0.42);white-space:nowrap;}
+.date-group{display:flex;align-items:center;gap:0.45rem;}
+.date-label{font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(253,246,233,0.5);}
+#boardDate{background:rgba(0,0,0,0.25);border:1px solid rgba(212,168,83,0.3);border-radius:999px;color:var(--ivory);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:600;padding:0.38rem 0.75rem;color-scheme:dark;}
+#boardDate:focus{outline:none;border-color:var(--gold);}
+.coverage-note{display:none;font-size:0.72rem;letter-spacing:0.04em;color:rgba(253,246,233,0.55);padding:0.5rem 0.2rem 0;}
+.coverage-note.show{display:block;}
+.dismissed-bar{display:none;width:100%;margin-top:0.8rem;padding:0.7rem 1.2rem;border:1px dashed rgba(212,168,83,0.4);border-radius:10px;background:transparent;color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;}
+.dismissed-bar.show{display:block;}
+.board-row.done{opacity:0.6;}
+.board-row.done .row-name{text-decoration:line-through;}
+.row-check{width:1.5rem;height:1.5rem;accent-color:var(--gold);cursor:pointer;justify-self:center;}
+.row-dismiss{width:1.9rem;height:1.9rem;border-radius:999px;border:1px solid rgba(212,168,83,0.35);background:transparent;color:rgba(253,246,233,0.6);font-size:0.95rem;line-height:1;cursor:pointer;justify-self:center;}
+.row-dismiss:hover{border-color:var(--gold);color:var(--gold-light);}
 
 main{flex:1;min-height:0;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex;flex-direction:column;}
 
@@ -98,7 +111,7 @@ main{flex:1;min-height:0;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex
 
 .board-cols{
   display:grid;
-  grid-template-columns:0.9fr 0.8fr 2fr 0.8fr;
+  grid-template-columns:2.4rem 0.9fr 0.8fr 2fr 0.8fr 2.4rem;
   padding:0.9rem 1.5rem;
   font-size:0.78rem;
   font-weight:700;
@@ -119,7 +132,7 @@ main{flex:1;min-height:0;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex
 
 .board-row{
   display:grid;
-  grid-template-columns:0.9fr 0.8fr 2fr 0.8fr;
+  grid-template-columns:2.4rem 0.9fr 0.8fr 2fr 0.8fr 2.4rem;
   align-items:center;
   padding:1.1rem 1.5rem;
   border-bottom:1px solid rgba(212,168,83,0.12);
@@ -207,7 +220,7 @@ footer{
   .sort-note{font-size:0.52rem;letter-spacing:0.05em;}
   main{padding:1rem 0.75rem 1.25rem;}
   .board-cols,.board-row{
-    grid-template-columns:54px 48px minmax(80px,1fr) 58px;
+    grid-template-columns:28px 54px 48px minmax(70px,1fr) 44px 28px;
     column-gap:0.65rem;
     padding-left:0.65rem;
     padding-right:0.65rem;
@@ -229,7 +242,7 @@ footer{
   <div class="brand">
     <img src="images/logo.png" alt="Vatan">
     <div class="brand-text">
-      <h1>Today's Reservations</h1>
+      <h1 id="boardTitle">Today's Reservations</h1>
       <p id="locLabel">Loading…</p>
     </div>
   </div>
@@ -247,25 +260,33 @@ footer{
     <a class="filter-btn" data-loc="ew" href="reservations-board.html?loc=ew">EW</a>
     <a class="filter-btn" data-loc="edi" href="reservations-board.html?loc=edi">EDI</a>
   </div>
+  <div class="date-group">
+    <label class="date-label" for="boardDate">Date</label>
+    <input type="date" id="boardDate">
+  </div>
   <span class="sort-note">↑ Earliest time first</span>
 </nav>
 
 <main>
   <div class="error-banner" id="errorBanner">Couldn't load reservations — retrying…</div>
+  <div class="coverage-note" id="coverageNote"></div>
 
   <div id="boardWrap">
     <div class="board-cols">
+      <span>Done</span>
       <span>Time</span>
       <span>Location</span>
       <span>Name</span>
       <span>Party</span>
+      <span></span>
     </div>
     <div class="board-body" id="boardBody"></div>
   </div>
 
+  <button class="dismissed-bar" id="dismissedBar" type="button"></button>
   <div class="empty-state" id="emptyState" style="display:none;">
     <span>🍽️</span>
-    <p>No reservations left for today</p>
+    <p>No reservations for this date</p>
   </div>
 </main>
 
@@ -295,8 +316,14 @@ document.querySelectorAll('.filter-btn').forEach((button) => {
   const isActive = button.dataset.loc === activeLoc;
   button.classList.toggle('active', isActive);
   if (isActive) button.setAttribute('aria-current', 'page');
-  button.addEventListener('click', () => {
+  button.addEventListener('click', (event) => {
     localStorage.setItem(boardLocationKey, button.dataset.loc);
+    if (boardDateInput.value && boardDateInput.value !== nyToday()) {
+      event.preventDefault();
+      const url = new URL(button.href, location.origin);
+      url.searchParams.set('date', boardDateInput.value);
+      location.href = `${url.pathname}?${url.searchParams.toString()}`;
+    }
   });
 });
 
@@ -346,23 +373,41 @@ function timeToMinutes(t) {
 async function loadBoard() {
   const errorBanner = document.getElementById('errorBanner');
   try {
-    const res = await fetch(`/.netlify/functions/reservations-board?loc=${encodeURIComponent(loc)}`, { cache: 'no-store' });
+    const viewing = viewedDateKey();
+    const res = await fetch(`/.netlify/functions/reservations-board?loc=${encodeURIComponent(loc)}&date=${encodeURIComponent(viewing)}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('bad response');
     const data = await res.json();
     errorBanner.classList.remove('show');
-    renderBoard(data.reservations || []);
+    renderBoard(data.reservations || [], data.date || viewing);
   } catch (err) {
     errorBanner.classList.add('show');
   }
 }
 
-function renderBoard(rows) {
+function renderBoard(rows, date) {
   const body = document.getElementById('boardBody');
   const boardWrap = document.getElementById('boardWrap');
   const emptyState = document.getElementById('emptyState');
+  const dismissedBar = document.getElementById('dismissedBar');
+  const coverageNote = document.getElementById('coverageNote');
+  const title = document.getElementById('boardTitle');
   const nowMin = currentMinutes();
+  const isToday = date === nyToday();
 
-  if (!rows.length) {
+  title.textContent = isToday ? "Today's Reservations" : `Reservations \u00b7 ${prettyDate(date)}`;
+  coverageNote.textContent = 'Showing reservations found in recent submissions.';
+  coverageNote.classList.toggle('show', !isToday);
+
+  const visible = rows.filter((r) => !r.dismissed);
+  const hiddenCount = rows.length - visible.length;
+  if (hiddenCount > 0) {
+    dismissedBar.textContent = `${hiddenCount} dismissed \u2014 tap to restore`;
+    dismissedBar.classList.add('show');
+  } else {
+    dismissedBar.classList.remove('show');
+  }
+
+  if (!visible.length) {
     boardWrap.style.display = 'none';
     emptyState.style.display = 'flex';
     return;
@@ -371,15 +416,22 @@ function renderBoard(rows) {
   boardWrap.style.display = 'flex';
   emptyState.style.display = 'none';
 
-  const sortedRows = [...rows].sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time));
+  const sortedRows = [...visible].sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time));
   body.innerHTML = sortedRows.map((r) => `
-    <div class="board-row ${timeToMinutes(r.time) < nowMin - 90 ? 'past' : ''}">
+    <div class="board-row ${isToday && timeToMinutes(r.time) < nowMin - 90 ? 'past' : ''} ${r.done ? 'done' : ''}" data-id="${escapeHtml(r.id)}">
+      <input type="checkbox" class="row-check" aria-label="Mark done" ${r.done ? 'checked' : ''}>
       <span class="row-time">${escapeHtml(r.time)}</span>
       <span class="row-location">${escapeHtml(r.location)}</span>
       <span class="row-name">${escapeHtml(r.name)}</span>
       <span class="row-party">${escapeHtml(r.party)}</span>
+      <button type="button" class="row-dismiss" aria-label="Dismiss">\u00d7</button>
     </div>
   `).join('');
+
+  if (!isToday) {
+    body.scrollTop = 0;
+    return;
+  }
 
   const firstUpcomingIndex = sortedRows.findIndex((row) => timeToMinutes(row.time) >= nowMin);
   const scrollTargetIndex = firstUpcomingIndex === -1
@@ -400,6 +452,109 @@ function escapeHtml(str) {
   div.textContent = str || '';
   return div.innerHTML;
 }
+
+const boardDateInput = document.getElementById('boardDate');
+
+function nyToday() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+}
+
+function prettyDate(ymd) {
+  const parts = (ymd || '').split('-').map(Number);
+  return new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function viewedDateKey() {
+  return boardDateInput.value || nyToday();
+}
+
+(function initBoardDate() {
+  const q = new URLSearchParams(location.search).get('date');
+  boardDateInput.value = (q && /^\d{4}-\d{2}-\d{2}$/.test(q)) ? q : nyToday();
+})();
+
+function syncDateParam() {
+  const url = new URL(location.href);
+  const viewing = viewedDateKey();
+  if (viewing === nyToday()) {
+    url.searchParams.delete('date');
+  } else {
+    url.searchParams.set('date', viewing);
+  }
+  history.replaceState(null, '', `${url.pathname}?${url.searchParams.toString()}`);
+}
+
+boardDateInput.addEventListener('change', () => {
+  if (!boardDateInput.value) boardDateInput.value = nyToday();
+  syncDateParam();
+  loadBoard();
+});
+
+async function postMark(id, patch) {
+  const res = await fetch('/.netlify/functions/reservations-board', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date: viewedDateKey(), submissionId: id, ...patch }),
+  });
+  if (!res.ok) throw new Error('save failed');
+}
+
+function flashError() {
+  const errorBanner = document.getElementById('errorBanner');
+  errorBanner.textContent = "Couldn't save \u2014 retrying on next refresh.";
+  errorBanner.classList.add('show');
+  setTimeout(() => errorBanner.classList.remove('show'), 4000);
+}
+
+document.getElementById('boardBody').addEventListener('change', async (event) => {
+  const box = event.target.closest('.row-check');
+  if (!box) return;
+  const row = box.closest('.board-row');
+  const id = row && row.dataset.id;
+  if (!id) return;
+  row.classList.toggle('done', box.checked);
+  try {
+    await postMark(id, { done: box.checked });
+  } catch (err) {
+    box.checked = !box.checked;
+    row.classList.toggle('done', box.checked);
+    flashError();
+  }
+});
+
+document.getElementById('boardBody').addEventListener('click', async (event) => {
+  const btn = event.target.closest('.row-dismiss');
+  if (!btn) return;
+  const row = btn.closest('.board-row');
+  const id = row && row.dataset.id;
+  if (!id) return;
+  row.style.display = 'none';
+  try {
+    await postMark(id, { dismissed: true });
+    loadBoard();
+  } catch (err) {
+    row.style.display = '';
+    flashError();
+  }
+});
+
+document.getElementById('dismissedBar').addEventListener('click', async () => {
+  const bar = document.getElementById('dismissedBar');
+  bar.disabled = true;
+  try {
+    const res = await fetch(`/.netlify/functions/reservations-board?loc=${encodeURIComponent(loc)}&date=${encodeURIComponent(viewedDateKey())}`, { cache: 'no-store' });
+    const data = await res.json();
+    const hidden = (data.reservations || []).filter((r) => r.dismissed);
+    for (const r of hidden) {
+      await postMark(r.id, { dismissed: false });
+    }
+    loadBoard();
+  } catch (err) {
+    flashError();
+  } finally {
+    bar.disabled = false;
+  }
+});
 
 loadBoard();
 setInterval(loadBoard, 300000); // 5 minutes
