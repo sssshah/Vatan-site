@@ -61,13 +61,13 @@ function timeToMinutes(t) {
   return h * 60 + parseInt(m[2], 10);
 }
 
-function signoffStore() {
-  return getStore(SIGNOFF_STORE);
+function signoffStore(token) {
+  return getStore({ name: SIGNOFF_STORE, siteID: SITE_ID, token });
 }
 
-async function loadSignoffs(date) {
+async function loadSignoffs(date, token) {
   try {
-    return (await signoffStore().get(`${SIGNOFF_PREFIX}${date}`, { type: 'json' })) || {};
+    return (await signoffStore(token).get(`${SIGNOFF_PREFIX}${date}`, { type: 'json' })) || {};
   } catch (err) {
     console.error(`[ReservationsBoard] signoff read failed: ${err.message}`);
     return {};
@@ -95,7 +95,7 @@ exports.handler = async (event) => {
     }
     try {
       const key = `${SIGNOFF_PREFIX}${date}`;
-      const state = (await signoffStore().get(key, { type: 'json' })) || {};
+      const state = (await signoffStore(token).get(key, { type: 'json' })) || {};
       const prev = state[submissionId] || {};
       const entry = {
         done: typeof body.done === 'boolean' ? body.done : prev.done === true,
@@ -103,10 +103,10 @@ exports.handler = async (event) => {
         at: new Date().toISOString(),
       };
       state[submissionId] = entry;
-      await signoffStore().setJSON(key, state);
+      await signoffStore(token).setJSON(key, state);
     } catch (err) {
       console.error(`[ReservationsBoard] signoff write failed: ${err.message}`);
-      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save state', detail: String((err && err.message) || err).slice(0, 200) }) };
+      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save state' }) };
     }
     return { statusCode: 200, body: JSON.stringify({ ok: true, entry }) };
   }
@@ -147,7 +147,7 @@ exports.handler = async (event) => {
       if (batch.length < 100) break;
     }
 
-    const signoffs = await loadSignoffs(date);
+    const signoffs = await loadSignoffs(date, token);
 
     const rows = submissions
       .filter((s) => s.data && s.data.date === date)
