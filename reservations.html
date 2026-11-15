@@ -932,15 +932,6 @@ function getReservationBlock(config, locationCode, date) {
   return block && block.active === true ? block : null;
 }
 
-function getReservationPause(config, locationCode) {
-  if (!config || config.enabled !== true) return null;
-  const location = config.locations && config.locations[locationCode];
-  const pause = location && location.pause;
-  if (!pause || pause.active !== true) return null;
-  const todayValue = `${yyyy}-${mm2}-${dd}`;
-  return !pause.through || todayValue <= pause.through ? pause : null;
-}
-
 function setReservationFieldsDisabled(disabled) {
   document.querySelectorAll('#resForm input:not([type="hidden"]):not([name="bot-field"]), #resForm select, #resForm textarea')
     .forEach(field => { field.disabled = disabled; });
@@ -993,19 +984,6 @@ function updateReservationAvailability() {
   }
 
   setReservationFieldsDisabled(false);
-  const locationPause = getReservationPause(reservationAvailability, currentLocationCode);
-  if (locationPause) {
-    const phone = reservationPhones[currentLocationCode];
-    const message = locationPause.message || 'Online reservations are temporarily unavailable.';
-    setReservationFieldsDisabled(true);
-    timeSelect.value = '';
-    submitButton.disabled = true;
-    submitButton.textContent = 'Temporarily unavailable';
-    notice.innerHTML = `${message} Please call the restaurant at <a href="${phone.href}">${phone.display}</a> for assistance.`;
-    notice.classList.add('show');
-    return false;
-  }
-
   const block = getReservationBlock(reservationAvailability, currentLocationCode, dateInput.value);
   const fullDayBlock = isFullDayReservationBlock(block);
   const selectedTimeWasBlocked = Boolean(timeSelect.value && isReservationTimeBlocked(block, timeSelect.value));
@@ -1016,12 +994,14 @@ function updateReservationAvailability() {
 
   if (fullDayBlock) {
     const phone = reservationPhones[currentLocationCode];
-    const reason = block.reason ? ` ${block.reason}.` : '';
+    const message = block.message || 'Online reservations are unavailable for this location on the selected date.';
+    setReservationFieldsDisabled(true);
+    dateInput.disabled = false;
     timeSelect.value = '';
     timeSelect.disabled = true;
     submitButton.disabled = true;
     submitButton.textContent = 'Date unavailable';
-    notice.innerHTML = `Online reservations are unavailable for this location on the selected date.${reason} Please choose another date or call <a href="${phone.href}">${phone.display}</a>.`;
+    notice.innerHTML = `${message} Please call the restaurant at <a href="${phone.href}">${phone.display}</a> for assistance, or choose another date.`;
     notice.classList.add('show');
     return false;
   }
