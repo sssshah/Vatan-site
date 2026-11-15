@@ -1,9 +1,14 @@
 {
   "enabled": true,
-  "updated": "2026-11-11",
+  "updated": "2026-11-14",
   "locations": {
     "EDI": {
       "enabled": true,
+      "pause": {
+        "active": true,
+        "through": "2026-11-22",
+        "message": "Online reservations for Edison are temporarily unavailable."
+      },
       "blockedDates": {
         "2026-11-13": {
           "active": true,

@@ -149,6 +149,7 @@ Notification arrives at info@vatans.com (M365 via GoDaddy MX records)
 ### Reservation availability controls
 
 - `reservation-availability.json` is the manual source of truth for dates that should not accept online reservations. It has a master `enabled` switch, an `enabled` switch for each location (`EDI`, `EW`, `JC`), and an `active` switch on each blocked date.
+- A location can also have a temporary `pause` with `active`, an inclusive `through` date (`YYYY-MM-DD`), and a customer-facing `message`. While active and not expired, all reservation fields for only that location are disabled and its phone number is shown; the form automatically reopens the following day.
 - Dates use `YYYY-MM-DD`. For a full-day block use `"2026-11-14": { "active": true, "allDay": true, "reason": "Fully booked" }`. For part of a day, set `allDay` to `false` and add one or more inclusive `blockedRanges`, such as `{ "start": "4:30 PM", "end": "9:30 PM" }`. Set `active` to `false` to retain the entry without blocking it, or remove the entry to reopen it.
 - `reservations.html` fetches the file with `cache: "no-store"`, checks it whenever location or date changes, and checks again immediately before submission. A full-day block disables time selection and submission; a range block disables only matching time options. Other locations remain unaffected.
 - If the availability file cannot be loaded, the form fails safely: online submission stays disabled and the selected location's telephone number is shown.
