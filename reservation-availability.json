@@ -1,37 +1,37 @@
 {
   "enabled": true,
-  "updated": "2026-11-15",
+  "updated": "2026-11-16",
   "locations": {
     "EDI": {
       "enabled": true,
       "blockedDates": {
         "2026-11-17": {
-          "active": true,
+          "active": false,
           "allDay": true,
           "message": "Online reservations for Edison are temporarily unavailable for this date."
         },
         "2026-11-18": {
-          "active": true,
+          "active": false,
           "allDay": true,
           "message": "Online reservations for Edison are temporarily unavailable for this date."
         },
         "2026-11-19": {
-          "active": true,
+          "active": false,
           "allDay": true,
           "message": "Online reservations for Edison are temporarily unavailable for this date."
         },
         "2026-11-20": {
-          "active": true,
+          "active": false,
           "allDay": true,
           "message": "Online reservations for Edison are temporarily unavailable for this date."
         },
         "2026-11-21": {
-          "active": true,
+          "active": false,
           "allDay": true,
           "message": "Online reservations for Edison are temporarily unavailable for this date."
         },
         "2026-11-22": {
-          "active": true,
+          "active": false,
           "allDay": true,
           "message": "Online reservations for Edison are temporarily unavailable for this date."
         },
