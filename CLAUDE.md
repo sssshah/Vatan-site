@@ -24,6 +24,7 @@ This is a **pure static site** — no frameworks, no bundler, no package.json. A
 - `order.html` — direct pickup order form (v1.3+); builds menu from `menu-data.js`
 - `faq.html` — sitewide FAQ page
 - `privacy-policy.html` — privacy policy
+- `terms-of-service.html` — public Terms of Service URL used by external business/profile services; intentionally not linked from the sitewide navigation
 
 **Local-SEO location/topic landing pages** (added post-v1.4, previously undocumented):
 - `thali.html`, `indo-chinese.html` — dish-focused landing pages
