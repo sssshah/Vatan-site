@@ -201,21 +201,21 @@ footer{
 
 .quick-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;background:rgba(10,5,2,0.78);backdrop-filter:blur(4px);}
 .quick-modal.open{display:flex;}
-.quick-card{width:min(620px,100%);max-height:calc(100vh - 2rem);overflow-y:auto;border:1px solid rgba(212,168,83,0.38);border-radius:18px;background:var(--ivory);color:var(--dark);box-shadow:0 24px 70px rgba(0,0,0,0.45);}
-.quick-card-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid rgba(92,56,30,0.14);}
-.quick-card-head h2{font-family:'Cormorant Garamond',serif;font-size:1.65rem;}
-.quick-close{width:2.2rem;height:2.2rem;border:0;border-radius:999px;background:var(--ivory-dark);color:var(--dark);font-size:1.35rem;cursor:pointer;}
-.quick-form{padding:1.1rem 1.25rem 1.25rem;}
-.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;}
+.quick-card{width:min(520px,100%);max-height:calc(100vh - 1.5rem);overflow-y:auto;border:1px solid rgba(212,168,83,0.38);border-radius:16px;background:var(--ivory);color:var(--dark);box-shadow:0 24px 70px rgba(0,0,0,0.45);}
+.quick-card-head{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-bottom:1px solid rgba(92,56,30,0.14);}
+.quick-card-head h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;}
+.quick-close{width:2rem;height:2rem;border:0;border-radius:999px;background:var(--ivory-dark);color:var(--dark);font-size:1.2rem;cursor:pointer;}
+.quick-form{padding:0.85rem 1rem 1rem;}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem 0.75rem;}
 .quick-field{display:flex;flex-direction:column;gap:0.35rem;}
 .quick-field.full{grid-column:1/-1;}
 .quick-field label{font-size:0.68rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:#6f4b31;}
-.quick-field input,.quick-field select{width:100%;min-height:3rem;border:1px solid #d9c5a8;border-radius:10px;background:#fffdf8;color:var(--dark);padding:0.65rem 0.75rem;font:600 1rem 'DM Sans',sans-serif;}
+.quick-field input,.quick-field select{width:100%;min-height:2.6rem;border:1px solid #d9c5a8;border-radius:9px;background:#fffdf8;color:var(--dark);padding:0.5rem 0.65rem;font:600 0.9rem 'DM Sans',sans-serif;}
 .quick-field input:focus,.quick-field select:focus{outline:2px solid rgba(200,102,10,0.25);border-color:var(--saffron);}
 .quick-party-note{margin-top:0.35rem;font-size:0.72rem;line-height:1.35;color:#7a1c2e;}
 .quick-hint{min-height:1.2rem;margin-top:0.65rem;font-size:0.78rem;color:#7a1c2e;}
-.quick-actions{display:flex;justify-content:flex-end;gap:0.65rem;margin-top:1rem;}
-.quick-cancel,.quick-submit{min-height:2.8rem;border-radius:999px;padding:0.6rem 1.15rem;font:700 0.85rem 'DM Sans',sans-serif;cursor:pointer;}
+.quick-actions{display:flex;justify-content:flex-end;gap:0.55rem;margin-top:0.75rem;}
+.quick-cancel,.quick-submit{min-height:2.5rem;border-radius:999px;padding:0.5rem 1rem;font:700 0.8rem 'DM Sans',sans-serif;cursor:pointer;}
 .quick-cancel{border:1px solid #cdb89a;background:transparent;color:#65472f;}
 .quick-submit{border:1px solid var(--saffron);background:var(--saffron);color:white;min-width:9rem;}
 .quick-submit:disabled{opacity:0.55;cursor:wait;}
@@ -261,6 +261,8 @@ footer{
   .row-name{min-width:0;font-size:1.12rem;line-height:1.05;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .row-party{font-size:0.78rem;line-height:1.2;white-space:nowrap;}
   footer{font-size:0.58rem;padding:0.65rem;}
+}
+@media (max-width:520px){
   .quick-grid{grid-template-columns:1fr;}
   .quick-field.full{grid-column:auto;}
 }
@@ -353,9 +355,8 @@ footer{
           <select id="quickGuests" name="party_size" required>
             <option>1 guest</option><option selected>2 guests</option><option>3 guests</option><option>4 guests</option>
             <option>5 guests</option><option>6 guests</option><option>7 guests</option><option>8 guests</option>
-            <option>9 guests</option><option>10 guests</option>
           </select>
-          <p class="quick-party-note">For parties over 10, please call the restaurant directly.</p>
+          <p class="quick-party-note">For parties over 8, please call the restaurant directly.</p>
         </div>
         <div class="quick-field">
           <label for="quickDate">Date *</label>
