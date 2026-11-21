@@ -14,7 +14,7 @@
 const { getStore } = require('@netlify/blobs');
 
 const SITE_ID = '6c80951b-e8d1-4101-a9b3-02544170e304';
-const FORM_NAME = 'reservation';
+const FORM_NAMES = ['reservation', 'staff-reservation'];
 const SUBMISSION_PAGES = 10; // scans the ~1,000 most recently created submissions
 const NY_TZ = 'America/New_York';
 const SIGNOFF_STORE = 'reservation-signoffs';
@@ -133,19 +133,25 @@ exports.handler = async (event) => {
     const formsRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/forms`, { headers: authHeaders });
     if (!formsRes.ok) throw new Error(`list forms failed (${formsRes.status})`);
     const forms = await formsRes.json();
-    const form = forms.find((f) => f.name === FORM_NAME);
-    if (!form) throw new Error(`form "${FORM_NAME}" not found`);
+    const reservationForms = FORM_NAMES
+      .map((name) => forms.find((form) => form.name === name))
+      .filter(Boolean);
+    if (!reservationForms.some((form) => form.name === 'reservation')) {
+      throw new Error('form "reservation" not found');
+    }
 
     let submissions = [];
-    for (let page = 1; page <= SUBMISSION_PAGES; page++) {
-      const res = await fetch(
-        `https://api.netlify.com/api/v1/forms/${form.id}/submissions?per_page=100&page=${page}`,
-        { headers: authHeaders }
-      );
-      if (!res.ok) throw new Error(`list submissions failed (${res.status})`);
-      const batch = await res.json();
-      submissions = submissions.concat(batch);
-      if (batch.length < 100) break;
+    for (const form of reservationForms) {
+      for (let page = 1; page <= SUBMISSION_PAGES; page++) {
+        const res = await fetch(
+          `https://api.netlify.com/api/v1/forms/${form.id}/submissions?per_page=100&page=${page}`,
+          { headers: authHeaders }
+        );
+        if (!res.ok) throw new Error(`list ${form.name} submissions failed (${res.status})`);
+        const batch = await res.json();
+        submissions = submissions.concat(batch);
+        if (batch.length < 100) break;
+      }
     }
 
     const signoffs = await loadSignoffs(date, token);
