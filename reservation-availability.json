@@ -1,6 +1,6 @@
 {
   "enabled": true,
-  "updated": "2026-11-16",
+  "updated": "2026-11-25",
   "locations": {
     "EDI": {
       "enabled": true,
@@ -45,6 +45,11 @@
               "end": "9:30 PM"
             }
           ]
+        },
+        "2026-11-25": {
+          "active": true,
+          "allDay": true,
+          "message": "Online reservations for Edison are temporarily unavailable for this date."
         }
       }
     },
