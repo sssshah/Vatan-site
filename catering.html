@@ -302,9 +302,10 @@ nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,0.3);}
 .btn-ghost:hover{border-color:white;background:rgba(255,255,255,0.1);}
 
 /* CONTACT STRIP */
+#catering-locations{scroll-margin-top:70px;}
 .contact-strip{
   background:var(--dark);padding:3rem 2rem;
-  display:grid;grid-template-columns:1fr 1fr auto;gap:2rem;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:2rem;
   max-width:1100px;margin:0 auto;align-items:center;
 }
 .contact-loc h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--ivory);margin-bottom:0.5rem;}
@@ -346,7 +347,7 @@ footer{background:var(--dark);padding:2rem;border-top:1px solid rgba(212,168,83,
 
 @media(max-width:900px){
   .stats-strip{grid-template-columns:repeat(2,1fr);}
-  .contact-strip{grid-template-columns:1fr 1fr;}
+  .contact-strip{grid-template-columns:repeat(3,minmax(0,1fr));}
   .contact-strip .btn-primary{display:none;}
 }
 @media(max-width:768px){
@@ -477,7 +478,8 @@ footer{background:var(--dark);padding:2rem;border-top:1px solid rgba(212,168,83,
     <p class="hero-sub">Authentic Indian vegetarian cuisine, delivered fresh to your event — office lunches, weddings, parties & more</p>
     <div class="hero-btns">
       <a href="mailto:info@vatans.com?subject=Catering Inquiry — Vatan" class="btn-primary">✉️ &nbsp; Request a Quote</a>
-      <a href="tel:+16093367333" class="btn-outline">📞 &nbsp; Call Us Now</a>
+      <a href="tel:+12017726994" class="btn-outline">📞 &nbsp; Call Catering</a>
+      <a href="#catering-locations" class="btn-outline">Catering Locations</a>
     </div>
   </div>
 </div>
@@ -517,7 +519,7 @@ footer{background:var(--dark);padding:2rem;border-top:1px solid rgba(212,168,83,
       <div class="feature-card reveal reveal-delay-1">
         <span class="feature-icon">💰</span>
         <div class="feature-title">Affordable Pricing</div>
-        <div class="feature-desc">Catering packages starting from $19.99 per person. We work within your budget to deliver a feast that feels far more luxurious than the price tag suggests. <a href="catering-east-windsor.html" style="color:var(--saffron);font-weight:500;">Serving East Windsor, Princeton, Robbinsville &amp; more →</a></div>
+        <div class="feature-desc">Catering packages starting from $19.99 per person. We work within your budget to deliver a feast that feels far more luxurious than the price tag suggests.</div>
       </div>
       <div class="feature-card reveal reveal-delay-2">
         <span class="feature-icon">📋</span>
@@ -756,21 +758,25 @@ footer{background:var(--dark);padding:2rem;border-top:1px solid rgba(212,168,83,
     <p>Let us handle the food so you can focus on making memories. Reach out today for a personalized quote.</p>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;" class="reveal">
       <a href="mailto:info@vatans.com?subject=Catering Inquiry — Vatan" class="btn-white">✉️ &nbsp; Email Us</a>
-      <a href="tel:+16093367333" class="btn-ghost">📞 &nbsp; (609) 336-7333</a>
+      <a href="tel:+12017726994" class="btn-ghost">📞 &nbsp; (201) 772-6994</a>
     </div>
   </div>
 </section>
 
 <!-- CONTACT STRIP -->
-<div style="background:var(--dark);padding:3rem 2rem;">
+<div id="catering-locations" style="background:var(--dark);padding:3rem 2rem;">
   <div class="contact-strip">
     <div class="contact-loc">
-      <h4>Jersey City</h4>
+      <h4><a href="catering-jersey-city.html">Jersey City Catering</a></h4>
       <p>808 Newark Ave, Jersey City, NJ 07306<br><a href="tel:+12018395426">(201) 839-5426</a></p>
     </div>
     <div class="contact-loc">
-      <h4>East Windsor</h4>
+      <h4><a href="catering-east-windsor.html">East Windsor Catering</a></h4>
       <p>761 NJ-33 West, East Windsor, NJ 08520<br><a href="tel:+16093367333">(609) 336-7333</a></p>
+    </div>
+    <div class="contact-loc">
+      <h4><a href="catering-edison.html">Edison Catering</a></h4>
+      <p>1667 Oak Tree Road, Edison, NJ 08820<br><a href="tel:+17325566000">(732) 556-6000</a></p>
     </div>
     <a href="contact.html" class="btn-primary">Contact Us →</a>
   </div>
