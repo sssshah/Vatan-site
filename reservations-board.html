@@ -118,10 +118,11 @@ main{flex:1;min-height:0;overflow:hidden;padding:1.5rem 2.5rem 2rem;display:flex
 }
 
 /* The Done column holds only checkboxes (which carry their own aria-labels),
-   so its header text is visually hidden — at 2.4rem/28px wide it would
-   otherwise overflow into the Time header ("DONETIME"). Kept readable for
-   screen readers. Applies at every width, tablet and mobile included. */
-.board-cols .col-done{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+   so its header text is rendered transparent — at 2.4rem/28px wide it would
+   otherwise overflow into the Time header ("DONETIME"). The text stays in
+   normal flow (unlike a clipped/moved element) so the remaining headers
+   keep aligning with their columns. Screen readers still announce "Done". */
+.board-cols .col-done{color:transparent;user-select:none;}
 .board-cols{
   display:grid;
   grid-template-columns:2.4rem 0.9fr 0.8fr 2fr 0.8fr 2.4rem;
