@@ -97,6 +97,7 @@ header{
 .stop-btn:disabled{opacity:0.5;cursor:wait;}
 .stop-btn[hidden],.stop-state[hidden]{display:none;}
 .stop-state{font-size:0.72rem;font-weight:700;letter-spacing:0.04em;color:#F08080;white-space:nowrap;}
+.stop-state.open{color:var(--gold-light);}
 .coverage-note{display:none;font-size:0.72rem;letter-spacing:0.04em;color:rgba(253,246,233,0.55);padding:0.5rem 0.2rem 0;}
 .coverage-note.show{display:block;}
 .dismissed-bar{display:none;width:100%;margin-top:0.8rem;padding:0.7rem 1.2rem;border:1px dashed rgba(212,168,83,0.4);border-radius:10px;background:transparent;color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;}
@@ -234,6 +235,8 @@ footer{
 .quick-toast.show{opacity:1;transform:translate(-50%,0);}
 
 @media (max-width:900px){
+  .sort-note{display:none;}
+  .board-toolbar{overflow-x:auto;scrollbar-width:thin;}
   .row-time{font-size:1.2rem;}
   .row-name{font-size:1.3rem;}
   .row-party{font-size:1rem;}
@@ -279,6 +282,21 @@ footer{
 @media (max-width:520px){
   .quick-grid{grid-template-columns:1fr;}
   .quick-field.full{grid-column:auto;}
+}
+/* Very narrow phones (≈320px): the standard 600px row grid still overflows,
+   pushing the dismiss control out of view. Tighten fixed columns, gaps, and
+   padding so the full row (including dismiss) fits without sideways scroll. */
+@media (max-width:380px){
+  .board-cols,.board-row{
+    grid-template-columns:26px 48px 44px minmax(60px,1fr) 40px 26px;
+    column-gap:0.4rem;
+    padding-left:0.5rem;
+    padding-right:0.5rem;
+  }
+  .row-time{font-size:0.9rem;}
+  .row-location{font-size:0.6rem;}
+  .row-party{font-size:0.72rem;overflow:hidden;text-overflow:ellipsis;}
+  .board-cols{font-size:0.5rem;letter-spacing:0.04em;}
 }
 </style>
 </head>
@@ -712,14 +730,33 @@ async function loadIntakeStopState() {
     stops = {};
   }
   const flag = stops[code];
+  // The owner can reopen over a stop flag with an explicit "active": false
+  // JSON entry (the public form honors that). The board must reflect reality:
+  // a flag plus an owner reopen means bookings are actually open.
+  let ownerReopened = false;
+  try {
+    const jr = await fetch('/reservation-availability.json', { cache: 'no-store' });
+    if (jr.ok) {
+      const cfg = await jr.json();
+      const lloc = cfg && cfg.enabled === true && cfg.locations && cfg.locations[code];
+      const ent = lloc && lloc.enabled === true && lloc.blockedDates && lloc.blockedDates[nyToday()];
+      ownerReopened = Boolean(ent && ent.active === false);
+    }
+  } catch (err) {}
   if (flag && flag.stopped === true) {
     intakeStopButton.hidden = true;
     intakeStopStateEl.hidden = false;
-    let when = '';
-    try {
-      when = new Date(flag.at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-    } catch (err) {}
-    intakeStopStateEl.textContent = `⛔ Bookings stopped${when ? ` at ${when}` : ''}.`;
+    if (ownerReopened) {
+      intakeStopStateEl.classList.add('open');
+      intakeStopStateEl.textContent = 'Bookings open — owner override.';
+    } else {
+      intakeStopStateEl.classList.remove('open');
+      let when = '';
+      try {
+        when = new Date(flag.at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      } catch (err) {}
+      intakeStopStateEl.textContent = `⛔ Bookings stopped${when ? ` at ${when}` : ''}.`;
+    }
   } else {
     intakeStopButton.hidden = false;
     intakeStopStateEl.hidden = true;

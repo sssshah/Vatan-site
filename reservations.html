@@ -1144,7 +1144,13 @@ function notifyMailerLite(email, source) {
 // Form submit
 document.getElementById('resForm').addEventListener('submit', async function(e) {
   e.preventDefault();
+  const btn = this.querySelector('.btn-reserve');
+  // Disable upfront: the availability re-check below awaits the network, and
+  // a second tap during that window would otherwise send a duplicate booking.
+  btn.disabled = true;
   await loadIntakeStops();
+  // updateReservationAvailability sets the button's disabled state itself
+  // (disabled when the date is blocked), so don't touch it on this path.
   if (!updateReservationAvailability()) return;
   const required = ['firstName','lastName','email','phone','resDate','resTime','partySize'];
   let valid = true;
@@ -1157,10 +1163,8 @@ document.getElementById('resForm').addEventListener('submit', async function(e) 
       el.style.borderColor = '';
     }
   });
-  if (!valid) return;
+  if (!valid) { btn.disabled = false; return; }
 
-  const btn = this.querySelector('.btn-reserve');
-  btn.disabled = true;
   btn.innerHTML = 'Sending…';
   fetch('/', {
     method: 'POST',

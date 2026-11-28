@@ -97,15 +97,24 @@ exports.handler = async (event) => {
     if (body.action !== undefined && body.action !== 'stop-intake') {
       return { statusCode: 400, body: JSON.stringify({ error: 'Unsupported action' }) };
     }
-    const code = LOCATION_CODES[String(body.location || '').trim().toLowerCase()];
+    // Location must be a plain string: array coercion (["EDI"] -> "EDI")
+    // would otherwise accept non-string input, and non-strings crash .trim().
+    if (typeof body.location !== 'string') {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Unknown location' }) };
+    }
+    const code = LOCATION_CODES[body.location.trim().toLowerCase()];
     if (!code) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Unknown location' }) };
     }
-    // An explicit date must be valid AND today; only an absent date defaults
-    // to today (an impossible date like Nov 31 must not silently stop today).
+    // An explicit date must be a valid YYYY-MM-DD string AND today; only an
+    // absent date defaults to today (an impossible date like Nov 31 must not
+    // silently stop today). Non-string dates (arrays, numbers) are rejected —
+    // validDateParam assumes a string and would throw on .split().
     let date;
     if (body.date === undefined || body.date === null || body.date === '') {
       date = todayInNY();
+    } else if (typeof body.date !== 'string') {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Invalid date' }) };
     } else {
       date = validDateParam(body.date);
       if (!date) {
