@@ -60,13 +60,7 @@
     },
     "EW": {
       "enabled": true,
-      "blockedDates": {
-        "2026-11-28": {
-          "active": false,
-          "allDay": true,
-          "message": "DRILL: owner reopen overrides board stop flag."
-        }
-      }
+      "blockedDates": {}
     },
     "JC": {
       "enabled": true,
