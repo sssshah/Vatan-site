@@ -21,6 +21,14 @@ const SITE_ID = '6c80951b-e8d1-4101-a9b3-02544170e304';
 const NY_TZ = 'America/New_York';
 const STOP_STORE = 'reservation-intake-stops';
 const STOP_PREFIX = 'intake-stop-';
+// One key per location per day (not one shared day object) so two locations
+// stopped at the same moment cannot overwrite each other (lost-update race
+// on read-modify-write). Day-keyed, so every day starts clean.
+const STOP_CODES = ['JC', 'EW', 'EDI'];
+
+function stopKey(date, code) {
+  return `${STOP_PREFIX}${date}-${code}`;
+}
 
 const LOCATION_CODES = {
   'jersey city': 'JC',
@@ -52,7 +60,15 @@ function stopStore(token) {
 
 async function loadStops(date, token) {
   try {
-    return (await stopStore(token).get(`${STOP_PREFIX}${date}`, { type: 'json' })) || {};
+    const store = stopStore(token);
+    const entries = await Promise.all(
+      STOP_CODES.map(async (code) => [code, await store.get(stopKey(date, code), { type: 'json' })])
+    );
+    const stops = {};
+    for (const [code, entry] of entries) {
+      if (entry && entry.stopped === true) stops[code] = entry;
+    }
+    return stops;
   } catch (err) {
     console.error(`[IntakeStop] stop read failed: ${err.message}`);
     return {};
@@ -67,11 +83,15 @@ exports.handler = async (event) => {
   }
 
   if (event.httpMethod === 'POST') {
-    let body = {};
+    let body;
     try {
       body = JSON.parse(event.body || '{}');
     } catch (err) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON' }) };
+    }
+    // JSON "null"/string/number bodies parse fine but are not usable requests.
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request' }) };
     }
     // One-way latch: any reopen/clear action is explicitly unsupported.
     if (body.action !== undefined && body.action !== 'stop-intake') {
@@ -81,19 +101,30 @@ exports.handler = async (event) => {
     if (!code) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Unknown location' }) };
     }
-    const date = validDateParam(body.date) || todayInNY();
+    // An explicit date must be valid AND today; only an absent date defaults
+    // to today (an impossible date like Nov 31 must not silently stop today).
+    let date;
+    if (body.date === undefined || body.date === null || body.date === '') {
+      date = todayInNY();
+    } else {
+      date = validDateParam(body.date);
+      if (!date) {
+        return { statusCode: 400, body: JSON.stringify({ error: 'Invalid date' }) };
+      }
+    }
     if (date !== todayInNY()) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Only today can be stopped' }) };
     }
     try {
-      const key = `${STOP_PREFIX}${date}`;
-      const state = (await stopStore(token).get(key, { type: 'json' })) || {};
-      state[code] = { stopped: true, at: new Date().toISOString() };
-      await stopStore(token).setJSON(key, state);
+      const entry = { stopped: true, at: new Date().toISOString() };
+      // Single blind write to this location's own key: no read-modify-write,
+      // so concurrent stops for different locations cannot clobber each other.
+      await stopStore(token).setJSON(stopKey(date, code), entry);
+      const stops = await loadStops(date, token);
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
-        body: JSON.stringify({ ok: true, date, stops: state }),
+        body: JSON.stringify({ ok: true, date, stops }),
       };
     } catch (err) {
       console.error(`[IntakeStop] stop write failed: ${err.message}`);
@@ -106,7 +137,15 @@ exports.handler = async (event) => {
   }
 
   const params = event.queryStringParameters || {};
-  const date = validDateParam(params.date) || todayInNY();
+  let date;
+  if (params.date === undefined || params.date === null || params.date === '') {
+    date = todayInNY();
+  } else {
+    date = validDateParam(params.date);
+    if (!date) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Invalid date' }) };
+    }
+  }
   const stops = await loadStops(date, token);
   return {
     statusCode: 200,

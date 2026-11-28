@@ -1040,8 +1040,11 @@ function updateReservationAvailability() {
   setReservationFieldsDisabled(false);
   const staticEntry = rawReservationEntry(reservationAvailability, currentLocationCode, dateInput.value);
   const ownerReopened = Boolean(staticEntry && staticEntry.active === false);
-  const block = getReservationBlock(reservationAvailability, currentLocationCode, dateInput.value)
-    || (!ownerReopened ? intakeStopBlock(currentLocationCode, dateInput.value) : null);
+  // A staff stop means no online bookings at all today, so the flag is
+  // checked first: a partial static block (e.g. dinner-only) must not leave
+  // the rest of the day bookable once staff stopped intake.
+  const block = (!ownerReopened ? intakeStopBlock(currentLocationCode, dateInput.value) : null)
+    || getReservationBlock(reservationAvailability, currentLocationCode, dateInput.value);
   const fullDayBlock = isFullDayReservationBlock(block);
   const selectedTimeWasBlocked = Boolean(timeSelect.value && isReservationTimeBlocked(block, timeSelect.value));
 
