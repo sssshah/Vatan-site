@@ -691,8 +691,8 @@ async function loadIntakeStopState() {
   const code = intakeTargetCode();
   if (!code) {
     intakeStopButton.hidden = true;
-    intakeStopStateEl.hidden = false;
-    intakeStopStateEl.textContent = 'Select a location to manage its online intake.';
+    intakeStopStateEl.hidden = true;
+    intakeStopStateEl.textContent = '';
     return;
   }
   let stops = {};
@@ -710,12 +710,12 @@ async function loadIntakeStopState() {
     try {
       when = new Date(flag.at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
     } catch (err) {}
-    intakeStopStateEl.textContent = `⛔ Online bookings STOPPED${when ? ` at ${when}` : ''} — owner reopens from the site repo.`;
+    intakeStopStateEl.textContent = `⛔ Bookings stopped${when ? ` at ${when}` : ''}.`;
   } else {
     intakeStopButton.hidden = false;
     intakeStopStateEl.hidden = true;
     intakeStopStateEl.textContent = '';
-    intakeStopButton.textContent = `⛔ Stop online bookings today (${code})`;
+    intakeStopButton.textContent = `⛔ Stop bookings`;
   }
 }
 
