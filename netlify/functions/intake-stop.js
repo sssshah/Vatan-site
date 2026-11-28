@@ -97,7 +97,7 @@ exports.handler = async (event) => {
       };
     } catch (err) {
       console.error(`[IntakeStop] stop write failed: ${err.message}`);
-      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save stop state' }) };
+      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save stop state', detail: String((err && err.message) || err) }) };
     }
   }
 
