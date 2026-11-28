@@ -92,6 +92,11 @@ header{
 .quick-add-btn{display:inline-flex;align-items:center;justify-content:center;gap:0.35rem;border:1px solid var(--gold);border-radius:999px;background:var(--gold);color:var(--dark);padding:0.42rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.04em;cursor:pointer;white-space:nowrap;}
 .quick-add-btn:hover{background:var(--gold-light);}
 .quick-add-btn .plus{font-size:1.05rem;line-height:0.8;}
+.stop-btn{display:inline-flex;align-items:center;gap:0.35rem;border:1px solid #E05252;border-radius:999px;background:transparent;color:#F08080;padding:0.42rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.04em;cursor:pointer;white-space:nowrap;}
+.stop-btn:hover{background:rgba(224,82,82,0.15);}
+.stop-btn:disabled{opacity:0.5;cursor:wait;}
+.stop-btn[hidden],.stop-state[hidden]{display:none;}
+.stop-state{font-size:0.72rem;font-weight:700;letter-spacing:0.04em;color:#F08080;white-space:nowrap;}
 .coverage-note{display:none;font-size:0.72rem;letter-spacing:0.04em;color:rgba(253,246,233,0.55);padding:0.5rem 0.2rem 0;}
 .coverage-note.show{display:block;}
 .dismissed-bar{display:none;width:100%;margin-top:0.8rem;padding:0.7rem 1.2rem;border:1px dashed rgba(212,168,83,0.4);border-radius:10px;background:transparent;color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;}
@@ -297,6 +302,8 @@ footer{
     <input type="date" id="boardDate">
   </div>
   <button class="quick-add-btn" id="quickAddButton" type="button"><span class="plus">+</span><span class="label">Add Reservation</span></button>
+  <button class="stop-btn" id="intakeStopButton" type="button" hidden>⛔ Stop online bookings today</button>
+  <span class="stop-state" id="intakeStopState" hidden></span>
   <span class="sort-note">↑ Earliest time first</span>
 </nav>
 
@@ -667,6 +674,74 @@ function escapeHtml(str) {
 
 const boardDateInput = document.getElementById('boardDate');
 
+// One-way intake stop: staff can STOP online bookings for the viewed
+// location for today. No reopen control exists here — reopening is done by
+// the owner via reservation-availability.json. Quick Add (staff/phone) is
+// intentionally not gated by this flag.
+const intakeStopButton = document.getElementById('intakeStopButton');
+const intakeStopStateEl = document.getElementById('intakeStopState');
+const INTAKE_LOC_CODES = { jc: 'JC', ew: 'EW', edi: 'EDI', ed: 'EDI' };
+const INTAKE_LOC_NAMES = { JC: 'Jersey City', EW: 'East Windsor', EDI: 'Edison' };
+
+function intakeTargetCode() {
+  return INTAKE_LOC_CODES[loc] || null;
+}
+
+async function loadIntakeStopState() {
+  const code = intakeTargetCode();
+  if (!code) {
+    intakeStopButton.hidden = true;
+    intakeStopStateEl.hidden = false;
+    intakeStopStateEl.textContent = 'Select a location to manage its online intake.';
+    return;
+  }
+  let stops = {};
+  try {
+    const res = await fetch(`/.netlify/functions/intake-stop?date=${nyToday()}`, { cache: 'no-store' });
+    if (res.ok) stops = ((await res.json()).stops) || {};
+  } catch (err) {
+    stops = {};
+  }
+  const flag = stops[code];
+  if (flag && flag.stopped === true) {
+    intakeStopButton.hidden = true;
+    intakeStopStateEl.hidden = false;
+    let when = '';
+    try {
+      when = new Date(flag.at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    } catch (err) {}
+    intakeStopStateEl.textContent = `⛔ Online bookings STOPPED${when ? ` at ${when}` : ''} — owner reopens from the site repo.`;
+  } else {
+    intakeStopButton.hidden = false;
+    intakeStopStateEl.hidden = true;
+    intakeStopStateEl.textContent = '';
+    intakeStopButton.textContent = `⛔ Stop online bookings today (${code})`;
+  }
+}
+
+intakeStopButton.addEventListener('click', async () => {
+  const code = intakeTargetCode();
+  if (!code || intakeStopButton.disabled) return;
+  const label = INTAKE_LOC_NAMES[code] || code;
+  const confirmed = confirm(
+    `Stop ONLINE reservations for ${label} TODAY?\n\nGuests will see "temporarily unavailable" and be routed to call. Phone/staff entries still work. This cannot be undone from here — only the site owner can reopen.`
+  );
+  if (!confirmed) return;
+  intakeStopButton.disabled = true;
+  try {
+    const res = await fetch('/.netlify/functions/intake-stop', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'stop-intake', location: code })
+    });
+    if (!res.ok) throw new Error(`stop failed (${res.status})`);
+  } catch (err) {
+    alert('Could not stop online bookings. Check the connection and try again.');
+  }
+  intakeStopButton.disabled = false;
+  loadIntakeStopState();
+});
+
 function nyToday() {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
 }
@@ -874,7 +949,11 @@ quickForm.addEventListener('submit', async (event) => {
 });
 
 loadBoard();
-setInterval(loadBoard, 300000); // 5 minutes
+loadIntakeStopState();
+setInterval(() => { loadBoard(); loadIntakeStopState(); }, 300000); // 5 minutes
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') loadIntakeStopState();
+});
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

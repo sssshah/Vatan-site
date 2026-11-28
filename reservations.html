@@ -932,6 +932,60 @@ function getReservationBlock(config, locationCode, date) {
   return block && block.active === true ? block : null;
 }
 
+// Raw JSON entry for a date/location (unlike getReservationBlock, this also
+// returns entries with active:false so an explicit owner reopen can be told
+// apart from "no entry"). Used by the one-way intake-stop latch below.
+function rawReservationEntry(config, locationCode, date) {
+  if (!config || config.enabled !== true || !date) return null;
+  const location = config.locations && config.locations[locationCode];
+  if (!location || location.enabled !== true || !location.blockedDates) return null;
+  return location.blockedDates[date] || null;
+}
+
+// One-way intake stop (set from the reservations board, today only).
+// Staff can STOP online intake; only an explicit "active": false JSON entry
+// (owner, via git) reopens while a stop flag exists. Fail-open: if the flag
+// cannot be loaded, the static JSON alone decides.
+const INTAKE_STOP_NY_TZ = 'America/New_York';
+const intakeLocationNames = { JC: 'Jersey City', EW: 'East Windsor', EDI: 'Edison' };
+let intakeStopState = {};
+
+function intakeTodayNY() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: INTAKE_STOP_NY_TZ });
+}
+
+async function loadIntakeStops() {
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    const response = await fetch(`/.netlify/functions/intake-stop?date=${intakeTodayNY()}`, {
+      cache: 'no-store',
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    if (!response.ok) throw new Error(`Intake stop request failed: ${response.status}`);
+    const data = await response.json();
+    intakeStopState = (data && data.stops) || {};
+  } catch (error) {
+    intakeStopState = {};
+  }
+}
+
+function intakeStopBlock(locationCode, date) {
+  if (!locationCode || !date || date !== intakeTodayNY()) return null;
+  const entry = intakeStopState[locationCode];
+  if (!entry || entry.stopped !== true) return null;
+  return {
+    active: true,
+    allDay: true,
+    message: `Online reservations for ${intakeLocationNames[locationCode] || 'this location'} are temporarily unavailable for this date.`
+  };
+}
+
+function refreshReservationAvailability() {
+  loadIntakeStops().finally(updateReservationAvailability);
+}
+
 function setReservationFieldsDisabled(disabled) {
   document.querySelectorAll('#resForm input:not([type="hidden"]):not([name="bot-field"]), #resForm select, #resForm textarea')
     .forEach(field => { field.disabled = disabled; });
@@ -984,7 +1038,10 @@ function updateReservationAvailability() {
   }
 
   setReservationFieldsDisabled(false);
-  const block = getReservationBlock(reservationAvailability, currentLocationCode, dateInput.value);
+  const staticEntry = rawReservationEntry(reservationAvailability, currentLocationCode, dateInput.value);
+  const ownerReopened = Boolean(staticEntry && staticEntry.active === false);
+  const block = getReservationBlock(reservationAvailability, currentLocationCode, dateInput.value)
+    || (!ownerReopened ? intakeStopBlock(currentLocationCode, dateInput.value) : null);
   const fullDayBlock = isFullDayReservationBlock(block);
   const selectedTimeWasBlocked = Boolean(timeSelect.value && isReservationTimeBlocked(block, timeSelect.value));
 
@@ -1036,7 +1093,7 @@ function selectLoc(loc) {
   const locationNames = { JC: 'Jersey City', EW: 'East Windsor', EDI: 'Edison' };
   currentLocationCode = locationNames[loc] ? loc : 'EDI';
   document.getElementById('selectedLocation').value = locationNames[currentLocationCode];
-  updateReservationAvailability();
+  refreshReservationAvailability();
 }
 
 const requestedLocation = new URLSearchParams(window.location.search).get('loc');
@@ -1044,7 +1101,10 @@ const initialLocation = requestedLocation && /^(jc|ew|edi|ed)$/i.test(requestedL
   ? (/^jc$/i.test(requestedLocation) ? 'JC' : /^ew$/i.test(requestedLocation) ? 'EW' : 'EDI')
   : 'EDI';
 selectLoc(initialLocation);
-dateInput.addEventListener('change', updateReservationAvailability);
+dateInput.addEventListener('change', refreshReservationAvailability);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') refreshReservationAvailability();
+});
 
 async function loadReservationAvailability() {
   try {
@@ -1062,7 +1122,7 @@ async function loadReservationAvailability() {
     availabilityReady = false;
     availabilityLoadFailed = true;
   }
-  updateReservationAvailability();
+  refreshReservationAvailability();
 }
 
 loadReservationAvailability();
@@ -1079,8 +1139,9 @@ function notifyMailerLite(email, source) {
 }
 
 // Form submit
-document.getElementById('resForm').addEventListener('submit', function(e) {
+document.getElementById('resForm').addEventListener('submit', async function(e) {
   e.preventDefault();
+  await loadIntakeStops();
   if (!updateReservationAvailability()) return;
   const required = ['firstName','lastName','email','phone','resDate','resTime','partySize'];
   let valid = true;
