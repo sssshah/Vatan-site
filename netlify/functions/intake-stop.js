@@ -97,7 +97,7 @@ exports.handler = async (event) => {
     if (body.action !== undefined && body.action !== 'stop-intake') {
       return { statusCode: 400, body: JSON.stringify({ error: 'Unsupported action' }) };
     }
-    const code = LOCATION_CODES[(body.location || '').trim().toLowerCase()];
+    const code = LOCATION_CODES[String(body.location || '').trim().toLowerCase()];
     if (!code) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Unknown location' }) };
     }
