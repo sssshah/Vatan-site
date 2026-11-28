@@ -17,7 +17,7 @@
 // function already uses). No new secrets.
 const { getStore } = require('@netlify/blobs');
 
-const SITE_ID = '6c809b51-e8d1-4103-a9b3-02544170e304';
+const SITE_ID = '6c80951b-e8d1-4101-a9b3-02544170e304';
 const NY_TZ = 'America/New_York';
 const STOP_STORE = 'reservation-intake-stops';
 const STOP_PREFIX = 'intake-stop-';
@@ -97,7 +97,7 @@ exports.handler = async (event) => {
       };
     } catch (err) {
       console.error(`[IntakeStop] stop write failed: ${err.message}`);
-      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save stop state', detail: String((err && err.message) || err) }) };
+      return { statusCode: 502, body: JSON.stringify({ error: 'Failed to save stop state' }) };
     }
   }
 
